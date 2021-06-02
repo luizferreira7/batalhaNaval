@@ -96,6 +96,10 @@ Jogador setJogador(){
     return jogador;
 }
 
+void acertou_ou_nao(){
+    
+}
+
 int main(){
     char tabuleiro[TAMANHO][TAMANHO];
     preencheTabuleiro(tabuleiro);
