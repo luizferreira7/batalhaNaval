@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#define TAMANHO 10
+#define TAMANHO 11
 
 typedef struct
 {
@@ -12,10 +12,29 @@ typedef struct
 } Jogador;
 
 void preencheTabuleiro(char tabuleiro[TAMANHO][TAMANHO]){
-    for (int i = 0; i < 10; i++){
-        for (int j = 0; j < 10; j++){
-            tabuleiro[i][j] = '~';
+    // adicionando números a linha
+    char numero = 48;
+    for (int i = 0; i < TAMANHO; i++){
+        if (i == 10)
+        {
+            tabuleiro[0][i] = 49;
+            break;
         }
+        
+        tabuleiro[0][i] = numero;
+        numero++;
+    }
+    // adicionando letras na coluna
+    char letra = 64;
+    for (int i = 0; i < TAMANHO; i++){
+        tabuleiro[i][0] = letra;
+        letra++;
+    }
+    // acidionando água
+    for (int i = 1; i < TAMANHO; i++){
+        for (int j = 1; j < TAMANHO; j++){
+            tabuleiro[i][j] = '~';
+        } 
     }
 }
 
@@ -85,10 +104,13 @@ int main(){
     printf("\nBem-vindo(a)! %s %s ao Batalha Naval!\n", jogador1.titulo, jogador1.nome);
 
     for(int i = 0; i < TAMANHO; i++){
-        printf("\n");
         for(int j = 0; j < TAMANHO; j++){
             printf(" %c ", tabuleiro[i][j]);
+            if (i == 0 && j == 10){
+                printf("%d",0);
+            }
         }
+        printf("\n");
     }
 
     return 0;
