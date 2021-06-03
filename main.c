@@ -11,22 +11,24 @@ typedef struct
     int pontuacao;
 } Jogador;
 
+typedef struct
+{
+    char nome[30];
+    char classe;
+    int tamanho;
+    char posicao[5][5];
+} Navio;
+
 void preencheTabuleiro(char tabuleiro[TAMANHO][TAMANHO]){
     // adicionando números a linha
-    char numero = 48;
+    char numero = 47;
     for (int i = 0; i < TAMANHO; i++){
-        if (i == 10)
-        {
-            tabuleiro[0][i] = 49;
-            break;
-        }
-        
         tabuleiro[0][i] = numero;
         numero++;
     }
     // adicionando letras na coluna
-    char letra = 64;
-    for (int i = 0; i < TAMANHO; i++){
+    char letra = 65;
+    for (int i = 1; i < TAMANHO; i++){
         tabuleiro[i][0] = letra;
         letra++;
     }
@@ -76,46 +78,98 @@ void sorteiaTitulo(char titulo[30]){
     }
 }
 
-Jogador setJogador(){
-    int tamanho_nome;
+Jogador setJogador(int humano){
     Jogador jogador;
-    printf("Digite seu nome: ");
-    fgets(jogador.nome, 30, stdin);
 
-    tamanho_nome = strlen(jogador.nome);
+    if (humano == 1){
+        int tamanho_nome;
+        printf("Digite seu nome: ");
+        fgets(jogador.nome, 30, stdin);
 
-    for (int i = 0; i < tamanho_nome; i++){
-        if (jogador.nome[i] == '\n'){
-            jogador.nome[i] = '\0';
+        tamanho_nome = strlen(jogador.nome);
+
+        for (int i = 0; i < tamanho_nome; i++){
+            if (jogador.nome[i] == '\n'){
+                jogador.nome[i] = '\0';
+            }
         }
+
+        jogador.pontuacao = 0;
+        sorteiaTitulo(jogador.titulo);
+    } else {
+        char n[ ] = "Computador";
+
+        int tamanho = strlen(n), i;
+
+        for (i = 0; i < tamanho; i++){
+            jogador.nome[i] = n[i];
+        }
+        jogador.nome[i] = '\0';
+
+        int tamanho_nome = strlen(jogador.nome);
+
+        for (int i = 0; i < tamanho_nome; i++){
+            if (jogador.nome[i] == '\n'){
+                jogador.nome[i] = '\0';
+            }
+        }
+
+        sorteiaTitulo(jogador.titulo);
+        jogador.pontuacao = 0;
     }
 
-    jogador.pontuacao = 0;
-    sorteiaTitulo(jogador.titulo);
-
     return jogador;
+}
+
+void setNavio(char tabuleiro[TAMANHO][TAMANHO]){
+
+    printf("\nDigite a posicao inicial do navio!\n");
+    printf("Fileira: ");
+    char i = getchar();
+
+    fflush(stdin);
+    fpurge(stdin);
+
+    printf("Coluna: ");
+    char j = getchar();
+
+    tabuleiro[i-64][j-47] = 'S';
+
 }
 
 void acertou_ou_nao(){
     
 }
 
+void imprimeTabuleiro(char tabuleiro[TAMANHO][TAMANHO]){
+
+    for(int i = 0; i < TAMANHO; i++){
+        printf("\n");
+        for(int j = 0; j < TAMANHO; j++){
+            printf(" %c ", tabuleiro[i][j]);
+        }
+    }
+}
+
 int main(){
     char tabuleiro[TAMANHO][TAMANHO];
     preencheTabuleiro(tabuleiro);
 
-    Jogador jogador1 = setJogador();
+    int humano = 1;
+    int computador = 0;
+
+    Jogador jogador1 = setJogador(humano);
     printf("\nBem-vindo(a)! %s %s ao Batalha Naval!\n", jogador1.titulo, jogador1.nome);
 
-    for(int i = 0; i < TAMANHO; i++){
-        for(int j = 0; j < TAMANHO; j++){
-            printf(" %c ", tabuleiro[i][j]);
-            if (i == 0 && j == 10){
-                printf("%d",0);
-            }
-        }
-        printf("\n");
-    }
+    Jogador computador1 = setJogador(computador);
+
+    imprimeTabuleiro(tabuleiro);
+
+    printf("\n\nAdversario %s %s", computador1.titulo, computador1.nome);
+
+    setNavio(tabuleiro);
+
+    imprimeTabuleiro(tabuleiro);
 
     return 0;
 }
