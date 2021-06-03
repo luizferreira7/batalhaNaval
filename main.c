@@ -140,7 +140,7 @@ Navio setNavio(char tabuleiro[TAMANHO][TAMANHO], char nome[30],
     printf("\nDigite as posições do %s!\n", navio.nome);
 
     while (posicaoValidaI == false){
-        int colideI = 0, colideJ = 0;
+        int colideIE = 0, colideID = 0, colideJE = 0, colideJD = 0;
 
         printf("Primeira: ");
         scanf("%c %c", &i, &j);
@@ -153,30 +153,38 @@ Navio setNavio(char tabuleiro[TAMANHO][TAMANHO], char nome[30],
             printf("\nDigite uma posição válida!\n");
         } else {
             for (int a = 0; a < tamanho; a++){
-                if (i-64+a <= TAMANHO){
+                if (i-64+a < TAMANHO){
                     if (tabuleiro[i-64+a][j-47] != '~'){
-                        colideJ += 1;
+                        colideJD += 1;
                     }
+                } else {
+                    colideJD += 1;
                 }
                 if (i-64-a > 0){
                     if (tabuleiro[i-64-a][j-47] != '~'){
-                        colideJ += 1;
+                        colideJE += 1;
                     }
+                } else {
+                    colideJE += 1;
                 }
             }
             for (int b = 0; b < tamanho; b++){
-                if (j-47+b <= TAMANHO){
+                if (j-47+b < TAMANHO){
                     if (tabuleiro[i-64][j-47+b] != '~'){
-                        colideI += 1;
+                        colideID += 1;
                     }
+                } else {
+                    colideID += 1;
                 }
                 if (j-47-b > 0){
                     if (tabuleiro[i-64][j-47-b] != '~'){
-                        colideI += 1;
+                        colideIE += 1;
                     }
+                } else {
+                    colideIE += 1;
                 }
             }
-            if (colideI != 0 && colideJ != 0){
+            if (colideIE != 0 && colideJD != 0 && colideID != 0 && colideJE != 0){
                 printf("\nDigite uma posição válida!\n");
             } else {
                 posicaoValidaI = true;
@@ -197,9 +205,21 @@ Navio setNavio(char tabuleiro[TAMANHO][TAMANHO], char nome[30],
             printf("\nDigite uma posição válida!\n");
         } else if (i != i2 && j != j2){
             printf("\nDigite uma posição válida!\n");
-        } else if ( ((j2-47) - (j-47) > tamanho) || 
-                    ((i2-64) - (i-64)) > tamanho) {
+        } else if (((((j2 - j) < 0) ? -1*(j2-j) : (j2-j)) > tamanho-1) || 
+                  ((((i2 - i) < 0) ? -1*(i2-i) : (i2-i)) > tamanho-1) ){
             printf("\nDigite uma posição válida!\n");
+        } else if (i==i2){
+            if ( (((j2 - j) < 0) ? -1*(j2-j) : (j2-j)) < tamanho-1){
+                printf("\nDigite uma posição válida!\n");
+            } else {
+                posicaoValidaF = true;
+            }
+        } else if (j==j2){
+            if ( (((i2 - i) < 0) ? -1*(i2-i) : (i2-i)) < tamanho-1){
+                printf("\nDigite uma posição válida!\n");
+            } else {
+                posicaoValidaF = true;
+            }
         } else {
             posicaoValidaF = true;
         }
