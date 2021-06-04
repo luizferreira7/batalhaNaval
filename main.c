@@ -210,7 +210,6 @@ Navio setNavio(char tabuleiro[TAMANHO][TAMANHO], char nome[30],
             }
         }
 
-        fflush(stdin);
     }
 
     while (posicaoValidaF == false){
@@ -237,6 +236,8 @@ Navio setNavio(char tabuleiro[TAMANHO][TAMANHO], char nome[30],
         } else if (((((j2 - j) < 0) ? -1*(j2-j) : (j2-j)) > tamanho-1) || 
                   ((((i2 - i) < 0) ? -1*(i2-i) : (i2-i)) > tamanho-1) ){
             printf("\nDigite uma posição válida!\n");
+        } else if ( tabuleiro[i2-64][j2-47] != '~') {
+            printf("\nDigite uma posição válida!\n");
         } else if (i==i2){
             if ( (((j2 - j) < 0) ? -1*(j2-j) : (j2-j)) < tamanho-1){
                 printf("\nDigite uma posição válida!\n");
@@ -253,7 +254,6 @@ Navio setNavio(char tabuleiro[TAMANHO][TAMANHO], char nome[30],
             posicaoValidaF = true;
         }
 
-        fflush(stdin);
     }
 
     if (i == i2){
@@ -333,9 +333,7 @@ int main(){
 
     Navio cruzadorJogador = setNavio(tabuleiroJogador, "Cruzador", 'C', 3);
 
-    Navio portaAvioJogador = setNavio(tabuleiroJogador, "Porta-Avião", 'P', 4);
-
-    imprimeTabuleiro(tabuleiroJogador);
+    Navio portaAviaoJogador = setNavio(tabuleiroJogador, "Porta-Aviões", 'P', 4);
 
     return 0;
 }
