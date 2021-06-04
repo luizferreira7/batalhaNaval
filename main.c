@@ -145,37 +145,53 @@ Jogador setJogador(int humano){
     return jogador;
 }
 
-void getPosicao(char i, char j, int tamanho, int tentativa, char posicao[2]){
+void getPosicao(bool posicaoInicial, bool humano, char i, char j, int tamanho, int tentativa, char posicao[2]){
 
-    char i2, j2;
+    if (posicaoInicial == true){
 
-    switch (tentativa){
+        char c;
+        int w = 0;
 
-        case 0:
-            i2 = i;
-            j2 = j+tamanho-1;
-            break;
-        case 1:
-            i2 = i;
-            j2 = j-tamanho+1;
-            break;
-        case 2:
-            i2 = i+tamanho-1;
+        printf("Primeira: ");
+
+        while ( (c = getchar() ) != '\n' && c != EOF){
+            posicao[w] = c;
+            w++;
+        }
+
+    } else if (posicaoInicial == false && humano == false){
+
+        char i2, j2;
+
+        switch (tentativa){
+
+            case 0:
+                i2 = i;
+                j2 = j+tamanho-1;
+                break;
+            case 1:
+                i2 = i;
+                j2 = j-tamanho+1;
+                break;
+            case 2:
+                i2 = i+tamanho-1;
+                    j2 = j;
+                break;
+            case 3:
+                i2 = i-tamanho+1;
                 j2 = j;
             break;
-        case 3:
-            i2 = i-tamanho+1;
-            j2 = j;
-        break;
-                
-        default:
-            i2 = i;
-            j2 = j;
-            break;
-    }
+                    
+            default:
+                i2 = i;
+                j2 = j;
+                break;
+        }
 
-    posicao[0] = i2;
-    posicao[1] = j2;
+        posicao[0] = i2;
+        posicao[1] = j2;
+    
+    }
 
 }
 
@@ -328,19 +344,12 @@ Navio setNavio(char tabuleiro[TAMANHO][TAMANHO], char nome[30],
 
     while (posicaoValidaI == false){
 
-        char posicaoI[2], c;
+        char posicao[2];
 
-        int w = 0;
+        getPosicao(true, humano, i, j, tamanho, 0, posicao);
 
-        printf("Primeira: ");
-        
-        while ( (c = getchar() ) != '\n' && c != EOF){
-            posicaoI[w] = c;
-            w++;
-        }
-
-        i = posicaoI[0];
-        j = posicaoI[1];
+        i = posicao[0];
+        j = posicao[1];
         
         posicaoValidaI = verificaPosicao(true, tabuleiro, humano, tamanho, i, j, i2, j2);
 
@@ -350,35 +359,29 @@ Navio setNavio(char tabuleiro[TAMANHO][TAMANHO], char nome[30],
 
         if (humano == true){
 
-            char posicaoF[2], c;
+            char posicao[2];
 
-            int w = 0;
+            getPosicao(true, humano, i, j, tamanho, 0, posicao);
 
-            printf("Ultima: ");
-
-            while ( (c = getchar() ) != '\n' && c != EOF){
-                posicaoF[w] = c;
-                w++;
-            }
-
-            i2 = posicaoF[0];
-            j2 = posicaoF[1];
+            i2 = posicao[0];
+            j2 = posicao[1];
 
             posicaoValidaF = verificaPosicao(false, tabuleiro, humano, tamanho, i, j, i2, j2);
         
-        }
+        } else {
 
-        for (int l = 0; l < 4; l++){
-            char posicao[2];
+            for (int l = 0; l < 4; l++){
+                char posicao[2];
 
-            getPosicao(i, j, tamanho, l, posicao);
+                getPosicao(false, humano, i, j, tamanho, l, posicao);
 
-            posicaoValidaF = verificaPosicao(false, tabuleiro, humano, tamanho, i, j, posicao[0], posicao[1]);
+                posicaoValidaF = verificaPosicao(false, tabuleiro, humano, tamanho, i, j, posicao[0], posicao[1]);
 
-            if (posicaoValidaF == true){
-                i2 = posicao[0];
-                j2 = posicao[1];
-                break;
+                if (posicaoValidaF == true){
+                    i2 = posicao[0];
+                    j2 = posicao[1];
+                    break;
+                }
             }
         }
 
