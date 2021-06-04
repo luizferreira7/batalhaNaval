@@ -205,20 +205,20 @@ void getPosicao(bool posicaoInicial, bool humano, char i, char j, int tamanho, i
 
 }
 
-bool verificaPosicao(bool posicaoInicial, char tabuleiro[TAMANHO][TAMANHO],
+bool verificaPosicao(bool posicaoInicial, char tabuleiro[TAMANHO][TAMANHO], bool humano,
                         int tamanho, char i, char j, char i2, char j2){
 
     if (posicaoInicial == true) {
         int colideIE = 0, colideID = 0, colideJE = 0, colideJD = 0;
 
         if (i > 74 || i < 65){
-            printf("\nDigite uma posição válida!\n");
+            (humano == true) ? printf("\nDigite uma posição válida!\n") : printf("");
             return false;
         } else if (j > 57 || j < 48){
-            printf("\nDigite uma posição válida!\n");
+            (humano == true) ? printf("\nDigite uma posição válida!\n") : printf("");
             return false;
         } else if (tabuleiro[i-64][j-47] != '~'){
-            printf("\nDigite uma posição válida!\n");
+            (humano == true) ? printf("\nDigite uma posição válida!\n") : printf("");
             return false;
         } else {
             for (int a = 0; a < tamanho; a++){
@@ -254,7 +254,7 @@ bool verificaPosicao(bool posicaoInicial, char tabuleiro[TAMANHO][TAMANHO],
                 }
             }
             if (colideIE != 0 && colideJD != 0 && colideID != 0 && colideJE != 0){
-                printf("\nDigite uma posição válida!\n");
+                (humano == true) ? printf("\nDigite uma posição válida!\n") : printf("");
                 return false;
             } else {
                 return true;
@@ -263,31 +263,31 @@ bool verificaPosicao(bool posicaoInicial, char tabuleiro[TAMANHO][TAMANHO],
     } else if (posicaoInicial == false) {
 
         if (i2 > 74 || i2 < 65){
-            printf("\nDigite uma posição válida!\n");
+            (humano == true) ? printf("\nDigite uma posição válida!\n") : printf("");
             return false;
         } else if (j2 > 57 || j2 < 48){
-            printf("\nDigite uma posição válida!\n");
+            (humano == true) ? printf("\nDigite uma posição válida!\n") : printf("");
             return false;
         } else if (i != i2 && j != j2){
-            printf("\nDigite uma posição válida!\n");
+            (humano == true) ? printf("\nDigite uma posição válida!\n") : printf("");
             return false;
         } else if (((((j2 - j) < 0) ? -1*(j2-j) : (j2-j)) > tamanho-1) || 
                   ((((i2 - i) < 0) ? -1*(i2-i) : (i2-i)) > tamanho-1) ){
-            printf("\nDigite uma posição válida!\n");
+            (humano == true) ? printf("\nDigite uma posição válida!\n") : printf("");
             return false;
         } else if ( tabuleiro[i2-64][j2-47] != '~') {
-            printf("\nDigite uma posição válida!\n");
+            (humano == true) ? printf("\nDigite uma posição válida!\n") : printf("");
             return false;
         } else if (i==i2){
             if ( (((j2 - j) < 0) ? -1*(j2-j) : (j2-j)) < tamanho-1){
-                printf("\nDigite uma posição válida!\n");
+                (humano == true) ? printf("\nDigite uma posição válida!\n") : printf("");
                 return false;
             } else {
                 return true;
             }
         } else if (j==j2){
             if ( (((i2 - i) < 0) ? -1*(i2-i) : (i2-i)) < tamanho-1){
-                printf("\nDigite uma posição válida!\n");
+                (humano == true) ? printf("\nDigite uma posição válida!\n") : printf("");
                 return false;
             } else {
                 return true;
@@ -326,7 +326,7 @@ Navio setNavio(char tabuleiro[TAMANHO][TAMANHO], char nome[30],
         i = posicao[0];
         j = posicao[1];
         
-        posicaoValidaI = verificaPosicao(true, tabuleiro, tamanho, i, j, i2, j2);
+        posicaoValidaI = verificaPosicao(true, tabuleiro, humano, tamanho, i, j, i2, j2);
 
     }
 
@@ -341,7 +341,7 @@ Navio setNavio(char tabuleiro[TAMANHO][TAMANHO], char nome[30],
             i2 = posicao[0];
             j2 = posicao[1];
 
-            posicaoValidaF = verificaPosicao(false, tabuleiro, tamanho, i, j, i2, j2);
+            posicaoValidaF = verificaPosicao(false, tabuleiro, humano, tamanho, i, j, i2, j2);
         
         } else {
 
@@ -350,7 +350,7 @@ Navio setNavio(char tabuleiro[TAMANHO][TAMANHO], char nome[30],
 
                 getPosicao(false, humano, i, j, tamanho, l, posicao);
 
-                posicaoValidaF = verificaPosicao(false, tabuleiro, tamanho, i, j, posicao[0], posicao[1]);
+                posicaoValidaF = verificaPosicao(false, tabuleiro, humano, tamanho, i, j, posicao[0], posicao[1]);
 
                 if (posicaoValidaF == true){
                     i2 = posicao[0];
