@@ -150,10 +150,19 @@ Navio setNavio(char tabuleiro[TAMANHO][TAMANHO], char nome[30],
     printf("\nDigite as posições do %s!\n", navio.nome);
 
     while (posicaoValidaI == false){
-        int colideIE = 0, colideID = 0, colideJE = 0, colideJD = 0;
+        int colideIE = 0, colideID = 0, colideJE = 0, colideJD = 0, w = 0;
+
+        char posicaoI[2], c;
 
         printf("Primeira: ");
-        scanf("%c %c", &i, &j);
+        
+        while ( (c = getchar() ) != '\n' && c != EOF){
+            posicaoI[w] = c;
+            w++;
+        }
+
+        i = posicaoI[0];
+        j = posicaoI[1];
 
         if (i > 74 || i < 65){
             printf("\nDigite uma posição válida!\n");
@@ -205,9 +214,25 @@ Navio setNavio(char tabuleiro[TAMANHO][TAMANHO], char nome[30],
     }
 
     while (posicaoValidaF == false){
+<<<<<<< HEAD
         /**/
         printf("Ultima: ");
         scanf("%c %c", &i2, &j2).toupper();
+=======
+        char posicaoF[2], c;
+
+        int w = 0;
+
+        printf("Ultima: ");
+
+        while ( (c = getchar() ) != '\n' && c != EOF){
+            posicaoF[w] = c;
+            w++;
+        }
+
+        i2 = posicaoF[0];
+        j2 = posicaoF[1];
+>>>>>>> 9f2547d59786a83ab399acfd35a83ccb8d8a756e
 
         if (i2 > 74 || i2 < 65){
             printf("\nDigite uma posição válida!\n");
