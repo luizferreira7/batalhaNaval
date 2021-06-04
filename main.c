@@ -7,6 +7,7 @@
 
 typedef struct
 {
+    bool humano;
     char nome[30];
     char titulo[20];
     int pontuacao;
@@ -105,6 +106,7 @@ Jogador setJogador(int humano){
 
     if (humano == 1){
         int tamanho_nome;
+        jogador.humano = true;
         printf("Digite seu nome: ");
         fgets(jogador.nome, 30, stdin);
 
@@ -119,6 +121,7 @@ Jogador setJogador(int humano){
         jogador.pontuacao = 0;
         sorteiaTitulo(jogador.titulo);
     } else {
+        jogador.humano = false;
         char n[ ] = "Computador";
 
         int tamanho = strlen(n), i;
@@ -147,44 +150,55 @@ Jogador setJogador(int humano){
     return jogador;
 }
 
-Navio setNavio(char tabuleiro[TAMANHO][TAMANHO], char nome[30],
-        char classe, int tamanho){
-    Navio navio;
-    int k;
-    char i, j, i2, j2;
-    bool posicaoValidaI = false, posicaoValidaF = false;
+void getPosicao(char i, char j, int tamanho, int tentativa, char posicao[2]){
 
-    navio.classe = classe;
-    navio.tamanho = tamanho;
+    char i2, j2;
 
-    for (k = 0; k < strlen(nome); k++){
-        navio.nome[k] = nome[k];
+    switch (tentativa){
+
+        case 0:
+            i2 = i;
+            j2 = j+tamanho-1;
+            break;
+        case 1:
+            i2 = i;
+            j2 = j-tamanho+1;
+            break;
+        case 2:
+            i2 = i+tamanho-1;
+                j2 = j;
+            break;
+        case 3:
+            i2 = i-tamanho+1;
+            j2 = j;
+        break;
+                
+        default:
+            i2 = i;
+            j2 = j;
+            break;
     }
-    navio.nome[k] = '\0';
 
-    printf("\nDigite as posições do %s!\n", navio.nome);
+    posicao[0] = i2;
+    posicao[1] = j2;
 
-    while (posicaoValidaI == false){
-        int colideIE = 0, colideID = 0, colideJE = 0, colideJD = 0, w = 0;
+}
 
-        char posicaoI[2], c;
+bool verificaPosicao(bool posicaoInicial, char tabuleiro[TAMANHO][TAMANHO], bool humano,
+                        int tamanho, char i, char j, char i2, char j2){
 
-        printf("Primeira: ");
-        
-        while ( (c = getchar() ) != '\n' && c != EOF){
-            posicaoI[w] = c;
-            w++;
-        }
-
-        i = posicaoI[0];
-        j = posicaoI[1];
+    if (posicaoInicial == true) {
+        int colideIE = 0, colideID = 0, colideJE = 0, colideJD = 0;
 
         if (i > 74 || i < 65){
             printf("\nDigite uma posição válida!\n");
+            return false;
         } else if (j > 57 || j < 48){
             printf("\nDigite uma posição válida!\n");
+            return false;
         } else if (tabuleiro[i-64][j-47] != '~'){
             printf("\nDigite uma posição válida!\n");
+            return false;
         } else {
             for (int a = 0; a < tamanho; a++){
                 if (i-64+a < TAMANHO){
@@ -220,53 +234,157 @@ Navio setNavio(char tabuleiro[TAMANHO][TAMANHO], char nome[30],
             }
             if (colideIE != 0 && colideJD != 0 && colideID != 0 && colideJE != 0){
                 printf("\nDigite uma posição válida!\n");
+                return false;
             } else {
-                posicaoValidaI = true;
+                return true;
             }
         }
-
-    }
-
-    while (posicaoValidaF == false){
-        char posicaoF[2], c;
-
-        int w = 0;
-
-        printf("Ultima: ");
-
-        while ( (c = getchar() ) != '\n' && c != EOF){
-            posicaoF[w] = c;
-            w++;
-        }
-
-        i2 = posicaoF[0];
-        j2 = posicaoF[1];
+    } else if (posicaoInicial == false && humano == true) {
 
         if (i2 > 74 || i2 < 65){
             printf("\nDigite uma posição válida!\n");
+            return false;
         } else if (j2 > 57 || j2 < 48){
             printf("\nDigite uma posição válida!\n");
+            return false;
         } else if (i != i2 && j != j2){
             printf("\nDigite uma posição válida!\n");
+            return false;
         } else if (((((j2 - j) < 0) ? -1*(j2-j) : (j2-j)) > tamanho-1) || 
                   ((((i2 - i) < 0) ? -1*(i2-i) : (i2-i)) > tamanho-1) ){
             printf("\nDigite uma posição válida!\n");
+            return false;
         } else if ( tabuleiro[i2-64][j2-47] != '~') {
             printf("\nDigite uma posição válida!\n");
+            return false;
         } else if (i==i2){
             if ( (((j2 - j) < 0) ? -1*(j2-j) : (j2-j)) < tamanho-1){
                 printf("\nDigite uma posição válida!\n");
+                return false;
             } else {
-                posicaoValidaF = true;
+                return true;
             }
         } else if (j==j2){
             if ( (((i2 - i) < 0) ? -1*(i2-i) : (i2-i)) < tamanho-1){
                 printf("\nDigite uma posição válida!\n");
+                return false;
             } else {
-                posicaoValidaF = true;
+                return true;
             }
         } else {
-            posicaoValidaF = true;
+            return true;
+        }
+    } else if (posicaoInicial == false && humano == false){
+
+        if (i2 > 74 || i2 < 65){
+            printf("\nDigite uma posição válida!\n");
+            return false;
+        } else if (j2 > 57 || j2 < 48){
+            printf("\nDigite uma posição válida!\n");
+            return false;
+        } else if (i != i2 && j != j2){
+            printf("\nDigite uma posição válida!\n");
+            return false;
+        } else if (((((j2 - j) < 0) ? -1*(j2-j) : (j2-j)) > tamanho-1) || 
+                    ((((i2 - i) < 0) ? -1*(i2-i) : (i2-i)) > tamanho-1) ){
+            printf("\nDigite uma posição válida!\n");
+            return false;
+        } else if ( tabuleiro[i2-64][j2-47] != '~') {
+            printf("\nDigite uma posição válida!\n");
+            return false;
+        } else if (i==i2){
+            if ( (((j2 - j) < 0) ? -1*(j2-j) : (j2-j)) < tamanho-1){
+                printf("\nDigite uma posição válida!\n");
+                return false;
+            } else {
+                return true;
+            }
+        } else if (j==j2){
+            if ( (((i2 - i) < 0) ? -1*(i2-i) : (i2-i)) < tamanho-1){
+                printf("\nDigite uma posição válida!\n");
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+Navio setNavio(char tabuleiro[TAMANHO][TAMANHO], char nome[30],
+                char classe, int tamanho, bool humano){
+    Navio navio;
+    int k;
+    char i, j, i2 = '\0', j2 = '\0';
+    bool posicaoValidaI = false, posicaoValidaF = false;
+
+    navio.classe = classe;
+    navio.tamanho = tamanho;
+
+    for (k = 0; k < strlen(nome); k++){
+        navio.nome[k] = nome[k];
+    }
+    navio.nome[k] = '\0';
+
+    printf("\nDigite as posições do %s!\n", navio.nome);
+
+    while (posicaoValidaI == false){
+
+        char posicaoI[2], c;
+
+        int w = 0;
+
+        printf("Primeira: ");
+        
+        while ( (c = getchar() ) != '\n' && c != EOF){
+            posicaoI[w] = c;
+            w++;
+        }
+
+        i = posicaoI[0];
+        j = posicaoI[1];
+        
+        posicaoValidaI = verificaPosicao(true, tabuleiro, humano, tamanho, i, j, i2, j2);
+
+    }
+
+    while (posicaoValidaF == false){
+
+        if (humano == true){
+
+            char posicaoF[2], c;
+
+            int w = 0;
+
+            printf("Ultima: ");
+
+            while ( (c = getchar() ) != '\n' && c != EOF){
+                posicaoF[w] = c;
+                w++;
+            }
+
+            i2 = posicaoF[0];
+            j2 = posicaoF[1];
+
+            posicaoValidaF = verificaPosicao(false, tabuleiro, humano, tamanho, i, j, i2, j2);
+        
+        }
+
+        for (int l = 0; l < 4; l++){
+            char posicao[2];
+
+            getPosicao(i, j, tamanho, l, posicao);
+
+            posicaoValidaF = verificaPosicao(false, tabuleiro, humano, tamanho, i, j, posicao[0], posicao[1]);
+
+            if (posicaoValidaF == true){
+                i2 = posicao[0];
+                j2 = posicao[1];
+                break;
+            }
         }
 
     }
@@ -374,7 +492,6 @@ void realizaDisparo(char tabuleiro[TAMANHO][TAMANHO], char jogadasRealizadas[100
 }
 
 int main(){
-
     int humano = 1;
     int computador = 0;
 
@@ -387,9 +504,11 @@ int main(){
 
     printf("\n\nAdversario %s %s", computador1.titulo, computador1.nome);
 
-    Navio submarinoJogador = setNavio(jogador1.tabuleiro, "Submarino", 'S', 2);
+    Navio submarinoComputador = setNavio(computador1.tabuleiro, "Submarino", 'S', 2, computador1.humano);
 
-    Navio destroyerJogador = setNavio(jogador1.tabuleiro, "Destroyer", 'D', 3);
+    Navio submarinoJogador = setNavio(jogador1.tabuleiro, "Submarino", 'S', 2, jogador1.humano);
+
+    Navio destroyerJogador = setNavio(jogador1.tabuleiro, "Destroyer", 'D', 3, jogador1.humano);
 
     //Navio cruzadorJogador = setNavio(jogador1.tabuleiro, "Cruzador", 'C', 3);
 
