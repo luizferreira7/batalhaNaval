@@ -321,7 +321,7 @@ bool verificaJogada(char i, char j, char jogadasRealizadas[1000][2]){
 
 }
 
-void disparo(char tabuleiro[TAMANHO][TAMANHO], char jogadasRealizadas[1000][2], int pontuacao){
+void realizaDisparo(char tabuleiro[TAMANHO][TAMANHO], char jogadasRealizadas[1000][2], int pontuacao){
 
     char i, j;
 
@@ -395,9 +395,9 @@ int main(){
 
     //Navio portaAviaoJogador = setNavio(jogador1.tabuleiro, "Porta-Aviões", 'P', 4);
 
-    disparo(jogador1.tabuleiro, jogador1.jogadasRealizadas, jogador1.pontuacao);
+    realizaDisparo(jogador1.tabuleiro, jogador1.jogadasRealizadas, jogador1.pontuacao);
 
-    disparo(jogador1.tabuleiro, jogador1.jogadasRealizadas, jogador1.pontuacao);
+    realizaDisparo(jogador1.tabuleiro, jogador1.jogadasRealizadas, jogador1.pontuacao);
 
     return 0;
 }
