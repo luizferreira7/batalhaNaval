@@ -205,8 +205,9 @@ Navio setNavio(char tabuleiro[TAMANHO][TAMANHO], char nome[30],
     }
 
     while (posicaoValidaF == false){
+        /**/
         printf("Ultima: ");
-        scanf("%c %c", &i2, &j2);
+        scanf("%c %c", &i2, &j2).toupper();
 
         if (i2 > 74 || i2 < 65){
             printf("\nDigite uma posição válida!\n");
