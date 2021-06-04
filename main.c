@@ -131,9 +131,188 @@ Jogador setJogador(int humano){
 
     return jogador;
 }
+char sorteiaI(void){
+//sorteia posicao[i]
+    char i;
+
+    srand( (unsigned)time(NULL) );
+    i = 65 + rand() %10;
+    fflush(stdin);
+    return ("%c",i);
+}
+
+char sorteiaJ(void){
+//sorteia posicao[j]
+
+    char i;
+    srand( (unsigned)time(NULL) );
+    j = 48 + rand() %10;
+    return ("%c",j);
+}
+}
+Navio setNavioInimigo(char tabuleiro[TAMANHO][TAMANHO], char nome[30],
+        char classe, int tamanho){
+    //define mapa tabuleiro inimigo - computador
+
+    Navio navio;
+    int k, sorteio1, sorteio2;
+    char i, j, i2, j2;
+    bool posicaoValidaI = false, posicaoValidaF = false;
+
+    navio.classe = classe;
+    navio.tamanho = tamanho;
+
+    for(k=0;k<strlen(nome);k++){
+        navio.nome[k]=nome[k];
+    }
+    navio.nome[k] = '\0';
+
+    while(posicaoValidaI == false)
+    {
+        int colideIE = 0, colideID = 0, colideJE = 0, colideJD = 0, w=0;
+        char posicaoI[2], c;
+        i = sorteiaI();
+        j = sorteiaJ();
+        posicaoI[0] = i;
+        posicaoI[1] = j;
+//sorteados os i e j da primeira posicao, sao feitos os testes iguais aos do SetNAvio,
+// com excecao daqueles que sao excluivamente erros de digitacao ou de entendimento do usuario
+        if(tabuleiro[i-64][j-47] != '~')
+        {
+            //sorteia novamente
+            i = sorteiaI();
+            j = sorteiaJ();
+            posicaoI[0] = i;
+            posicaoI[1] = j;
+        }
+        else
+        {
+            for (int a = 0; a < tamanho; a++)
+            {
+                if (i-64+a < TAMANHO)
+                {
+                    if (tabuleiro[i-64+a][j-47] != '~')
+                    {
+                        colideJD += 1;
+                    }
+                } 
+                else
+                {
+                    colideJD += 1;
+                }
+                if (i-64-a > 0)
+                {
+                    if (tabuleiro[i-64-a][j-47] != '~')
+                    {
+                        colideJE += 1;
+                    }
+                } 
+                else 
+                {
+                    colideJE += 1;
+                }
+            }
+            for (int b = 0; b < tamanho; b++)
+            {
+                if (j-47+b < TAMANHO)
+                {
+                    if (tabuleiro[i-64][j-47+b] != '~')
+                    {
+                        colideID += 1;
+                    }
+                } 
+                else
+                {
+                    colideID += 1;
+                }
+                if (j-47-b > 0)
+                {
+                    if (tabuleiro[i-64][j-47-b] != '~')
+                    {
+                        colideIE += 1;
+                    }
+                } 
+                else
+                {
+                    colideIE += 1;
+                }
+            }
+        }
+        if (colideIE != 0 && colideJD != 0 && colideID != 0 && colideJE != 0)
+        {
+            //sorteia novamente
+            i = sorteiaI();
+            j = sorteiaJ();
+            posicaoI[0] = i;
+            posicaoI[1] = j;
+        }
+        else
+        {
+            posicaoValidaI = true;
+        }
+        fflush(stdin);
+    }
+    
+    while(posicaoValidaF == false){
+        //sorteia posicao da popa do navio
+        i2 = sorteiaI;
+        j2 = sorteiaJ;
+        posicaoF[0] = i2;
+        posicaoF[1] = j2;
+        if(i != i2 && j != j2)
+        {
+            i2 = sorteiaI;
+            j2 = sorteiaJ;
+            posicaoF[0] = i2;
+            posicaoF[1] = j2;
+        }
+        else if(((((j2 - j) < 0) ? -1*(j2-j) : (j2-j)) > tamanho-1) || 
+                  ((((i2 - i) < 0) ? -1*(i2-i) : (i2-i)) > tamanho-1) )
+        {
+            i2 = sorteiaI;
+            j2 = sorteiaJ;
+            posicaoF[0] = i2;
+            posicaoF[1] = j2;
+        }
+        else if (i==i2)
+        {
+            if( (((j2 - j) < 0) ? -1*(j2-j) : (j2-j)) < tamanho-1)
+            {
+                i2 = sorteiaI;
+                j2 = sorteiaJ;
+                posicaoF[0] = i2;
+                posicaoF[1] = j2;
+            }
+            else
+            {
+                posicaoValidaF = true;
+            }
+        }
+        else if (j==j2)
+        {
+            if( (((i2 - i) < 0) ? -1*(i2-i) : (i2-i)) < tamanho-1)
+            {
+                i2 = sorteiaI;
+                j2 = sorteiaJ;
+                posicaoF[0] = i2;
+                posicaoF[1] = j2;
+            }
+            else
+            {
+                posicaoValidaF = true;
+            }
+        }
+        else{
+            poaicaoValidaF = true;
+        }
+        fflush(stdin);
+    }
 
 Navio setNavio(char tabuleiro[TAMANHO][TAMANHO], char nome[30],
         char classe, int tamanho){
+
+    //define mapa tabuleiro do jogador humano
+
     Navio navio;
     int k;
     char i, j, i2, j2;
