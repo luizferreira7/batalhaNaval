@@ -65,7 +65,7 @@ void preencheJogadas(char jogadasRealizadas[1000][2]){
 
 void sorteiaTitulo(char titulo[30]){
     char almirante[ ] = "Almirante";
-    char vice_almirante[ ] = "Vice-Almirante";
+    char viceAlmirante[ ] = "Vice-Almirante";
     char capitao[ ] = "Cap.";
     char tenente[ ] = "Tenente";
     int sorteio, tamanho, i;
@@ -81,9 +81,9 @@ void sorteiaTitulo(char titulo[30]){
         }
         titulo[i] = '\0';
     } else if (sorteio == 1){
-        tamanho = strlen(vice_almirante);
+        tamanho = strlen(viceAlmirante);
         for (i = 0; i < tamanho; i++){
-        titulo[i] = vice_almirante[i];
+        titulo[i] = viceAlmirante[i];
         }
         titulo[i] = '\0';
     } else if (sorteio == 2){
@@ -105,14 +105,11 @@ Jogador setJogador(int humano){
     Jogador jogador;
 
     if (humano == 1){
-        int tamanho_nome;
         jogador.humano = true;
         printf("Digite seu nome: ");
         fgets(jogador.nome, 30, stdin);
 
-        tamanho_nome = strlen(jogador.nome);
-
-        for (int i = 0; i < tamanho_nome; i++){
+        for (int i = 0; i < strlen(jogador.nome); i++){
             if (jogador.nome[i] == '\n'){
                 jogador.nome[i] = '\0';
             }
@@ -121,19 +118,17 @@ Jogador setJogador(int humano){
         jogador.pontuacao = 0;
         sorteiaTitulo(jogador.titulo);
     } else {
+        int i;
+        char nome[ ] = "Computador";
+
         jogador.humano = false;
-        char n[ ] = "Computador";
 
-        int tamanho = strlen(n), i;
-
-        for (i = 0; i < tamanho; i++){
-            jogador.nome[i] = n[i];
+        for (i = 0; i < strlen(nome); i++){
+            jogador.nome[i] = nome[i];
         }
         jogador.nome[i] = '\0';
 
-        int tamanho_nome = strlen(jogador.nome);
-
-        for (int i = 0; i < tamanho_nome; i++){
+        for (int i = 0; i < strlen(jogador.nome); i++){
             if (jogador.nome[i] == '\n'){
                 jogador.nome[i] = '\0';
             }
@@ -447,7 +442,7 @@ void realizaDisparo(char tabuleiro[TAMANHO][TAMANHO], char jogadasRealizadas[100
 
     while (jogadaValida == false){
 
-        char posicaoF[2], c;
+        char posicao[2], c;
 
         int w = 0;
 
@@ -456,12 +451,12 @@ void realizaDisparo(char tabuleiro[TAMANHO][TAMANHO], char jogadasRealizadas[100
         printf("Posicao: ");
 
         while ( (c = getchar() ) != '\n' && c != EOF){
-            posicaoF[w] = c;
+            posicao[w] = c;
             w++;
         }
 
-        i = posicaoF[0];
-        j = posicaoF[1];
+        i = posicao[0];
+        j = posicao[1];
 
         jogadaValida = verificaJogada(i, j, jogadasRealizadas);
 
