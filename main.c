@@ -10,6 +10,8 @@ typedef struct
     char nome[30];
     char titulo[20];
     int pontuacao;
+    char jogadasRealizadas[1000][2];
+    char tabuleiro[TAMANHO][TAMANHO];
 } Jogador;
 
 typedef struct
@@ -137,6 +139,10 @@ Jogador setJogador(int humano){
         sorteiaTitulo(jogador.titulo);
         jogador.pontuacao = 0;
     }
+
+    preencheJogadas(jogador.jogadasRealizadas);
+
+    preencheTabuleiro(jogador.tabuleiro);
 
     return jogador;
 }
@@ -303,10 +309,10 @@ Navio setNavio(char tabuleiro[TAMANHO][TAMANHO], char nome[30],
 
 }
 
-bool verificaJogada(char i, char j, char jogadasRealizadasJogador[1000][2]){
+bool verificaJogada(char i, char j, char jogadasRealizadas[1000][2]){
 
     for (int k = 0; k < 1000; k++){
-        if (jogadasRealizadasJogador[k][0] == i && jogadasRealizadasJogador[k][1] == j){
+        if (jogadasRealizadas[k][0] == i && jogadasRealizadas[k][1] == j){
             return false;
         }
     }
@@ -315,7 +321,7 @@ bool verificaJogada(char i, char j, char jogadasRealizadasJogador[1000][2]){
 
 }
 
-void disparo(char jogadasRealizadasJogador[1000][2], char tabuleiro[TAMANHO][TAMANHO], Jogador jogador){
+void disparo(char tabuleiro[TAMANHO][TAMANHO], char jogadasRealizadas[1000][2], int pontuacao){
 
     char i, j;
 
@@ -339,7 +345,7 @@ void disparo(char jogadasRealizadasJogador[1000][2], char tabuleiro[TAMANHO][TAM
         i = posicaoF[0];
         j = posicaoF[1];
 
-        jogadaValida = verificaJogada(i, j, jogadasRealizadasJogador);
+        jogadaValida = verificaJogada(i, j, jogadasRealizadas);
 
         if (jogadaValida == false){
             printf("\nJogada ja realizada!\n");
@@ -347,16 +353,17 @@ void disparo(char jogadasRealizadasJogador[1000][2], char tabuleiro[TAMANHO][TAM
     }
 
     for (int k = 0; k < 1000; k++){
-        if (jogadasRealizadasJogador[k][0] == 'n' && jogadasRealizadasJogador[k][1] == 'n'){
-            jogadasRealizadasJogador[k][0] = i;
-            jogadasRealizadasJogador[k][1] = j;
+        if (jogadasRealizadas[k][0] == 'n' && jogadasRealizadas[k][1] == 'n'){
+            jogadasRealizadas[k][0] = i;
+            jogadasRealizadas[k][1] = j;
+            break;
         }
     }
 
     if (tabuleiro[i-64][j-47] != '~'){
         tabuleiro[i-64][j-47] = '*';
         printf("\nAcertou!\n");
-        jogador.pontuacao += 1;
+        pontuacao += 1;
     } else {
         tabuleiro[i-64][j-47] = 'X';
         printf("\nErrou!\n");
@@ -367,14 +374,6 @@ void disparo(char jogadasRealizadasJogador[1000][2], char tabuleiro[TAMANHO][TAM
 }
 
 int main(){
-    char tabuleiroJogador[TAMANHO][TAMANHO];
-    char tabuleiroInimigo[TAMANHO][TAMANHO];
-
-    preencheTabuleiro(tabuleiroJogador);
-    preencheTabuleiro(tabuleiroInimigo);
-
-    char jogadasRealizadasJ1[1000][2];
-    preencheJogadas(jogadasRealizadasJ1);
 
     int humano = 1;
     int computador = 0;
@@ -384,21 +383,21 @@ int main(){
 
     Jogador computador1 = setJogador(computador);
 
-    imprimeTabuleiro(tabuleiroJogador);
+    imprimeTabuleiro(jogador1.tabuleiro);
 
     printf("\n\nAdversario %s %s", computador1.titulo, computador1.nome);
 
-    Navio submarinoJogador = setNavio(tabuleiroJogador, "Submarino", 'S', 2);
+    Navio submarinoJogador = setNavio(jogador1.tabuleiro, "Submarino", 'S', 2);
 
-    //Navio destroyerJogador = setNavio(tabuleiroJogador, "Destroyer", 'D', 3);
+    Navio destroyerJogador = setNavio(jogador1.tabuleiro, "Destroyer", 'D', 3);
 
-    //Navio cruzadorJogador = setNavio(tabuleiroJogador, "Cruzador", 'C', 3);
+    //Navio cruzadorJogador = setNavio(jogador1.tabuleiro, "Cruzador", 'C', 3);
 
-    //Navio portaAviaoJogador = setNavio(tabuleiroJogador, "Porta-Aviões", 'P', 4);
+    //Navio portaAviaoJogador = setNavio(jogador1.tabuleiro, "Porta-Aviões", 'P', 4);
 
-    disparo(jogadasRealizadasJ1, tabuleiroJogador, jogador1);
+    disparo(jogador1.tabuleiro, jogador1.jogadasRealizadas, jogador1.pontuacao);
 
-    disparo(jogadasRealizadasJ1, tabuleiroJogador, jogador1);
+    disparo(jogador1.tabuleiro, jogador1.jogadasRealizadas, jogador1.pontuacao);
 
     return 0;
 }
