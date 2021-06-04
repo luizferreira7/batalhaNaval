@@ -145,8 +145,23 @@ Jogador setJogador(int humano){
     return jogador;
 }
 
-void sorteiaPosicao(char *i, char *j){
-    
+char sorteiaI(void){
+    //sorteia posicao[i]
+    char i;
+
+    srand(time(NULL));
+    i = 65 + rand() % 9;
+
+    return i;
+}
+
+char sorteiaJ(void){
+    //sorteia posicao[j]
+    char j;
+
+    srand(time(NULL) + 10);
+    j = 48 + rand() % 9;
+    return j;
 }
 
 void getPosicao(bool posicaoInicial, bool humano, char i, char j, int tamanho, int tentativa, char posicao[2]){
@@ -165,17 +180,9 @@ void getPosicao(bool posicaoInicial, bool humano, char i, char j, int tamanho, i
 
     } else if (posicaoInicial == true && humano == false) {
 
-        //sorteiaPosicao(&posicao[0], &posicao[1]);
+        posicao[0] = sorteiaI();
 
-        char c;
-        int w = 0;
-
-        (posicaoInicial == true) ? printf("Primeira: ") : printf("Ultima: ");
-
-        while ( (c = getchar() ) != '\n' && c != EOF){
-            posicao[w] = c;
-            w++;
-        }
+        posicao[1] = sorteiaJ();
 
     } else if (posicaoInicial == false && humano == false){
 
@@ -406,6 +413,7 @@ Navio setNavio(Jogador *jogador, char nome[30], char classe, int tamanho){
     if ((*jogador).humano == true){ 
         imprimeTabuleiro((*jogador).tabuleiro);
     } else { 
+        imprimeTabuleiro((*jogador).tabuleiro);
         printf("\nAguardando computador...");
     }
 
