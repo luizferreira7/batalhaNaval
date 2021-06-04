@@ -304,7 +304,7 @@ Navio setNavioInimigo(char tabuleiro[TAMANHO][TAMANHO], char nome[30],
         }
         else{
             poaicaoValidaF = true;
-        }
+        }cd
         fflush(stdin);
     }
 
