@@ -20,6 +20,16 @@ typedef struct
     char posicao[5][2];
 } Navio;
 
+void imprimeTabuleiro(char tabuleiro[TAMANHO][TAMANHO]){
+
+    for(int i = 0; i < TAMANHO; i++){
+        printf("\n");
+        for(int j = 0; j < TAMANHO; j++){
+            printf(" %c ", tabuleiro[i][j]);
+        }
+    }
+}
+
 void preencheTabuleiro(char tabuleiro[TAMANHO][TAMANHO]){
     // adicionando números a linha
     char numero = 47;
@@ -192,7 +202,6 @@ Navio setNavio(char tabuleiro[TAMANHO][TAMANHO], char nome[30],
         }
 
         fflush(stdin);
-        fpurge(stdin);
     }
 
     while (posicaoValidaF == false){
@@ -225,7 +234,6 @@ Navio setNavio(char tabuleiro[TAMANHO][TAMANHO], char nome[30],
         }
 
         fflush(stdin);
-        fpurge(stdin);
     }
 
     if (i == i2){
@@ -250,22 +258,24 @@ Navio setNavio(char tabuleiro[TAMANHO][TAMANHO], char nome[30],
         }
     }
 
+    for (int l = 0; l < tamanho; l++){
+        if (i == i2){
+            navio.posicao[l][0] = i;
+            navio.posicao[l][1] = j + l;
+        } else {
+            navio.posicao[l][0] = i + l;
+            navio.posicao[l][1] = j;
+        }
+    }
+
+    imprimeTabuleiro(tabuleiro);
+
     return navio;
 
 }
 
 void acertou_ou_nao(){
     
-}
-
-void imprimeTabuleiro(char tabuleiro[TAMANHO][TAMANHO]){
-
-    for(int i = 0; i < TAMANHO; i++){
-        printf("\n");
-        for(int j = 0; j < TAMANHO; j++){
-            printf(" %c ", tabuleiro[i][j]);
-        }
-    }
 }
 
 bool verificaJogada(char i, char j){
@@ -277,8 +287,12 @@ bool verificaJogada(char i, char j){
 }
 
 int main(){
-    char tabuleiro[TAMANHO][TAMANHO];
-    preencheTabuleiro(tabuleiro);
+    char tabuleiroJogador[TAMANHO][TAMANHO];
+    char tabuleiroInimigo[TAMANHO][TAMANHO];
+
+    preencheTabuleiro(tabuleiroJogador);
+    preencheTabuleiro(tabuleiroInimigo);
+
     char jogadasRealizadasJ1[TAMANHO][TAMANHO];
 
     int humano = 1;
@@ -289,17 +303,19 @@ int main(){
 
     Jogador computador1 = setJogador(computador);
 
-    imprimeTabuleiro(tabuleiro);
+    imprimeTabuleiro(tabuleiroJogador);
 
     printf("\n\nAdversario %s %s", computador1.titulo, computador1.nome);
 
-    Navio cruzador = setNavio(tabuleiro, "Cruzador", 'C', 3);
+    Navio submarinoJogador = setNavio(tabuleiroJogador, "Submarino", 'S', 2);
 
-    Navio submarino = setNavio(tabuleiro, "Submarino", 'S', 2);
+    Navio destroyerJogador = setNavio(tabuleiroJogador, "Destroyer", 'D', 3);
 
-    Navio destroyer = setNavio(tabuleiro, "Destroyer", 'D', 5);
+    Navio cruzadorJogador = setNavio(tabuleiroJogador, "Cruzador", 'C', 3);
 
-    imprimeTabuleiro(tabuleiro);
+    Navio portaAvioJogador = setNavio(tabuleiroJogador, "Porta-Avião", 'P', 4);
+
+    imprimeTabuleiro(tabuleiroJogador);
 
     return 0;
 }
