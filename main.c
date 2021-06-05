@@ -16,6 +16,15 @@
 
     #define OS 1
     #include<windows.h>
+
+    char COLOR_PRINT(char c, int front_color,int back_color) //cor de fundo para windows
+    {
+        HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleTextAttribute(handle, BACKGROUND_INTENSITY | back_color*16 |FOREGROUND_INTENSITY | front_color);
+        printf(c);
+        SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | 7);
+        return c;
+    }
     
 
 #endif
@@ -69,15 +78,6 @@ void navio(){
     printf("\033[33m\033[44m");
 }
 
-char COLOR_PRINT(char c, int front_color,int back_color) //cor de fundo para windows
-{
- HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
- SetConsoleTextAttribute(handle, BACKGROUND_INTENSITY | back_color*16 |FOREGROUND_INTENSITY | front_color);
- printf(c);
- SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | 7);
- return c;
-}
-
 void imprimeTabuleiro(char tabuleiro[TAMANHO][TAMANHO]){
 
     for(int i = 0; i < TAMANHO; i++){
@@ -109,7 +109,7 @@ void imprimeTabuleiro(char tabuleiro[TAMANHO][TAMANHO]){
                     resetColor();
                     printf(" %c ", tabuleiro[i][j]);
                 }
-            } else {
+            } else if (OS == 1) {
                 COLOR_PRINT(tabuleiro[i][j],11,1);
 
             }
@@ -122,9 +122,9 @@ void imprimeTabuleiroOculto(char tabuleiro[TAMANHO][TAMANHO]){
         printf("\n");
         for(int j = 0; j < TAMANHO; j++){
             if(j==0){
-                continue;
+                printf(" %c ", tabuleiro[i][j]);
             }
-            else(tabuleiro[i][j]=='S' || tabuleiro[i][j]=='C'||
+            else if (tabuleiro[i][j]=='S' || tabuleiro[i][j]=='C'||
                 tabuleiro[i][j]=='D'||tabuleiro[i][j]=='P')
                 {
                     printf("~");
@@ -1190,6 +1190,7 @@ int main(){
             while (jogador1.acertouAnterior == true){
                 jogador1.jogadas += 1;
                 realizaDisparo(&jogador1, &computador, &jogo);
+                printf("\n");
             }
 
             printf("\n");
@@ -1200,6 +1201,7 @@ int main(){
             while (computador.acertouAnterior == true){
                 computador.jogadas += 1;
                 realizaDisparoIA(&computador, &jogador1, jogo.dificuldade, computador.jogadas-2);
+                printf("\n");
             }
 
             jogo.rodada += 1;
@@ -1239,6 +1241,7 @@ int main(){
             while (computador.acertouAnterior == true){
                 computador.jogadas += 1;
                 realizaDisparoIA(&computador, &computador2, jogo.dificuldade, computador.jogadas-2);
+                printf("\n");
             }
 
             printf("\n");
@@ -1249,6 +1252,7 @@ int main(){
             while (computador2.acertouAnterior == true){
                 computador2.jogadas += 1;
                 realizaDisparoIA(&computador2, &computador, jogo.dificuldade, computador2.jogadas-2);
+                printf("\n");
             }
 
             jogo.rodada += 1;
@@ -1298,6 +1302,7 @@ int main(){
             while (jogador1.acertouAnterior == true){
                 jogador1.jogadas += 1;
                 realizaDisparo(&jogador1, &jogador2, &jogo);
+                printf("\n");
             }
 
             printf("\n");
@@ -1308,6 +1313,7 @@ int main(){
             while (jogador2.acertouAnterior == true){
                 jogador2.jogadas += 1;
                 realizaDisparo(&jogador2, &jogador1, &jogo);
+                printf("\n");
             }
 
             jogo.rodada += 1;
