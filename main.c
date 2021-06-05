@@ -119,11 +119,13 @@ void imprimeTabuleiro(char tabuleiro[TAMANHO][TAMANHO]){
                 else if(tabuleiro[i][j] == '*'){
                     COLOR_PRINT(tabuleiro[i][j],4,1);
                 }
-                else if (tabuleiro[i][j] == 'S' || tabuleiro[i][j] == 'C' || tabuleiro[i][j] == 'H' || tabuleiro[i][j] == 'D' ||tabuleiro[i][j] == 'P'){
-                    COLOR_PRINT(tabuleiro[i][j],6,1);        
-                }
                 else if (j == 0){
                     printf("%c", tabuleiro[i][j]);
+                }
+                else if (tabuleiro[i][j] == 'S' || tabuleiro[i][j] == 'C' || 
+                         tabuleiro[i][j] == 'H' || tabuleiro[i][j] == 'D' || 
+                         tabuleiro[i][j] == 'P'){
+                    COLOR_PRINT(tabuleiro[i][j],6,1);        
                 }
                 else{
                     printf("%c", tabuleiro[i][j]);
@@ -552,6 +554,26 @@ Navio setNavio(Jogador *jogador, char nome[30], char classe, int tamanho, Jogo *
 
 }
 
+bool verificaSeAfundou(char navio, char tabuleiro[TAMANHO][TAMANHO]){
+
+    int contador = 0;
+
+    for (int i = 1; i < TAMANHO; i++){
+        for (int j = 1; j < TAMANHO; j++){
+            if (tabuleiro[i][j] == navio){
+                contador += 1;
+            }
+        }
+    }
+
+    if (contador <= 1){
+        return true;
+    } else {
+        return false;
+    }
+
+}
+
 bool verificaJogada(char i, char j, char jogadasRealizadas[1000][2]){
 
     for (int k = 0; k < 1000; k++){
@@ -625,10 +647,24 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
             }
 
             if ((*jogador).tabuleiro[i-64][j-47] != '~'){
+
+                printf("\nAcertou!\n");
+
+                if (verificaSeAfundou((*jogador).tabuleiro[i-64][j-47], (*jogador).tabuleiro)){
+
+                    char nomeNavio[20];
+
+                    recuperaNomeNavio((*jogador).tabuleiro[i-64][j-47], nomeNavio);
+
+                    printf("\nAfundou o %s\n", nomeNavio);
+                }
+
                 (*jogador).tabuleiro[i-64][j-47] = '*';
                 (*computador).pontuacao += 1;
+                (*computador).acertouAnterior = true;
             } else {
                 (*jogador).tabuleiro[i-64][j-47] = 'X';
+                (*computador).acertouAnterior = false;
             }
 
             imprimeTabuleiro((*jogador).tabuleiro);
@@ -688,11 +724,24 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
                 }
 
                 if ((*jogador).tabuleiro[i-64][j-47] != '~'){
+
+                    printf("\nAcertou!\n");
+
+                    if (verificaSeAfundou((*jogador).tabuleiro[i-64][j-47], (*jogador).tabuleiro)){
+
+                        char nomeNavio[20];
+
+                        recuperaNomeNavio((*jogador).tabuleiro[i-64][j-47], nomeNavio);
+
+                        printf("\nAfundou o %s\n", nomeNavio);
+                    }
+
                     (*jogador).tabuleiro[i-64][j-47] = '*';
                     (*computador).pontuacao += 1;
                     (*computador).acertouAnterior = true;
                 } else {
                     (*jogador).tabuleiro[i-64][j-47] = 'X';
+                    (*computador).acertouAnterior = false;
                 }
 
                 imprimeTabuleiro((*jogador).tabuleiro);
@@ -750,6 +799,18 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
                 }
 
                 if ((*jogador).tabuleiro[i-64][j-47] != '~'){
+
+                    printf("\nAcertou!\n");
+
+                    if (verificaSeAfundou((*jogador).tabuleiro[i-64][j-47], (*jogador).tabuleiro)){
+
+                        char nomeNavio[20];
+
+                        recuperaNomeNavio((*jogador).tabuleiro[i-64][j-47], nomeNavio);
+
+                        printf("\nAfundou o %s\n", nomeNavio);
+                    }
+
                     (*jogador).tabuleiro[i-64][j-47] = '*';
                     (*computador).pontuacao += 1;
                     (*computador).acertouAnterior = true;
@@ -817,11 +878,24 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
                 }
 
                 if ((*jogador).tabuleiro[i-64][j-47] != '~'){
+
+                    printf("\nAcertou!\n");
+
+                    if (verificaSeAfundou((*jogador).tabuleiro[i-64][j-47], (*jogador).tabuleiro)){
+
+                        char nomeNavio[20];
+
+                        recuperaNomeNavio((*jogador).tabuleiro[i-64][j-47], nomeNavio);
+
+                        printf("\nAfundou o %s\n", nomeNavio);
+                    }
+
                     (*jogador).tabuleiro[i-64][j-47] = '*';
                     (*computador).pontuacao += 1;
                     (*computador).acertouAnterior = true;
                 } else {
                     (*jogador).tabuleiro[i-64][j-47] = 'X';
+                    (*computador).acertouAnterior = false;
                 }
 
                 imprimeTabuleiro((*jogador).tabuleiro);
@@ -893,6 +967,18 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
                 }
 
                 if ((*jogador).tabuleiro[i-64][j-47] != '~'){
+
+                    printf("\nAcertou!\n");
+
+                    if (verificaSeAfundou((*jogador).tabuleiro[i-64][j-47], (*jogador).tabuleiro)){
+
+                        char nomeNavio[20];
+
+                        recuperaNomeNavio((*jogador).tabuleiro[i-64][j-47], nomeNavio);
+
+                        printf("\nAfundou o %s\n", nomeNavio);
+                    }
+
                     (*jogador).tabuleiro[i-64][j-47] = '*';
                     (*computador).pontuacao += 1;
                     (*computador).acertouAnterior = true;
@@ -955,15 +1041,63 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
             }
 
             if ((*jogador).tabuleiro[i-64][j-47] != '~'){
+
+                printf("\nAcertou!\n");
+
+                if (verificaSeAfundou((*jogador).tabuleiro[i-64][j-47], (*jogador).tabuleiro)){
+
+                    char nomeNavio[20];
+
+                    recuperaNomeNavio((*jogador).tabuleiro[i-64][j-47], nomeNavio);
+
+                    printf("\nAfundou o %s\n", nomeNavio);
+                }
+
                 (*jogador).tabuleiro[i-64][j-47] = '*';
                 (*computador).pontuacao += 1;
+                (*computador).acertouAnterior = true;
             } else {
                 (*jogador).tabuleiro[i-64][j-47] = 'X';
+                (*computador).acertouAnterior = false;
             }
 
             imprimeTabuleiro((*jogador).tabuleiro);
 
             break;
+    }
+
+}
+
+void recuperaNomeNavio(char classe, char nome[20]){
+
+    if (classe == 'S'){
+        int i;
+        char navio[ ] = {"Submarino"};
+        for(i = 0; i < strlen(navio); i++){
+            nome[i] = navio[i];
+        }
+        nome[i] = '\0';
+    } else if (classe == 'D'){
+        int i;
+        char navio[ ] = {"Destroyer"};
+        for(i = 0; i < strlen(navio); i++){
+            nome[i] = navio[i];
+        }
+        nome[i] = '\0';
+    } else if (classe == 'C'){
+        int i;
+        char navio[ ] = {"Cruzador"};
+        for(i = 0; i < strlen(navio); i++){
+            nome[i] = navio[i];
+        }
+        nome[i] = '\0';
+    } else if (classe == 'P'){
+        int i;
+        char navio[ ] = {"Porta-Aviões"};
+        for(i = 0; i < strlen(navio); i++){
+            nome[i] = navio[i];
+        }
+        nome[i] = '\0';
     }
 
 }
@@ -1014,10 +1148,22 @@ void realizaDisparo(Jogador *jogador, Jogador *jogadorAlvo, Jogo *jogo){
     }
 
     if ((*jogadorAlvo).tabuleiro[i-64][j-47] != '~'){
+
+        printf("\nAcertou!\n");
+
+        if (verificaSeAfundou((*jogadorAlvo).tabuleiro[i-64][j-47], (*jogadorAlvo).tabuleiro)){
+
+            char nomeNavio[20];
+
+            recuperaNomeNavio((*jogadorAlvo).tabuleiro[i-64][j-47], nomeNavio);
+
+            printf("Afundou o %s Inimigo!", nomeNavio);
+        }
+
         (*jogadorAlvo).tabuleiro[i-64][j-47] = '*';
         (*jogador).pontuacao += 1;
         (*jogador).acertouAnterior = true;
-        printf("\nAcertou!\n");
+
     } else {
         (*jogadorAlvo).tabuleiro[i-64][j-47] = 'X';
         (*jogador).acertouAnterior = false;
