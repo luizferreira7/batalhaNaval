@@ -330,13 +330,13 @@ bool verificaPosicao(bool posicaoInicial, char tabuleiro[TAMANHO][TAMANHO], bool
         int colideIE = 0, colideID = 0, colideJE = 0, colideJD = 0;
 
         if (i > 74 || i < 65){
-            (humano == true) ? printf("\nDigite uma posição válida!\n") : printf("");
+            if (humano == true) { printf("\nDigite uma posição válida!\n"); }
             return false;
         } else if (j > 57 || j < 48){
-            (humano == true) ? printf("\nDigite uma posição válida!\n") : printf("");
+            if (humano == true) { printf("\nDigite uma posição válida!\n"); }
             return false;
         } else if (tabuleiro[i-64][j-47] != '~'){
-            (humano == true) ? printf("\nDigite uma posição válida!\n") : printf("");
+            if (humano == true) { printf("\nDigite uma posição válida!\n"); }
             return false;
         } else {
             for (int a = 0; a < tamanho; a++){
@@ -372,7 +372,7 @@ bool verificaPosicao(bool posicaoInicial, char tabuleiro[TAMANHO][TAMANHO], bool
                 }
             }
             if (colideIE != 0 && colideJD != 0 && colideID != 0 && colideJE != 0){
-                (humano == true) ? printf("\nDigite uma posição válida!\n") : printf("");
+                if (humano == true) { printf("\nDigite uma posição válida!\n"); }
                 return false;
             } else {
                 return true;
@@ -381,31 +381,31 @@ bool verificaPosicao(bool posicaoInicial, char tabuleiro[TAMANHO][TAMANHO], bool
     } else if (posicaoInicial == false) {
 
         if (i2 > 74 || i2 < 65){
-            (humano == true) ? printf("\nDigite uma posição válida!\n") : printf("");
+            if (humano == true) { printf("\nDigite uma posição válida!\n"); }
             return false;
         } else if (j2 > 57 || j2 < 48){
-            (humano == true) ? printf("\nDigite uma posição válida!\n") : printf("");
+            if (humano == true) { printf("\nDigite uma posição válida!\n"); }
             return false;
         } else if (i != i2 && j != j2){
-            (humano == true) ? printf("\nDigite uma posição válida!\n") : printf("");
+            if (humano == true) { printf("\nDigite uma posição válida!\n"); }
             return false;
         } else if (((((j2 - j) < 0) ? -1*(j2-j) : (j2-j)) > tamanho-1) || 
                   ((((i2 - i) < 0) ? -1*(i2-i) : (i2-i)) > tamanho-1) ){
-            (humano == true) ? printf("\nDigite uma posição válida!\n") : printf("");
+            if (humano == true) { printf("\nDigite uma posição válida!\n"); }
             return false;
         } else if ( tabuleiro[i2-64][j2-47] != '~') {
-            (humano == true) ? printf("\nDigite uma posição válida!\n") : printf("");
+            if (humano == true) { printf("\nDigite uma posição válida!\n"); }
             return false;
         } else if (i==i2){
             if ( (((j2 - j) < 0) ? -1*(j2-j) : (j2-j)) < tamanho-1){
-                (humano == true) ? printf("\nDigite uma posição válida!\n") : printf("");
+                if (humano == true) { printf("\nDigite uma posição válida!\n"); }
                 return false;
             } else {
                 return true;
             }
         } else if (j==j2){
             if ( (((i2 - i) < 0) ? -1*(i2-i) : (i2-i)) < tamanho-1){
-                (humano == true) ? printf("\nDigite uma posição válida!\n") : printf("");
+                if (humano == true) { printf("\nDigite uma posição válida!\n"); }
                 return false;
             } else {
                 return true;
@@ -433,7 +433,7 @@ Navio setNavio(Jogador *jogador, char nome[30], char classe, int tamanho){
     }
     navio.nome[k] = '\0';
     printf("\n");
-    ((*jogador).humano == true) ? printf("\nDigite as posições do %s!\n", navio.nome) : printf("");
+    if ((*jogador).humano == true) { printf("\nDigite as posições do %s!\n", navio.nome); }
 
     while (posicaoValidaI == false){
 
@@ -638,21 +638,19 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
 
     bool jogadaValida = false;
 
-    unsigned long int tempoInicio, tempoTentativa;
+    unsigned long int tempo;
 
     switch (dificuldade){
 
         case 1:
-            
-            tempoInicio = time(NULL);
 
-            tempoTentativa = time(NULL);
+            tempo = 0;
 
             while (jogadaValida == false){
 
-                tempoTentativa += 1;
+                tempo += 1;
 
-                if (tempoTentativa < tempoInicio+TIMEOUT){
+                if (tempo < TIMEOUT){
 
                     i = sorteiaI();
                     j = sorteiaJ();
@@ -709,15 +707,13 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
 
             if ( (*computador).acertouAnterior == false){
 
-                tempoInicio = time(NULL);
-
-                tempoTentativa = time(NULL);
+                tempo = 0;
 
                 while (jogadaValida == false){
 
-                    tempoTentativa += 1;
+                    tempo += 1;
 
-                    if (tempoTentativa < tempoInicio+TIMEOUT){
+                    if (tempo < TIMEOUT){
 
                         i = sorteiaI();
                         j = sorteiaJ();
@@ -840,15 +836,13 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
 
             if ( (*computador).acertouAnterior == false){
 
-                tempoInicio = time(NULL);
-
-                tempoTentativa = time(NULL);
+                tempo = 0;
 
                 while (jogadaValida == false){
 
-                    tempoTentativa += 1;
+                    tempo += 1;
 
-                    if (tempoTentativa < tempoInicio+TIMEOUT){
+                    if (tempo < TIMEOUT){
 
                         i = sorteiaI();
                         j = sorteiaJ();
@@ -982,15 +976,11 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
         
         default:
 
-            tempoInicio = time(NULL);
-
-            tempoTentativa = time(NULL);
+            tempo = 0;
 
             while (jogadaValida == false){
 
-                tempoTentativa += 1;
-
-                if (tempoTentativa < tempoInicio+TIMEOUT){
+                if (tempo < TIMEOUT){
 
                     i = sorteiaI();
                     j = sorteiaJ();
@@ -1168,7 +1158,7 @@ int escolheModoJogo(){
 
     printf("\n [1] - 1 Jogador");
     printf("\n [2] - 2 Jogadores");
-    printf("\n [3] - CPU x CPUS\n");
+    printf("\n [3] - CPU x CPU\n");
 
     while (modo != 1 && modo != 2 && modo != 3){
 
