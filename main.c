@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
-#define TIMEOUT 10000
+#define TIMEOUT 10000000
 #define TAMANHO 11
 
 typedef struct
@@ -643,13 +643,13 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
 
                 }  else {
 
-                    int l = 1, m = 1;
+                    int l = 1, m;
                     bool para = false;
 
                     while (l < TAMANHO && para == false){
+                        m = 1;
                         while (m < TAMANHO && para == false){
                             if ( verificaJogada(l+64, m+47, (*computador).jogadasRealizadas) ){
-                                printf("teste");
                                 i = l + 64;
                                 j = m + 47;
                                 para = true;
@@ -708,13 +708,13 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
 
                     }  else {
 
-                        int l = 1, m = 1;
+                        int l = 1, m;
                         bool para = false;
 
                         while (l < TAMANHO && para == false){
+                            m = 1;
                             while (m < TAMANHO && para == false){
                                 if ( verificaJogada(l+64, m+47, (*computador).jogadasRealizadas) ){
-                                    printf("teste");
                                     i = l + 64;
                                     j = m + 47;
                                     para = true;
@@ -839,13 +839,13 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
 
                     }  else {
 
-                        int l = 1, m = 1;
+                        int l = 1, m;
                         bool para = false;
 
                         while (l < TAMANHO && para == false){
+                            m = 1;
                             while (m < TAMANHO && para == false){
                                 if ( verificaJogada(l+64, m+47, (*computador).jogadasRealizadas) ){
-                                    printf("teste");
                                     i = l + 64;
                                     j = m + 47;
                                     para = true;
@@ -966,10 +966,38 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
         
         default:
 
+            tempoInicio = time(NULL);
+
+            tempoTentativa = time(NULL);
+
             while (jogadaValida == false){
 
-                i = sorteiaI();
-                j = sorteiaJ();
+                tempoTentativa += 1;
+
+                if (tempoTentativa < tempoInicio+TIMEOUT){
+
+                    i = sorteiaI();
+                    j = sorteiaJ();
+
+                }  else {
+
+                    int l = 1, m;
+                    bool para = false;
+
+                    while (l < TAMANHO && para == false){
+                        m = 1;
+                        while (m < TAMANHO && para == false){
+                            if ( verificaJogada(l+64, m+47, (*computador).jogadasRealizadas) ){
+                                i = l + 64;
+                                j = m + 47;
+                                para = true;
+                            }
+                            m++;
+                        }
+                        l++;
+                    }
+
+                }
 
                 if (i > 74 || i < 65){
                     printf("");
@@ -1123,9 +1151,10 @@ int escolheModoJogo(){
     int modo = 0;
 
     printf("\n [1] - 1 Jogador");
-    printf("\n [2] - 2 Jogadores\n");
+    printf("\n [2] - 2 Jogadores");
+    printf("\n [3] - CPU x CPUS\n");
 
-    while (modo != 1 && modo != 2){
+    while (modo != 1 && modo != 2 && modo != 3){
 
         printf("\nEscolha o modo de Jogo: ");
 
@@ -1137,7 +1166,7 @@ int escolheModoJogo(){
 
         modo = (m - 48);
 
-        if (modo != 1 && modo != 2){
+        if (modo != 1 && modo != 2 && modo != 3){
             printf("\nModo Invalido!.Tente novamente.\n");
         }
 
@@ -1236,11 +1265,11 @@ int main(){
   
     Jogo jogo = setJogo();
 
-    Jogador jogador1 = setJogador(humano);
-
-    printf("\n\nJogador %s %s\n", jogador1.titulo, jogador1.nome);
-
     if (jogo.modoJogo == 1){
+
+        Jogador jogador1 = setJogador(humano);
+
+        printf("\n\nJogador %s %s\n", jogador1.titulo, jogador1.nome);
         
         Jogador computador = setJogador(comp);
 
@@ -1275,7 +1304,46 @@ int main(){
             jogo.rodada += 1;
         }
 
+    } else if (jogo.modoJogo == 3) {
+
+        Jogador computador = setJogador(comp);
+
+        printf("\n\nAdversario %s %s\n", computador.titulo, computador.nome);
+
+        Navio submarinoComputador = setNavio(&computador, "Submarino", 'S', 2);
+
+        Navio destroyerComputador = setNavio(&computador, "Destroyer", 'D', 3);
+
+        Navio cruzadorComputador = setNavio(&computador, "Cruzador", 'C', 4);
+
+        Navio portaAviaoComputador = setNavio(&computador, "Porta-Aviões", 'P', 5);
+
+        Jogador computador2 = setJogador(comp);
+
+        printf("\n\nAdversario %s %s\n", computador2.titulo, computador2.nome);
+
+        Navio submarinoComputador2 = setNavio(&computador2, "Submarino", 'S', 2);
+
+        Navio destroyerComputador2 = setNavio(&computador2, "Destroyer", 'D', 3);
+
+        Navio cruzadorComputador2 = setNavio(&computador2, "Cruzador", 'C', 4);
+
+        Navio portaAviaoComputador2 = setNavio(&computador2, "Porta-Aviões", 'P', 5);
+
+        while (jogo.rodada != 50){
+
+            realizaDisparoIA(&computador, &computador2, jogo.dificuldade, jogo.rodada-2);
+
+            realizaDisparoIA(&computador2, &computador, jogo.dificuldade, jogo.rodada-2);
+
+            jogo.rodada += 1;
+        }
+
     } else {
+
+        Jogador jogador1 = setJogador(humano);
+
+        printf("\n\nJogador %s %s\n", jogador1.titulo, jogador1.nome);
 
         imprimeInventario();
         imprimeTabuleiroAgua(jogador1.tabuleiro);
