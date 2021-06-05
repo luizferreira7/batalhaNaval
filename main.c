@@ -858,7 +858,7 @@ int escolheModoJogo(){
         modo = (m - 48);
 
         if (modo != 1 && modo != 2){
-            printf("\nModo Invalido!\n");
+            printf("\nModo Invalido!.Tente novamente.\n");
         }
 
     }
@@ -897,7 +897,6 @@ int escolheDificuldade(){
 
 }
 
-} 
 
 Jogo setJogo(){
 
@@ -926,9 +925,8 @@ int main(){
     int i, j;
 
     Jogo jogo = setJogo();
-
-    Jogador jogador1 = setJogador(humano);
-    
+    printf("\n");
+    printf("\n***************** INVENTARIO *****************\n");
     for (i=0; i<3; i++) {
 		printf("%s\t",I_head[i]);
     }
@@ -954,6 +952,10 @@ int main(){
             printf("%s\t",I[j][i]);
         }
     }
+    printf("\n***************** ********** *****************\n");
+
+    Jogador jogador1 = setJogador(humano);
+    
 
     printf("\n\nJogador %s %s\n", jogador1.titulo, jogador1.nome);
 
