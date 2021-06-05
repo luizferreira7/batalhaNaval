@@ -15,6 +15,8 @@
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32)
 
     #define OS 1
+    #include<windows.h>
+    
 
 #endif
 
@@ -67,6 +69,15 @@ void navio(){
     printf("\033[33m\033[44m");
 }
 
+char COLOR_PRINT(char c, int front_color,int back_color) //cor de fundo para windows
+{
+ HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+ SetConsoleTextAttribute(handle, BACKGROUND_INTENSITY | back_color*16 |FOREGROUND_INTENSITY | front_color);
+ printf(c);
+ SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | 7);
+ return c;
+}
+
 void imprimeTabuleiro(char tabuleiro[TAMANHO][TAMANHO]){
 
     for(int i = 0; i < TAMANHO; i++){
@@ -99,7 +110,8 @@ void imprimeTabuleiro(char tabuleiro[TAMANHO][TAMANHO]){
                     printf(" %c ", tabuleiro[i][j]);
                 }
             } else {
-                printf(" %c ", tabuleiro[i][j]);
+                COLOR_PRINT(tabuleiro[i][j],11,1);
+
             }
         }
     }
@@ -109,7 +121,10 @@ void imprimeTabuleiroOculto(char tabuleiro[TAMANHO][TAMANHO]){
     for(int i = 0; i < TAMANHO; i++){
         printf("\n");
         for(int j = 0; j < TAMANHO; j++){
-            if(tabuleiro[i][j]=='S' || tabuleiro[i][j]=='C'||
+            if(j==0){
+                continue;
+            }
+            else(tabuleiro[i][j]=='S' || tabuleiro[i][j]=='C'||
                 tabuleiro[i][j]=='D'||tabuleiro[i][j]=='P')
                 {
                     printf("~");
