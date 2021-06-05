@@ -5,6 +5,7 @@
 #include <time.h>
 #define TIMEOUT 10000000
 #define TAMANHO 11
+#define PONTUACAO_MAX 14
 
 #if defined(__linux__) || defined(__APPLE__)
 
@@ -1182,7 +1183,7 @@ int main(){
 
         Navio portaAviaoJogador = setNavio(&jogador1, "Porta-Aviões", 'P', 5, &jogo);
 
-        while (jogo.rodada != 50){
+        while ((jogador1.pontuacao && computador.pontuacao) != PONTUACAO_MAX){
 
             jogador1.jogadas += 1;
             realizaDisparo(&jogador1, &computador, &jogo);
@@ -1203,8 +1204,13 @@ int main(){
                 realizaDisparoIA(&computador, &jogador1, jogo.dificuldade, computador.jogadas-2);
                 printf("\n");
             }
-
-            jogo.rodada += 1;
+            if (jogador1.pontuacao == PONTUACAO_MAX){
+                printf("\nVENCEDOR PLAYER: %s\n", jogador1.nome);
+                return 0;
+            } else if (computador.pontuacao == PONTUACAO_MAX){
+                printf("\nVENCEDOR: CPU\n");
+                return 0;
+            }
         }
 
     } else if (jogo.modoJogo == 3) {
@@ -1233,7 +1239,7 @@ int main(){
 
         Navio portaAviaoComputador2 = setNavio(&computador2, "Porta-Aviões", 'P', 5, &jogo);
 
-        while (jogo.rodada != 50){
+        while ((computador.pontuacao && computador2.pontuacao) != PONTUACAO_MAX){
 
             computador.jogadas += 1;
                 realizaDisparoIA(&computador, &computador2, jogo.dificuldade, computador.jogadas-2);
@@ -1254,8 +1260,14 @@ int main(){
                 realizaDisparoIA(&computador2, &computador, jogo.dificuldade, computador2.jogadas-2);
                 printf("\n");
             }
+            if (computador.pontuacao == PONTUACAO_MAX){
+                printf("\n VENCEDOR: CPU1 \n");
+                return 0;
+            } else if (computador2.pontuacao == PONTUACAO_MAX){
+                printf("\n VENCEDOR: CPU2 \n");
+                return 0;
+            }
 
-            jogo.rodada += 1;
         }
 
     } else {
@@ -1294,7 +1306,7 @@ int main(){
 
         Navio portaAviaoJogador2 = setNavio(&jogador2, "Porta-Aviões", 'P', 5, &jogo);
 
-        while (jogo.rodada != 50){
+        while ((jogador1.pontuacao && jogador2.pontuacao) != PONTUACAO_MAX){
 
             jogador1.jogadas += 1;
                 realizaDisparo(&jogador1, &jogador2, &jogo);
@@ -1315,8 +1327,14 @@ int main(){
                 realizaDisparo(&jogador2, &jogador1, &jogo);
                 printf("\n");
             }
+            if (jogador1.pontuacao == PONTUACAO_MAX){
+                printf("\n VENCEDOR PLAYER: %s \n", jogador1.nome);
+                return 0;
+            } else if (jogador2.pontuacao == PONTUACAO_MAX){
+                printf("\n VENCEDOR PLAYER: %s \n", jogador2.nome);
+                return 0;
+            }
 
-            jogo.rodada += 1;
         }
 
     }
