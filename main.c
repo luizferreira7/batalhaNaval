@@ -806,8 +806,8 @@ int escolheModoJogo(){
 
     int modo = 0;
 
-    printf("\n 1 - 1 Jogador");
-    printf("\n 2 - 2 Jogadores");
+    printf("\n [1] - 1 Jogador");
+    printf("\n [2] - 2 Jogadores\n");
 
     while (modo != 1 && modo != 2){
 
@@ -835,9 +835,9 @@ int escolheDificuldade(){
 
     int dificuldade = 0;
 
-    printf("\n 1 - Facil");
-    printf("\n 2 - Normal");
-    printf("\n 3 - Dificil\n");
+    printf("\n [1] - Facil");
+    printf("\n [2] - Normal");
+    printf("\n [3] - Dificil\n");
 
     while (dificuldade != 1 && dificuldade != 2 && dificuldade != 3){
 
@@ -865,6 +865,8 @@ Jogo setJogo(){
 
     Jogo jogo;
 
+    printf("\nBem-vindo ao Batalha Naval!\n");
+
     jogo.rodada = 1;
     jogo.dificuldade = escolheDificuldade();
     jogo.modoJogo = escolheModoJogo();
@@ -876,42 +878,73 @@ Jogo setJogo(){
 int main(){
 
     int humano = 1;
-    int computador = 0;
+    int comp = 0;
 
     Jogo jogo = setJogo();
 
     Jogador jogador1 = setJogador(humano);
-    printf("\nBem-vindo(a)! %s %s ao Batalha Naval!\n", jogador1.titulo, jogador1.nome);
 
-    Jogador computador1 = setJogador(computador);
+    printf("\n\nJogador %s %s\n", jogador1.titulo, jogador1.nome);
 
-    printf("\n\nAdversario %s %s", computador1.titulo, computador1.nome);
 
-    Navio submarinoComputador = setNavio(&computador1, "Submarino", 'S', 2);
+    if (jogo.modoJogo == 1){
 
-    Navio destroyerComputador = setNavio(&computador1, "Destroyer", 'D', 3);
+        Jogador computador = setJogador(comp);
 
-    Navio cruzadorComputador = setNavio(&computador1, "Cruzador", 'C', 4);
+        printf("\n\nAdversario %s %s\n", computador.titulo, computador.nome);
 
-    Navio portaAviaoComputador = setNavio(&computador1, "Porta-Aviões", 'P', 5);
+        Navio submarinoComputador = setNavio(&computador, "Submarino", 'S', 2);
 
-    imprimeTabuleiro(jogador1.tabuleiro);
+        Navio destroyerComputador = setNavio(&computador, "Destroyer", 'D', 3);
 
-    Navio submarinoJogador = setNavio(&jogador1, "Submarino", 'S', 2);
+        Navio cruzadorComputador = setNavio(&computador, "Cruzador", 'C', 4);
 
-    Navio destroyerJogador = setNavio(&jogador1, "Destroyer", 'D', 3);
+        Navio portaAviaoComputador = setNavio(&computador, "Porta-Aviões", 'P', 5);
 
-    Navio cruzadorJogador = setNavio(&jogador1, "Cruzador", 'C', 4);
+        imprimeTabuleiro(jogador1.tabuleiro);
 
-    Navio portaAviaoJogador = setNavio(&jogador1, "Porta-Aviões", 'P', 5);
+        Navio submarinoJogador = setNavio(&jogador1, "Submarino", 'S', 2);
 
-    while (jogo.rodada != 50){
+        Navio destroyerJogador = setNavio(&jogador1, "Destroyer", 'D', 3);
 
-        realizaDisparo(&jogador1, &computador1);
+        Navio cruzadorJogador = setNavio(&jogador1, "Cruzador", 'C', 4);
 
-        realizaDisparoIA(&computador1, &jogador1, jogo.dificuldade, jogo.rodada-2);
+        Navio portaAviaoJogador = setNavio(&jogador1, "Porta-Aviões", 'P', 5);
 
-        jogo.rodada += 1;
+        while (jogo.rodada != 50){
+
+            realizaDisparo(&jogador1, &computador);
+
+            realizaDisparoIA(&computador, &jogador1, jogo.dificuldade, jogo.rodada-2);
+
+            jogo.rodada += 1;
+        }
+
+    } else {
+
+        Jogador jogador2 = setJogador(humano);
+
+        printf("\n\nAdversario %s %s\n", jogador2.titulo, jogador2.nome);
+
+        Navio submarinoJogador2 = setNavio(&jogador2, "Submarino", 'S', 2);
+
+        Navio destroyerJogador2 = setNavio(&jogador2, "Destroyer", 'D', 3);
+
+        Navio cruzadorJogador2= setNavio(&jogador2, "Cruzador", 'C', 4);
+
+        Navio portaAviaoJogador2 = setNavio(&jogador2, "Porta-Aviões", 'P', 5);
+
+        imprimeTabuleiro(jogador2.tabuleiro);
+
+        while (jogo.rodada != 50){
+
+            realizaDisparo(&jogador1, &jogador2);
+
+            realizaDisparo(&jogador2, &jogador1);
+
+            jogo.rodada += 1;
+        }
+
     }
 
     return 0;
