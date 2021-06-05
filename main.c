@@ -376,7 +376,7 @@ Navio setNavio(Jogador *jogador, char nome[30], char classe, int tamanho){
         navio.nome[k] = nome[k];
     }
     navio.nome[k] = '\0';
-
+    printf("\n");
     ((*jogador).humano == true) ? printf("\nDigite as posições do %s!\n", navio.nome) : printf("");
 
     while (posicaoValidaI == false){
@@ -896,7 +896,41 @@ int escolheDificuldade(){
     return dificuldade;
 
 }
+void imprimeInventario(){
 
+    char I_head[4][15] = {"Seq","Nome","visual","Tamanho"};
+    char I_navio1[4][15] = {"1","Sub","SS","2"};
+    char I_navio2[4][15] = {"2","P.Aviao","PPPPP","5"};
+    char I_navio3[4][15] = {"3","Cruz","CCC","3"};
+    char I_navio4[4][15] = {"4","Dest","DDDD","4"};
+    char *I[5]; I[0]=I_head;I[1]=I_navio1;I[2]=I_navio2;I[3]=I_navio3;I[4]=I_navio4;
+    int i, j;
+
+    printf("\n");
+    printf("\n***************** INVENTARIO *****************\n");
+    for (i=0; i<4; i++) {
+    printf("%s\t",I_head[i]);
+    }
+    printf("\n");
+    for (i=0; i<4; i++) {    
+        printf("%s\t",I_navio1[i]);
+ }
+    printf("\n");
+    for (i=0; i<4; i++) {    
+        printf("%s\t",I_navio2[i]);
+ }
+    printf("\n");
+    for (i=0; i<4; i++) {    
+        printf("%s\t",I_navio3[i]);
+ }
+    printf("\n");
+    for (i=0; i<4; i++) {    
+        printf("%s\t",I_navio4[i]);
+    }
+    printf("\n");
+    printf("\n***************** *********** *****************\n");
+
+}
 
 Jogo setJogo(){
 
@@ -925,34 +959,6 @@ int main(){
     int i, j;
 
     Jogo jogo = setJogo();
-    printf("\n");
-    printf("\n***************** INVENTARIO *****************\n");
-    for (i=0; i<3; i++) {
-		printf("%s\t",I_head[i]);
-    }
-    printf("\n");
-    for (i=0; i<3; i++) {    
-        printf("%s\t",I_navio1[i]);
-	}
-    printf("\n");
-    for (i=0; i<3; i++) {    
-        printf("%s\t",I_navio2[i]);
-	}
-    printf("\n");
-    for (i=0; i<3; i++) {    
-        printf("%s\t",I_navio3[i]);
-	}
-    printf("\n");
-    for (i=0; i<3; i++) {    
-        printf("%s\t",I_navio4[i]);
-    }
-    printf("\n");
-    for (i=0; i<3; i++) {    
-        for(j=0;j<5;j++){
-            printf("%s\t",I[j][i]);
-        }
-    }
-    printf("\n***************** ********** *****************\n");
 
     Jogador jogador1 = setJogador(humano);
     
@@ -967,8 +973,6 @@ int main(){
 
         printf("\n\nAdversario %s %s\n", computador.titulo, computador.nome);
 
-        
-
         Navio submarinoComputador = setNavio(&computador, "Submarino", 'S', 2);
 
         Navio destroyerComputador = setNavio(&computador, "Destroyer", 'D', 3);
@@ -976,6 +980,8 @@ int main(){
         Navio cruzadorComputador = setNavio(&computador, "Cruzador", 'C', 4);
 
         Navio portaAviaoComputador = setNavio(&computador, "Porta-Aviões", 'P', 5);
+
+        imprimeInventario();
 
         imprimeTabuleiro(jogador1.tabuleiro);
 
@@ -998,13 +1004,13 @@ int main(){
 
     } else {
 
-        printf("Agora, ao oponente!");
+        printf("Agora, ao oponente! ");
 
         Jogador jogador2 = setJogador(humano);
 
         printf("\n\nAdversario %s %s\n", jogador2.titulo, jogador2.nome);
 
-        inventario();
+        imprimeInventario();
 
         Navio submarinoJogador2 = setNavio(&jogador2, "Submarino", 'S', 2);
 
