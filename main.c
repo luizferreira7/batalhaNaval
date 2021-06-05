@@ -9,6 +9,7 @@ typedef struct
 {
     int rodada;
     int dificuldade;
+    int modoJogo;
 } Jogo;
 
 
@@ -801,6 +802,35 @@ void realizaDisparo(Jogador *jogador, Jogador *jogadorAlvo){
 
 }
 
+int escolheModoJogo(){
+
+    int modo = 0;
+
+    printf("\n 1 - 1 Jogador");
+    printf("\n 2 - 2 Jogadores");
+
+    while (modo != 1 && modo != 2){
+
+        printf("\nEscolha o modo de Jogo: ");
+
+        char m, c;
+
+        while ( (c = getchar() ) != '\n' && c != EOF){
+            m = c;
+        }
+
+        modo = (m - 48);
+
+        if (modo != 1 && modo != 2){
+            printf("\nModo Invalido!\n");
+        }
+
+    }
+
+    return modo;
+
+}
+
 int escolheDificuldade(){
 
     int dificuldade = 0;
@@ -837,13 +867,14 @@ Jogo setJogo(){
 
     jogo.rodada = 1;
     jogo.dificuldade = escolheDificuldade();
+    jogo.modoJogo = escolheModoJogo();
 
     return jogo;
 
 }
 
 int main(){
-    
+
     int humano = 1;
     int computador = 0;
 
