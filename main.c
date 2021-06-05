@@ -55,6 +55,19 @@ void imprimeTabuleiro(char tabuleiro[TAMANHO][TAMANHO]){
     }
 }
 
+void imprimeTabuleiroOculto(char tabuleiro[TAMANHO][TAMANHO]){
+    for(int i = 0; i < TAMANHO; i++){
+        printf("\n");
+        for(int j = 0; j < TAMANHO; j++){
+            if(tabuleiro[i][j]=='S' || tabuleiro[i][j]=='C'||
+                tabuleiro[i][j]=='D'||tabuleiro[i][j]=='P'){
+                    printf("~");
+                }
+            printf(" %c ", tabuleiro[i][j]);
+        }
+    }
+}
+
 void preencheTabuleiro(char tabuleiro[TAMANHO][TAMANHO]){
     // adicionando números a linha
     char numero = 47;
@@ -74,6 +87,11 @@ void preencheTabuleiro(char tabuleiro[TAMANHO][TAMANHO]){
             tabuleiro[i][j] = '~';
         } 
     }
+}
+
+char imprimeTabuleiroAgua(char tabuleiro[TAMANHO][TAMANHO]){
+    preencheTabuleiro(char tabuleiro[TAMANHO][TAMANHO]);
+    return tabuleiro;
 }
 
 void preencheJogadas(char jogadasRealizadas[1000][2]){
@@ -445,6 +463,103 @@ Navio setNavio(Jogador *jogador, char nome[30], char classe, int tamanho){
 
 }
 
+Navio setNavioJogo2(Jogador *jogador, char nome[30], char classe, int tamanho){
+    
+    Navio navio;
+    int k;
+    char i, j, i2 = '\0', j2 = '\0';
+    bool posicaoValidaI = false, posicaoValidaF = false;
+
+    navio.classe = classe;
+    navio.tamanho = tamanho;
+
+    for (k = 0; k < strlen(nome); k++){
+        navio.nome[k] = nome[k];
+    }
+    navio.nome[k] = '\0';
+    printf("\n");
+    printf("\nDigite as posições do %s!\n", navio.nome);
+    while (posicaoValidaI == false){
+
+        char posicao[2];
+
+        getPosicao(true, (*jogador).humano, i, j, tamanho, 0, posicao);
+
+        i = posicao[0];
+        j = posicao[1];
+        
+        posicaoValidaI = verificaPosicao(true, (*jogador).tabuleiro, (*jogador).humano, tamanho, i, j, i2, j2);
+
+    }
+
+    while (posicaoValidaF == false){
+
+        if ((*jogador).humano == true){
+
+            char posicao[2];
+
+            getPosicao(false, (*jogador).humano, i, j, tamanho, 0, posicao);
+
+            i2 = posicao[0];
+            j2 = posicao[1];
+
+            posicaoValidaF = verificaPosicao(false, (*jogador).tabuleiro, (*jogador).humano, tamanho, i, j, i2, j2);
+        
+        } else {
+
+            for (int l = 0; l < 4; l++){
+                char posicao[2];
+
+                getPosicao(false, (*jogador).humano, i, j, tamanho, l, posicao);
+
+                posicaoValidaF = verificaPosicao(false, (*jogador).tabuleiro, (*jogador).humano, tamanho, 
+                                                    i, j, posicao[0], posicao[1]);
+
+                if (posicaoValidaF == true){
+                    i2 = posicao[0];
+                    j2 = posicao[1];
+                    break;
+                }
+            }
+        }
+
+    }
+
+    if (i == i2){
+        if (j2 > j){
+            for (int l = 0; l < tamanho; l++){
+                (*jogador).tabuleiro[i-64][j-47+l] = navio.classe;
+            }
+        } else {
+            for (int l = 0; l < tamanho; l++){
+                (*jogador).tabuleiro[i-64][j-47-l] = navio.classe;
+            }
+        }
+    } else {
+        if (i2 > i){
+            for (int l = 0; l < tamanho; l++){
+                (*jogador).tabuleiro[i-64+l][j-47] = navio.classe;
+            }
+        } else {
+            for (int l = 0; l < tamanho; l++){
+                (*jogador).tabuleiro[i-64-l][j-47] = navio.classe;
+            }
+        }
+    }
+
+    for (int l = 0; l < tamanho; l++){
+        if (i == i2){
+            navio.posicao[l][0] = i;
+            navio.posicao[l][1] = j + l;
+        } else {
+            navio.posicao[l][0] = i + l;
+            navio.posicao[l][1] = j;
+        }
+    }
+
+}
+
+
 bool verificaJogada(char i, char j, char jogadasRealizadas[1000][2]){
 
     for (int k = 0; k < 1000; k++){
@@ -813,6 +928,64 @@ void realizaDisparo(Jogador *jogador, Jogador *jogadorAlvo){
 
 }
 
+void realizaDisparoJogo2(Jogador *jogador, Jogador *jogadorAlvo){
+
+    char i, j;
+
+    bool jogadaValida = false;
+
+    while (jogadaValida == false){
+
+        char posicao[2], c;
+
+        int w = 0;
+
+        printf("\n %s %s, digite a posicao para disparo contra %s %s!\n",jogador.titulo, jogador1.nome, jogadorAlvo.titulo, jogadorAlvo.nome);
+
+        printf("Posicao: ");
+
+        while ( (c = getchar() ) != '\n' && c != EOF){
+            posicao[w] = c;
+            w++;
+        }
+
+        i = posicao[0];
+        j = posicao[1];
+
+        if (i > 74 || i < 65){
+            printf("\nDigite uma posição válida!\n");
+        } else if (j > 57 || j < 48){
+            printf("\nDigite uma posição válida!\n");
+        } else {
+            jogadaValida = verificaJogada(i, j, (*jogador).jogadasRealizadas);
+
+            if (jogadaValida == false){
+                printf("\nJogada ja realizada!\n");
+            }
+        }
+    }
+
+    for (int k = 0; k < 1000; k++){
+        if ((*jogador).jogadasRealizadas[k][0] == 'n' && (*jogador).jogadasRealizadas[k][1] == 'n'){
+            (*jogador).jogadasRealizadas[k][0] = i;
+            (*jogador).jogadasRealizadas[k][1] = j;
+            break;
+        }
+    }
+
+    if ((*jogadorAlvo).tabuleiro[i-64][j-47] != '~'){
+        (*jogadorAlvo).tabuleiro[i-64][j-47] = '*';
+        printf("\nAcertou!\n");
+        (*jogador).pontuacao += 1;
+    } else {
+        (*jogadorAlvo).tabuleiro[i-64][j-47] = 'X';
+        printf("\nErrou!\n");
+    }
+
+    imprimeTabuleiroOculto((*jogadorAlvo).tabuleiro);
+
+}
+
 int escolheModoJogo(){
 
     int modo = 0;
@@ -970,16 +1143,15 @@ int main(){
     } else {
 
         imprimeInventario();
+        imprimeTabuleiroAgua(jogador1.tabuleiro);
+        
+        Navio submarinoJogador = setNavioJogo2(&jogador1, "Submarino", 'S', 2);
 
-        imprimeTabuleiro(jogador1.tabuleiro);
+        Navio destroyerJogador = setNavioJogo2&jogador1, "Destroyer", 'D', 3);
 
-        Navio submarinoJogador = setNavio(&jogador1, "Submarino", 'S', 2);
+        Navio cruzadorJogador = setNavioJogo2(&jogador1, "Cruzador", 'C', 4);
 
-        Navio destroyerJogador = setNavio(&jogador1, "Destroyer", 'D', 3);
-
-        Navio cruzadorJogador = setNavio(&jogador1, "Cruzador", 'C', 4);
-
-        Navio portaAviaoJogador = setNavio(&jogador1, "Porta-Aviões", 'P', 5);
+        Navio portaAviaoJogador = setNavioJogo2(&jogador1, "Porta-Aviões", 'P', 5);
 
         printf("\nAgora, ao oponente!\n");
 
@@ -988,22 +1160,20 @@ int main(){
         printf("\n\nAdversario %s %s\n", jogador2.titulo, jogador2.nome);
 
         imprimeInventario();
+         imprimeTabuleiroAgua(jogador1.tabuleiro); //nao importa qual eh
+        Navio submarinoJogador2 = setNavioJogo2(&jogador2, "Submarino", 'S', 2);
 
-        Navio submarinoJogador2 = setNavio(&jogador2, "Submarino", 'S', 2);
+        Navio destroyerJogador2 = setNavioJogo2(&jogador2, "Destroyer", 'D', 3);
 
-        Navio destroyerJogador2 = setNavio(&jogador2, "Destroyer", 'D', 3);
+        Navio cruzadorJogador2= setNavioJogo2(&jogador2, "Cruzador", 'C', 4);
 
-        Navio cruzadorJogador2= setNavio(&jogador2, "Cruzador", 'C', 4);
-
-        Navio portaAviaoJogador2 = setNavio(&jogador2, "Porta-Aviões", 'P', 5);
-
-        imprimeTabuleiro(jogador2.tabuleiro);
+        Navio portaAviaoJogador2 = setNavioJogo2(&jogador2, "Porta-Aviões", 'P', 5);
 
         while (jogo.rodada != 50){
 
-            realizaDisparo(&jogador1, &jogador2);
+            realizaDisparoJogo2(&jogador1, &jogador2);
 
-            realizaDisparo(&jogador2, &jogador1);
+            realizaDisparoJogo2(&jogador2, &jogador1);
 
             jogo.rodada += 1;
         }
