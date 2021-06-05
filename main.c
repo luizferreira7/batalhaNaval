@@ -7,12 +7,20 @@
 
 typedef struct
 {
+    int rodada;
+    int dificuldade;
+} Jogo;
+
+
+typedef struct
+{
     bool humano;
     char nome[30];
     char titulo[20];
     int pontuacao;
     char jogadasRealizadas[1000][2];
     char tabuleiro[TAMANHO][TAMANHO];
+    bool acertouAnterior;
 } Jogador;
 
 typedef struct
@@ -117,6 +125,7 @@ Jogador setJogador(int humano){
 
         jogador.pontuacao = 0;
         sorteiaTitulo(jogador.titulo);
+        jogador.acertouAnterior = false;
     } else {
         int i;
         char nome[ ] = "Computador";
@@ -136,6 +145,7 @@ Jogador setJogador(int humano){
 
         sorteiaTitulo(jogador.titulo);
         jogador.pontuacao = 0;
+        jogador.acertouAnterior = false;
     }
 
     preencheJogadas(jogador.jogadasRealizadas);
@@ -150,7 +160,7 @@ char sorteiaI(void){
     char i;
 
     srand(time(NULL));
-    i = 65 + rand() % 9;
+    i = 65 + rand() % 10;
 
     return i;
 }
@@ -160,7 +170,7 @@ char sorteiaJ(void){
     char j;
 
     srand(time(NULL) + 10);
-    j = 48 + rand() % 9;
+    j = 48 + rand() % 10;
     return j;
 }
 
@@ -413,7 +423,6 @@ Navio setNavio(Jogador *jogador, char nome[30], char classe, int tamanho){
     if ((*jogador).humano == true){ 
         imprimeTabuleiro((*jogador).tabuleiro);
     } else { 
-        imprimeTabuleiro((*jogador).tabuleiro);
         printf("\nAguardando computador...");
     }
 
@@ -433,7 +442,308 @@ bool verificaJogada(char i, char j, char jogadasRealizadas[1000][2]){
 
 }
 
-void realizaDisparo(Jogador *jogador){
+void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, int rodada){
+
+    char i, j;
+
+    bool jogadaValida = false;
+
+    switch (dificuldade){
+
+        case 1:
+
+            while (jogadaValida == false){
+
+                i = sorteiaI();
+                j = sorteiaJ();
+
+                if (i > 74 || i < 65){
+                    printf("");
+                } else if (j > 57 || j < 48){
+                    printf("");
+                } else {
+                    jogadaValida = verificaJogada(i, j, (*computador).jogadasRealizadas);
+                }
+            }
+
+            for (int k = 0; k < 1000; k++){
+                if ((*computador).jogadasRealizadas[k][0] == 'n' && (*computador).jogadasRealizadas[k][1] == 'n'){
+                    (*computador).jogadasRealizadas[k][0] = i;
+                    (*computador).jogadasRealizadas[k][1] = j;
+                    break;
+                }
+            }
+
+            if ((*jogador).tabuleiro[i-64][j-47] != '~'){
+                (*jogador).tabuleiro[i-64][j-47] = '*';
+                (*computador).pontuacao += 1;
+            } else {
+                (*jogador).tabuleiro[i-64][j-47] = 'X';
+            }
+
+            imprimeTabuleiro((*jogador).tabuleiro);
+
+            break;
+
+        case 2:
+
+            if ( (*computador).acertouAnterior == false){
+
+                while (jogadaValida == false){
+
+                    i = sorteiaI();
+                    j = sorteiaJ();
+
+                    if (i > 74 || i < 65){
+                        printf("");
+                    } else if (j > 57 || j < 48){
+                        printf("");
+                    } else {
+                        jogadaValida = verificaJogada(i, j, (*computador).jogadasRealizadas);
+                    }
+                }
+
+                for (int k = 0; k < 1000; k++){
+                    if ((*computador).jogadasRealizadas[k][0] == 'n' && (*computador).jogadasRealizadas[k][1] == 'n'){
+                        (*computador).jogadasRealizadas[k][0] = i;
+                        (*computador).jogadasRealizadas[k][1] = j;
+                        break;
+                    }
+                }
+
+                if ((*jogador).tabuleiro[i-64][j-47] != '~'){
+                    (*jogador).tabuleiro[i-64][j-47] = '*';
+                    (*computador).pontuacao += 1;
+                    (*computador).acertouAnterior = true;
+                } else {
+                    (*jogador).tabuleiro[i-64][j-47] = 'X';
+                }
+
+                imprimeTabuleiro((*jogador).tabuleiro);
+
+            } else {
+
+                while (jogadaValida == false){
+
+                    srand(time(NULL));
+                    int sorteio = rand()%4;
+
+                    printf("\n%d\n", sorteio);
+
+                    switch (sorteio){
+                        case 0:
+                            i = (*computador).jogadasRealizadas[rodada][0]+1;
+                            j = (*computador).jogadasRealizadas[rodada][1];
+                            break;
+
+                        case 1:
+                            i = (*computador).jogadasRealizadas[rodada][0];
+                            j = (*computador).jogadasRealizadas[rodada][1]+1;
+                            break;
+
+                        case 2:
+                            i = (*computador).jogadasRealizadas[rodada][0]-1;
+                            j = (*computador).jogadasRealizadas[rodada][1];
+                            break;
+
+                        case 3:
+                            i = (*computador).jogadasRealizadas[rodada][0];
+                            j = (*computador).jogadasRealizadas[rodada][1]-1;
+                            break;
+                        
+                        default:
+                            i = (*computador).jogadasRealizadas[rodada][0]+1;
+                            j = (*computador).jogadasRealizadas[rodada][1];
+                            break;
+                    }
+
+                    if (i > 74 || i < 65){
+                        printf("");
+                    } else if (j > 57 || j < 48){
+                        printf("");
+                    } else {
+                        jogadaValida = verificaJogada(i, j, (*computador).jogadasRealizadas);
+                    }
+                }
+
+                for (int k = 0; k < 1000; k++){
+                    if ((*computador).jogadasRealizadas[k][0] == 'n' && (*computador).jogadasRealizadas[k][1] == 'n'){
+                        (*computador).jogadasRealizadas[k][0] = i;
+                        (*computador).jogadasRealizadas[k][1] = j;
+                        break;
+                    }
+                }
+
+                if ((*jogador).tabuleiro[i-64][j-47] != '~'){
+                    (*jogador).tabuleiro[i-64][j-47] = '*';
+                    (*computador).pontuacao += 1;
+                    (*computador).acertouAnterior = true;
+                } else {
+                    (*jogador).tabuleiro[i-64][j-47] = 'X';
+                    (*computador).acertouAnterior = false;
+                }
+
+                imprimeTabuleiro((*jogador).tabuleiro);
+
+            }
+
+            break;
+
+        case 3:
+
+                if ( (*computador).acertouAnterior == false){
+
+                    while (jogadaValida == false){
+
+                        i = sorteiaI();
+                        j = sorteiaJ();
+
+                        if (i > 74 || i < 65){
+                            printf("");
+                        } else if (j > 57 || j < 48){
+                            printf("");
+                        } else {
+                            jogadaValida = verificaJogada(i, j, (*computador).jogadasRealizadas);
+                        }
+                    }
+
+                    for (int k = 0; k < 1000; k++){
+                        if ((*computador).jogadasRealizadas[k][0] == 'n' && (*computador).jogadasRealizadas[k][1] == 'n'){
+                            (*computador).jogadasRealizadas[k][0] = i;
+                            (*computador).jogadasRealizadas[k][1] = j;
+                            break;
+                        }
+                    }
+
+                    if ((*jogador).tabuleiro[i-64][j-47] != '~'){
+                        (*jogador).tabuleiro[i-64][j-47] = '*';
+                        (*computador).pontuacao += 1;
+                        (*computador).acertouAnterior = true;
+                    } else {
+                        (*jogador).tabuleiro[i-64][j-47] = 'X';
+                    }
+
+                    imprimeTabuleiro((*jogador).tabuleiro);
+
+                } else {
+
+                    while (jogadaValida == false){
+
+                        char iAnterior = (*computador).jogadasRealizadas[rodada][0];
+                        char jAnterior = (*computador).jogadasRealizadas[rodada][1];
+
+                        char p1 = (*jogador).tabuleiro[iAnterior-64+1][jAnterior-47];
+                        char p2 = (*jogador).tabuleiro[iAnterior-64][jAnterior-47+1];
+                        char p3 = (*jogador).tabuleiro[iAnterior-64-1][jAnterior-47];
+                        char p4 = (*jogador).tabuleiro[iAnterior-64][jAnterior-47-1];
+
+                        if ( p1 != '~' && p1 != '*' && p1 != 'X' && (iAnterior+1 > 64 && iAnterior+1 < 75) &&
+                            verificaJogada(iAnterior+1, jAnterior, (*computador).jogadasRealizadas) == true &&
+                            (jAnterior > 47 && jAnterior < 58)){
+                                i = iAnterior+1;
+                                j = jAnterior;
+                        } else if ( p2 != '~' && p2 != '*' && p2 != 'X' && (iAnterior > 64 && iAnterior < 75) &&
+                                    verificaJogada(iAnterior, jAnterior+1, (*computador).jogadasRealizadas) == true &&
+                                    (jAnterior+1 > 47 && jAnterior+1 < 58)){
+                                i = iAnterior;
+                                j = jAnterior+1;
+                        } else if ( p3 != '~' && p3 != '*' && p3 != 'X' && (iAnterior-1 > 64 && iAnterior-1 < 75) &&
+                                    verificaJogada(iAnterior-1, jAnterior, (*computador).jogadasRealizadas) == true &&
+                                    (jAnterior > 47 && jAnterior < 58)){
+                                i = iAnterior-1;
+                                j = jAnterior;
+                        } else if ( p4 != '~' && p4 != '*' && p4 != 'X' && (iAnterior > 64 && iAnterior < 75) &&
+                                    verificaJogada(iAnterior, jAnterior-1, (*computador).jogadasRealizadas) == true &&
+                                    (jAnterior-1 > 47 && jAnterior-1 < 58)){
+                                i = iAnterior;
+                                j = jAnterior-1;
+                        } else {
+                             while (jogadaValida == false){
+
+                                i = sorteiaI();
+                                j = sorteiaJ();
+
+                                if (i > 74 || i < 65){
+                                    printf("");
+                                } else if (j > 57 || j < 48){
+                                    printf("");
+                                } else {
+                                    jogadaValida = verificaJogada(i, j, (*computador).jogadasRealizadas);
+                                }
+                            }
+                        }
+                    
+
+                    if (i > 74 || i < 65){
+                        printf("");
+                    } else if (j > 57 || j < 48){
+                        printf("");
+                    } else {
+                        jogadaValida = verificaJogada(i, j, (*computador).jogadasRealizadas);
+                    }
+                }
+
+                for (int k = 0; k < 1000; k++){
+                    if ((*computador).jogadasRealizadas[k][0] == 'n' && (*computador).jogadasRealizadas[k][1] == 'n'){
+                        (*computador).jogadasRealizadas[k][0] = i;
+                        (*computador).jogadasRealizadas[k][1] = j;
+                        break;
+                    }
+                }
+
+                if ((*jogador).tabuleiro[i-64][j-47] != '~'){
+                    (*jogador).tabuleiro[i-64][j-47] = '*';
+                    (*computador).pontuacao += 1;
+                    (*computador).acertouAnterior = true;
+                } else {
+                    (*jogador).tabuleiro[i-64][j-47] = 'X';
+                    (*computador).acertouAnterior = false;
+                }
+
+                imprimeTabuleiro((*jogador).tabuleiro);
+
+            }
+            break;
+        
+        default:
+
+            while (jogadaValida == false){
+
+                i = sorteiaI();
+                j = sorteiaJ();
+
+                if (i > 74 || i < 65){
+                    printf("");
+                } else if (j > 57 || j < 48){
+                    printf("");
+                } else {
+                    jogadaValida = verificaJogada(i, j, (*computador).jogadasRealizadas);
+                }
+            }
+
+            for (int k = 0; k < 1000; k++){
+                if ((*computador).jogadasRealizadas[k][0] == 'n' && (*computador).jogadasRealizadas[k][1] == 'n'){
+                    (*computador).jogadasRealizadas[k][0] = i;
+                    (*computador).jogadasRealizadas[k][1] = j;
+                    break;
+                }
+            }
+
+            if ((*jogador).tabuleiro[i-64][j-47] != '~'){
+                (*jogador).tabuleiro[i-64][j-47] = '*';
+                (*computador).pontuacao += 1;
+            } else {
+                (*jogador).tabuleiro[i-64][j-47] = 'X';
+            }
+
+            imprimeTabuleiro((*jogador).tabuleiro);
+
+            break;
+    }
+
+}
+
+void realizaDisparo(Jogador *jogador, Jogador *jogadorAlvo){
 
     char i, j;
 
@@ -478,16 +788,16 @@ void realizaDisparo(Jogador *jogador){
         }
     }
 
-    if ((*jogador).tabuleiro[i-64][j-47] != '~'){
-        (*jogador).tabuleiro[i-64][j-47] = '*';
+    if ((*jogadorAlvo).tabuleiro[i-64][j-47] != '~'){
+        (*jogadorAlvo).tabuleiro[i-64][j-47] = '*';
         printf("\nAcertou!\n");
         (*jogador).pontuacao += 1;
     } else {
-        (*jogador).tabuleiro[i-64][j-47] = 'X';
+        (*jogadorAlvo).tabuleiro[i-64][j-47] = 'X';
         printf("\nErrou!\n");
     }
 
-    imprimeTabuleiro((*jogador).tabuleiro);
+    imprimeTabuleiro((*jogadorAlvo).tabuleiro);
 
 }
 
@@ -495,8 +805,14 @@ int main(){
     int humano = 1;
     int computador = 0;
 
+    Jogo jogo;
+    jogo.rodada = 1;
+
+
     Jogador jogador1 = setJogador(humano);
     printf("\nBem-vindo(a)! %s %s ao Batalha Naval!\n", jogador1.titulo, jogador1.nome);
+
+    jogo.dificuldade = 3;
 
     Jogador computador1 = setJogador(computador);
 
@@ -516,13 +832,18 @@ int main(){
 
     Navio destroyerJogador = setNavio(&jogador1, "Destroyer", 'D', 3);
 
-    //Navio cruzadorJogador = setNavio(jogador1.tabuleiro, "Cruzador", 'C', 3);
+    Navio cruzadorJogador = setNavio(&jogador1, "Cruzador", 'C', 4);
 
-    //Navio portaAviaoJogador = setNavio(jogador1.tabuleiro, "Porta-Aviões", 'P', 4);
+    Navio portaAviaoJogador = setNavio(&jogador1, "Porta-Aviões", 'P', 5);
 
-    realizaDisparo(&jogador1);
+    while (jogo.rodada != 50){
 
-    realizaDisparo(&jogador1);
+        realizaDisparo(&jogador1, &computador1);
+
+        realizaDisparoIA(&computador1, &jogador1, jogo.dificuldade, jogo.rodada-2);
+
+        jogo.rodada += 1;
+    }
 
     return 0;
 }
