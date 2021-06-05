@@ -1,10 +1,6 @@
 #ifndef PREPARAJOGO_H
 #define PREPARAJOGO_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
 #include "struct.h"
 
 void imprimeTabuleiro(char tabuleiro[TAMANHO][TAMANHO]);

@@ -1,12 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include <stdbool.h>
-#include "ia.h"
-#include "preparaJogo.h"
 #include "struct.h"
+#include "preparaJogo.h"
 #include "jogoLogica.h"
+#include "ia.h"
 
 int main(){
 

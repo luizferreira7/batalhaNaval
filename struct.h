@@ -1,6 +1,10 @@
 #ifndef STRUCT_H
 #define STRUCT_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
 #include <stdbool.h>
 #define TAMANHO 11
 
