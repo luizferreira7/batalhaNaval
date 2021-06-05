@@ -1312,6 +1312,8 @@ int main(){
 
             realizaDisparo(&jogador1, &computador);
 
+            printf("\n");
+
             realizaDisparoIA(&computador, &jogador1, jogo.dificuldade, jogo.rodada-2);
 
             jogo.rodada += 1;
@@ -1347,6 +1349,8 @@ int main(){
 
             realizaDisparoIA(&computador, &computador2, jogo.dificuldade, jogo.rodada-2);
 
+            printf("\n");
+
             realizaDisparoIA(&computador2, &computador, jogo.dificuldade, jogo.rodada-2);
 
             jogo.rodada += 1;
@@ -1359,6 +1363,7 @@ int main(){
         printf("\n\nJogador %s %s\n", jogador1.titulo, jogador1.nome);
 
         imprimeInventario();
+
         imprimeTabuleiroAgua(jogador1.tabuleiro);
         
         Navio submarinoJogador = setNavioJogo2(&jogador1, "Submarino", 'S', 2);
@@ -1376,7 +1381,9 @@ int main(){
         printf("\n\nAdversario %s %s\n", jogador2.titulo, jogador2.nome);
 
         imprimeInventario();
-         imprimeTabuleiroAgua(jogador1.tabuleiro); //nao importa qual eh
+
+        imprimeTabuleiroAgua(jogador1.tabuleiro); //nao importa qual eh
+
         Navio submarinoJogador2 = setNavioJogo2(&jogador2, "Submarino", 'S', 2);
 
         Navio destroyerJogador2 = setNavioJogo2(&jogador2, "Destroyer", 'D', 3);
@@ -1388,6 +1395,8 @@ int main(){
         while (jogo.rodada != 50){
 
             realizaDisparoJogo2(&jogador1, &jogador2);
+
+            printf("\n");
 
             realizaDisparoJogo2(&jogador2, &jogador1);
 
