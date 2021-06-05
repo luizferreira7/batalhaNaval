@@ -144,12 +144,23 @@ void imprimeTabuleiroOculto(char tabuleiro[TAMANHO][TAMANHO]){
                 printf(" %c ", tabuleiro[i][j]);
             }
             else if (tabuleiro[i][j]=='S' || tabuleiro[i][j]=='C'||
-                tabuleiro[i][j]=='D'||tabuleiro[i][j]=='P')
-                {
-                    COLOR_PRINT("~",11,1);
+                tabuleiro[i][j]=='D'||tabuleiro[i][j]=='P'){
+                    if (OS == 0){
+                        agua();
+                        printf(" %c ", tabuleiro[i][j]);
+                        resetColor();
+                    } else {
+                        COLOR_PRINT("~",11,1);
+                    }
                 }
             else if(tabuleiro[i][j]=='~'){
-                COLOR_PRINT(tabuleiro[i][j],11,1);
+                if (OS == 0){
+                        agua();
+                        printf(" %c ", tabuleiro[i][j]);
+                        resetColor();
+                    } else {
+                        COLOR_PRINT("~",11,1);
+                    }
             }
             else
             {
