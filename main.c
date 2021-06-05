@@ -146,8 +146,11 @@ void imprimeTabuleiroOculto(char tabuleiro[TAMANHO][TAMANHO]){
             else if (tabuleiro[i][j]=='S' || tabuleiro[i][j]=='C'||
                 tabuleiro[i][j]=='D'||tabuleiro[i][j]=='P')
                 {
-                    printf("~");
+                    COLOR_PRINT("~",11,1);
                 }
+            else if(tabuleiro[i][j]=='~'){
+                COLOR_PRINT(tabuleiro[i][j],11,1);
+            }
             else
             {
                 printf(" %c ", tabuleiro[i][j]);
