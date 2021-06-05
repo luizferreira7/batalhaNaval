@@ -32,6 +32,42 @@ typedef struct
     char posicao[5][2];
 } Navio;
 
+char inventario(void){
+    char I_head[3][15] = {"Class","Nome","Tamanho"};
+    char I_navio1[3][15] = {"1","Sub","2"};
+    char I_navio2[3][15] = {"2","P.Aviao","5"};
+    char I_navio3[3][15] = {"3","Cruz","3"};
+    char I_navio4[3][15] = {"4","Dest","4"};
+    char *I[5]; I[0]=I_head;I[1]=I_navio1;I[2]=I_navio2;I[3]=I_navio3;I[4]=I_navio4;
+    int i, j;
+    
+    for (i=0; i<3; i++) {
+		printf("%s\t",I_head[i]);
+    }
+    printf("\n");
+    for (i=0; i<3; i++) {    
+        printf("%s\t",I_navio1[i]);
+	}
+    printf("\n");
+    for (i=0; i<3; i++) {    
+        printf("%s\t",I_navio2[i]);
+	}
+    printf("\n");
+    for (i=0; i<3; i++) {    
+        printf("%s\t",I_navio3[i]);
+	}
+    printf("\n");
+    for (i=0; i<3; i++) {    
+        printf("%s\t",I_navio4[i]);
+    }
+    printf("\n");
+    for (i=0; i<3; i++) {    
+        for(j=0;j<5;j++){
+            printf("%s\t",I[j][i]);
+        }
+    }
+    return (*I[5]);
+}
 void imprimeTabuleiro(char tabuleiro[TAMANHO][TAMANHO]){
 
     for(int i = 0; i < TAMANHO; i++){
@@ -861,6 +897,8 @@ int escolheDificuldade(){
 
 }
 
+} 
+
 Jogo setJogo(){
 
     Jogo jogo;
@@ -879,19 +917,55 @@ int main(){
 
     int humano = 1;
     int comp = 0;
+    char I_head[3][15] = {"Seq","Nome","Tamanho"};
+    char I_navio1[3][15] = {"1","Sub","2"};
+    char I_navio2[3][15] = {"2","P.Aviao","5"};
+    char I_navio3[3][15] = {"3","Cruz","3"};
+    char I_navio4[3][15] = {"4","Encour","4"};
+    char *I[5]; I[0]=I_head;I[1]=I_navio1;I[2]=I_navio2;I[3]=I_navio3;I[4]=I_navio4;
+    int i, j;
 
     Jogo jogo = setJogo();
 
     Jogador jogador1 = setJogador(humano);
+    
+    for (i=0; i<3; i++) {
+		printf("%s\t",I_head[i]);
+    }
+    printf("\n");
+    for (i=0; i<3; i++) {    
+        printf("%s\t",I_navio1[i]);
+	}
+    printf("\n");
+    for (i=0; i<3; i++) {    
+        printf("%s\t",I_navio2[i]);
+	}
+    printf("\n");
+    for (i=0; i<3; i++) {    
+        printf("%s\t",I_navio3[i]);
+	}
+    printf("\n");
+    for (i=0; i<3; i++) {    
+        printf("%s\t",I_navio4[i]);
+    }
+    printf("\n");
+    for (i=0; i<3; i++) {    
+        for(j=0;j<5;j++){
+            printf("%s\t",I[j][i]);
+        }
+    }
 
     printf("\n\nJogador %s %s\n", jogador1.titulo, jogador1.nome);
 
 
     if (jogo.modoJogo == 1){
 
+        
         Jogador computador = setJogador(comp);
 
         printf("\n\nAdversario %s %s\n", computador.titulo, computador.nome);
+
+        
 
         Navio submarinoComputador = setNavio(&computador, "Submarino", 'S', 2);
 
@@ -922,9 +996,13 @@ int main(){
 
     } else {
 
+        printf("Agora, ao oponente!");
+
         Jogador jogador2 = setJogador(humano);
 
         printf("\n\nAdversario %s %s\n", jogador2.titulo, jogador2.nome);
+
+        inventario();
 
         Navio submarinoJogador2 = setNavio(&jogador2, "Submarino", 'S', 2);
 
