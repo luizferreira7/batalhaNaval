@@ -32,6 +32,19 @@ typedef struct
     char posicao[5][2];
 } Navio;
 
+int randomNum(int limite) {
+
+    int divisor = RAND_MAX/(limite+1);
+
+    int sorteio = rand() / divisor;
+
+    while (sorteio > limite){
+        sorteio = rand() / divisor;
+    }
+
+    return sorteio;
+}
+
 void imprimeTabuleiro(char tabuleiro[TAMANHO][TAMANHO]){
 
     for(int i = 0; i < TAMANHO; i++){
@@ -79,9 +92,7 @@ void sorteiaTitulo(char titulo[30]){
     char tenente[ ] = "Tenente";
     int sorteio, tamanho, i;
 
-    srand(time(NULL));
-
-    sorteio = rand() % 4;
+    sorteio = randomNum(3);
 
     if (sorteio == 0){
         tamanho = strlen(almirante);
@@ -160,8 +171,9 @@ char sorteiaI(void){
     //sorteia posicao[i]
     char i;
 
-    srand(time(NULL));
-    i = 65 + rand() % 10;
+    int sorteio = randomNum(9);
+
+    i = 65 + sorteio;
 
     return i;
 }
@@ -170,8 +182,10 @@ char sorteiaJ(void){
     //sorteia posicao[j]
     char j;
 
-    srand(time(NULL) + 10);
-    j = 48 + rand() % 10;
+    int sorteio = randomNum(9);
+
+    j = 48 + sorteio;
+
     return j;
 }
 
@@ -526,10 +540,7 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
 
                 while (jogadaValida == false){
 
-                    srand(time(NULL));
-                    int sorteio = rand()%4;
-
-                    printf("\n%d\n", sorteio);
+                    int sorteio = randomNum(3);
 
                     switch (sorteio){
                         case 0:
