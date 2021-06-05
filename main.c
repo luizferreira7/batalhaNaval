@@ -36,6 +36,7 @@ typedef struct
     char jogadasRealizadas[1000][2];
     char tabuleiro[TAMANHO][TAMANHO];
     bool acertouAnterior;
+    int jogadas;
 } Jogador;
 
 typedef struct
@@ -206,6 +207,7 @@ Jogador setJogador(int humano){
         jogador.pontuacao = 0;
         sorteiaTitulo(jogador.titulo);
         jogador.acertouAnterior = false;
+        jogador.jogadas = 0;
     } else {
         int i;
         char nome[ ] = "Computador";
@@ -226,6 +228,7 @@ Jogador setJogador(int humano){
         sorteiaTitulo(jogador.titulo);
         jogador.pontuacao = 0;
         jogador.acertouAnterior = false;
+        jogador.jogadas = 0;
     }
 
     preencheJogadas(jogador.jogadasRealizadas);
@@ -529,7 +532,7 @@ bool verificaJogada(char i, char j, char jogadasRealizadas[1000][2]){
 
 }
 
-void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, int rodada){
+void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, int jogada){
 
     char i, j;
 
@@ -672,28 +675,28 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
 
                     switch (sorteio){
                         case 0:
-                            i = (*computador).jogadasRealizadas[rodada][0]+1;
-                            j = (*computador).jogadasRealizadas[rodada][1];
+                            i = (*computador).jogadasRealizadas[jogada][0]+1;
+                            j = (*computador).jogadasRealizadas[jogada][1];
                             break;
 
                         case 1:
-                            i = (*computador).jogadasRealizadas[rodada][0];
-                            j = (*computador).jogadasRealizadas[rodada][1]+1;
+                            i = (*computador).jogadasRealizadas[jogada][0];
+                            j = (*computador).jogadasRealizadas[jogada][1]+1;
                             break;
 
                         case 2:
-                            i = (*computador).jogadasRealizadas[rodada][0]-1;
-                            j = (*computador).jogadasRealizadas[rodada][1];
+                            i = (*computador).jogadasRealizadas[jogada][0]-1;
+                            j = (*computador).jogadasRealizadas[jogada][1];
                             break;
 
                         case 3:
-                            i = (*computador).jogadasRealizadas[rodada][0];
-                            j = (*computador).jogadasRealizadas[rodada][1]-1;
+                            i = (*computador).jogadasRealizadas[jogada][0];
+                            j = (*computador).jogadasRealizadas[jogada][1]-1;
                             break;
                         
                         default:
-                            i = (*computador).jogadasRealizadas[rodada][0]+1;
-                            j = (*computador).jogadasRealizadas[rodada][1];
+                            i = (*computador).jogadasRealizadas[jogada][0]+1;
+                            j = (*computador).jogadasRealizadas[jogada][1];
                             break;
                     }
 
@@ -795,8 +798,8 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
 
                 while (jogadaValida == false){
 
-                    char iAnterior = (*computador).jogadasRealizadas[rodada][0];
-                    char jAnterior = (*computador).jogadasRealizadas[rodada][1];
+                    char iAnterior = (*computador).jogadasRealizadas[jogada][0];
+                    char jAnterior = (*computador).jogadasRealizadas[jogada][1];
 
                     char p1 = (*jogador).tabuleiro[iAnterior-64+1][jAnterior-47];
                     char p2 = (*jogador).tabuleiro[iAnterior-64][jAnterior-47+1];
@@ -980,10 +983,12 @@ void realizaDisparo(Jogador *jogador, Jogador *jogadorAlvo, Jogo *jogo){
 
     if ((*jogadorAlvo).tabuleiro[i-64][j-47] != '~'){
         (*jogadorAlvo).tabuleiro[i-64][j-47] = '*';
-        printf("\nAcertou!\n");
         (*jogador).pontuacao += 1;
+        (*jogador).acertouAnterior = true;
+        printf("\nAcertou!\n");
     } else {
         (*jogadorAlvo).tabuleiro[i-64][j-47] = 'X';
+        (*jogador).acertouAnterior = false;
         printf("\nErrou!\n");
     }
 
@@ -1164,11 +1169,23 @@ int main(){
 
         while (jogo.rodada != 50){
 
+            jogador1.jogadas += 1;
             realizaDisparo(&jogador1, &computador, &jogo);
+
+            while (jogador1.acertouAnterior == true){
+                jogador1.jogadas += 1;
+                realizaDisparo(&jogador1, &computador, &jogo);
+            }
 
             printf("\n");
 
-            realizaDisparoIA(&computador, &jogador1, jogo.dificuldade, jogo.rodada-2);
+            computador.jogadas += 1;
+                realizaDisparoIA(&computador, &jogador1, jogo.dificuldade, computador.jogadas-2);
+
+            while (computador.acertouAnterior == true){
+                computador.jogadas += 1;
+                realizaDisparoIA(&computador, &jogador1, jogo.dificuldade, computador.jogadas-2);
+            }
 
             jogo.rodada += 1;
         }
@@ -1201,11 +1218,23 @@ int main(){
 
         while (jogo.rodada != 50){
 
-            realizaDisparoIA(&computador, &computador2, jogo.dificuldade, jogo.rodada-2);
+            computador.jogadas += 1;
+                realizaDisparoIA(&computador, &computador2, jogo.dificuldade, computador.jogadas-2);
+
+            while (computador.acertouAnterior == true){
+                computador.jogadas += 1;
+                realizaDisparoIA(&computador, &computador2, jogo.dificuldade, computador.jogadas-2);
+            }
 
             printf("\n");
 
-            realizaDisparoIA(&computador2, &computador, jogo.dificuldade, jogo.rodada-2);
+            computador2.jogadas += 1;
+                realizaDisparoIA(&computador2, &computador, jogo.dificuldade, computador2.jogadas-2);
+
+            while (computador2.acertouAnterior == true){
+                computador2.jogadas += 1;
+                realizaDisparoIA(&computador2, &computador, jogo.dificuldade, computador2.jogadas-2);
+            }
 
             jogo.rodada += 1;
         }
@@ -1248,11 +1277,23 @@ int main(){
 
         while (jogo.rodada != 50){
 
-            realizaDisparo(&jogador1, &jogador2, &jogo);
+            jogador1.jogadas += 1;
+                realizaDisparo(&jogador1, &jogador2, &jogo);
+
+            while (jogador1.acertouAnterior == true){
+                jogador1.jogadas += 1;
+                realizaDisparo(&jogador1, &jogador2, &jogo);
+            }
 
             printf("\n");
 
-            realizaDisparo(&jogador2, &jogador1, &jogo);
+            jogador2.jogadas += 1;
+                realizaDisparo(&jogador2, &jogador1, &jogo);
+
+            while (jogador2.acertouAnterior == true){
+                jogador2.jogadas += 1;
+                realizaDisparo(&jogador2, &jogador1, &jogo);
+            }
 
             jogo.rodada += 1;
         }
