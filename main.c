@@ -275,6 +275,40 @@ Jogador setJogador(int humano){
     return jogador;
 }
 
+void recuperaNomeNavio(char classe, char nome[20]){
+
+    if (classe == 'S'){
+        int i;
+        char navio[ ] = {"Submarino"};
+        for(i = 0; i < strlen(navio); i++){
+            nome[i] = navio[i];
+        }
+        nome[i] = '\0';
+    } else if (classe == 'D'){
+        int i;
+        char navio[ ] = {"Destroyer"};
+        for(i = 0; i < strlen(navio); i++){
+            nome[i] = navio[i];
+        }
+        nome[i] = '\0';
+    } else if (classe == 'C'){
+        int i;
+        char navio[ ] = {"Cruzador"};
+        for(i = 0; i < strlen(navio); i++){
+            nome[i] = navio[i];
+        }
+        nome[i] = '\0';
+    } else if (classe == 'P'){
+        int i;
+        char navio[ ] = {"Porta-Aviões"};
+        for(i = 0; i < strlen(navio); i++){
+            nome[i] = navio[i];
+        }
+        nome[i] = '\0';
+    }
+
+}
+
 char sorteiaI(void){
     //sorteia posicao[i]
     char i;
@@ -1067,40 +1101,6 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
             imprimeTabuleiro((*jogador).tabuleiro);
 
             break;
-    }
-
-}
-
-void recuperaNomeNavio(char classe, char nome[20]){
-
-    if (classe == 'S'){
-        int i;
-        char navio[ ] = {"Submarino"};
-        for(i = 0; i < strlen(navio); i++){
-            nome[i] = navio[i];
-        }
-        nome[i] = '\0';
-    } else if (classe == 'D'){
-        int i;
-        char navio[ ] = {"Destroyer"};
-        for(i = 0; i < strlen(navio); i++){
-            nome[i] = navio[i];
-        }
-        nome[i] = '\0';
-    } else if (classe == 'C'){
-        int i;
-        char navio[ ] = {"Cruzador"};
-        for(i = 0; i < strlen(navio); i++){
-            nome[i] = navio[i];
-        }
-        nome[i] = '\0';
-    } else if (classe == 'P'){
-        int i;
-        char navio[ ] = {"Porta-Aviões"};
-        for(i = 0; i < strlen(navio); i++){
-            nome[i] = navio[i];
-        }
-        nome[i] = '\0';
     }
 
 }
