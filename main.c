@@ -897,6 +897,7 @@ int escolheDificuldade(){
 
 }
 
+} 
 
 Jogo setJogo(){
 
@@ -925,8 +926,9 @@ int main(){
     int i, j;
 
     Jogo jogo = setJogo();
-    printf("\n");
-    printf("\n***************** INVENTARIO *****************\n");
+
+    Jogador jogador1 = setJogador(humano);
+    
     for (i=0; i<3; i++) {
 		printf("%s\t",I_head[i]);
     }
@@ -952,10 +954,6 @@ int main(){
             printf("%s\t",I[j][i]);
         }
     }
-    printf("\n***************** ********** *****************\n");
-
-    Jogador jogador1 = setJogador(humano);
-    
 
     printf("\n\nJogador %s %s\n", jogador1.titulo, jogador1.nome);
 
