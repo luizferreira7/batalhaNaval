@@ -21,7 +21,7 @@
     {
         HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
         SetConsoleTextAttribute(handle, BACKGROUND_INTENSITY | back_color*16 |FOREGROUND_INTENSITY | front_color);
-        printf(c);
+        printf(" %c ", c);
         SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | 7);
         return c;
     }
@@ -716,9 +716,9 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
                     }
 
                     if (i > 74 || i < 65){
-                        printf("");
+                        jogadaValida = false;
                     } else if (j > 57 || j < 48){
-                        printf("");
+                        jogadaValida = false;
                     } else {
                         jogadaValida = verificaJogada(i, j, (*computador).jogadasRealizadas);
                     }
@@ -783,9 +783,9 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
                     }
 
                     if (i > 74 || i < 65){
-                        printf("");
+                        jogadaValida = false;
                     } else if (j > 57 || j < 48){
-                        printf("");
+                        jogadaValida = false;
                     } else {
                         jogadaValida = verificaJogada(i, j, (*computador).jogadasRealizadas);
                     }
@@ -848,9 +848,9 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
                             j = sorteiaJ();
 
                             if (i > 74 || i < 65){
-                                printf("");
+                                jogadaValida = false;
                             } else if (j > 57 || j < 48){
-                                printf("");
+                                jogadaValida = false;
                             } else {
                                 jogadaValida = verificaJogada(i, j, (*computador).jogadasRealizadas);
                             }
@@ -859,9 +859,9 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
                     
 
                     if (i > 74 || i < 65){
-                        printf("");
+                        jogadaValida = false;
                     } else if (j > 57 || j < 48){
-                        printf("");
+                        jogadaValida = false;
                     } else {
                         jogadaValida = verificaJogada(i, j, (*computador).jogadasRealizadas);
                     }
