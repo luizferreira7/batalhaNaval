@@ -6,6 +6,18 @@
 #define TIMEOUT 10000000
 #define TAMANHO 11
 
+#if defined(__linux__) || defined(__APPLE__)
+
+    #define OS 0
+
+#endif
+
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32)
+
+    #define OS 1
+
+#endif
+
 typedef struct
 {
     int rodada;
@@ -58,29 +70,33 @@ void imprimeTabuleiro(char tabuleiro[TAMANHO][TAMANHO]){
     for(int i = 0; i < TAMANHO; i++){
         printf("\n");
         for(int j = 0; j < TAMANHO; j++){
-            if (tabuleiro[i][j] == '~'){
-                agua();
-                printf(" %c ", tabuleiro[i][j]);
-                resetColor();
-            } else if (tabuleiro[i][j] == 'X'){
-                disparoErro();
-                printf(" %c ", tabuleiro[i][j]);
-                resetColor();
-            } else if (tabuleiro[i][j] == '*'){
-                disparoAcerto();
-                printf(" %c ", tabuleiro[i][j]);
-                resetColor();
-            } else if (j == 0){
-                resetColor();
-                printf(" %c ", tabuleiro[i][j]);
-            } else if (tabuleiro[i][j] == 'S' || tabuleiro[i][j] == 'C' || 
-                       tabuleiro[i][j] == 'H' || tabuleiro[i][j] == 'D' ||
-                       tabuleiro[i][j] == 'P'){
-                navio();
-                printf(" %c ", tabuleiro[i][j]);
-                resetColor();
+            if (OS == 0){
+                if (tabuleiro[i][j] == '~'){
+                    agua();
+                    printf(" %c ", tabuleiro[i][j]);
+                    resetColor();
+                } else if (tabuleiro[i][j] == 'X'){
+                    disparoErro();
+                    printf(" %c ", tabuleiro[i][j]);
+                    resetColor();
+                } else if (tabuleiro[i][j] == '*'){
+                    disparoAcerto();
+                    printf(" %c ", tabuleiro[i][j]);
+                    resetColor();
+                } else if (j == 0){
+                    resetColor();
+                    printf(" %c ", tabuleiro[i][j]);
+                } else if (tabuleiro[i][j] == 'S' || tabuleiro[i][j] == 'C' || 
+                        tabuleiro[i][j] == 'H' || tabuleiro[i][j] == 'D' ||
+                        tabuleiro[i][j] == 'P'){
+                    navio();
+                    printf(" %c ", tabuleiro[i][j]);
+                    resetColor();
+                } else {
+                    resetColor();
+                    printf(" %c ", tabuleiro[i][j]);
+                }
             } else {
-                resetColor();
                 printf(" %c ", tabuleiro[i][j]);
             }
         }
@@ -1256,9 +1272,6 @@ Jogo setJogo(){
 }
 
 int main(){
-
-    printf("%ld", time(NULL));
-    
 
     int humano = 1;
     int comp = 0;
