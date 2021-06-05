@@ -60,10 +60,14 @@ void imprimeTabuleiroOculto(char tabuleiro[TAMANHO][TAMANHO]){
         printf("\n");
         for(int j = 0; j < TAMANHO; j++){
             if(tabuleiro[i][j]=='S' || tabuleiro[i][j]=='C'||
-                tabuleiro[i][j]=='D'||tabuleiro[i][j]=='P'){
+                tabuleiro[i][j]=='D'||tabuleiro[i][j]=='P')
+                {
                     printf("~");
                 }
-            printf(" %c ", tabuleiro[i][j]);
+            else
+            {
+                printf(" %c ", tabuleiro[i][j]);
+            }
         }
     }
 }
