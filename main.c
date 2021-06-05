@@ -1208,42 +1208,56 @@ int escolheDificuldade(){
 
     }
 
+    printf("\n");
+
     return dificuldade;
 
 }
 
 void imprimeInventario(){
 
-    char I_head[4][15] = {"Seq","Nome","visual","Tamanho"};
-    char I_navio1[4][15] = {"1","Sub","SS","2"};
-    char I_navio2[4][15] = {"2","P.Aviao","PPPPP","5"};
-    char I_navio3[4][15] = {"3","Cruz","CCC","3"};
-    char I_navio4[4][15] = {"4","Dest","DDDD","4"};
+    char I_head[4][15] = {"#  Seq","Nome        ","Visual"," Tamanho  #"};
+    char I_navio1[4][15] = {"#  1","Submarino   ","SS    ","    2     #"};
+    char I_navio2[4][15] = {"#  2","Destroyer   ","DDD   ","    3     #"};
+    char I_navio3[4][15] = {"#  3","Cruzador    ","CCCC  ","    4     #"};
+    char I_navio4[4][15] = {"#  4","Porta-Aviões","PPPPP ","    5     #"};
     int i;
 
     printf("\n");
-    printf("\n***************** INVENTARIO *****************\n");
+    printf("\n############### INVENTARIO ################\n");
+    printf("#                                         #\n");
+
     for (i=0; i<4; i++) {
-    printf("%s\t",I_head[i]);
+        printf("%s\t",I_head[i]);
     }
+
     printf("\n");
+
     for (i=0; i<4; i++) {    
         printf("%s\t",I_navio1[i]);
- }
+    }
+
     printf("\n");
+
     for (i=0; i<4; i++) {    
         printf("%s\t",I_navio2[i]);
- }
+    }
+
     printf("\n");
+
     for (i=0; i<4; i++) {    
         printf("%s\t",I_navio3[i]);
- }
+    }
+
     printf("\n");
+
     for (i=0; i<4; i++) {    
         printf("%s\t",I_navio4[i]);
     }
-    printf("\n");
-    printf("\n***************** *********** *****************\n");
+
+    printf("\n#                                         #");
+
+    printf("\n###########################################\n");
 
 }
 
@@ -1254,8 +1268,11 @@ Jogo setJogo(){
     printf("\nBem-vindo ao Batalha Naval!\n");
 
     jogo.rodada = 1;
-    jogo.dificuldade = escolheDificuldade();
     jogo.modoJogo = escolheModoJogo();
+
+    if(jogo.modoJogo != 2){
+        jogo.dificuldade = escolheDificuldade();
+    }
 
     return jogo;
 
@@ -1292,9 +1309,15 @@ int main(){
 
         Navio submarinoJogador = setNavio(&jogador1, "Submarino", 'S', 2);
 
+        imprimeInventario();
+
         Navio destroyerJogador = setNavio(&jogador1, "Destroyer", 'D', 3);
 
+        imprimeInventario();
+
         Navio cruzadorJogador = setNavio(&jogador1, "Cruzador", 'C', 4);
+
+        imprimeInventario();
 
         Navio portaAviaoJogador = setNavio(&jogador1, "Porta-Aviões", 'P', 5);
 
