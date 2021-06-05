@@ -1,6 +1,3 @@
-#include "struct.h"
-#include "preparaJogo.h"
-#include "jogoLogica.h"
 #include "ia.h"
 
 int main(){

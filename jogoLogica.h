@@ -1,7 +1,7 @@
 #ifndef JOGOLOGICA_H
 #define JOGOLOGICA_H
 
-#include "struct.h"
+#include "comuns.h"
 #include "preparaJogo.h"
 
 char sorteiaI(void);

@@ -1,5 +1,5 @@
-#ifndef STRUCT_H
-#define STRUCT_H
+#ifndef COMUNS_H
+#define COMUNS_H
 
 #include <stdio.h>
 #include <stdlib.h>

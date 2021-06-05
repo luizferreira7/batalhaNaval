@@ -1,7 +1,7 @@
 #ifndef PREPARAJOGO_H
 #define PREPARAJOGO_H
 
-#include "struct.h"
+#include "comuns.h"
 
 void imprimeTabuleiro(char tabuleiro[TAMANHO][TAMANHO]);
 
