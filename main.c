@@ -801,18 +801,56 @@ void realizaDisparo(Jogador *jogador, Jogador *jogadorAlvo){
 
 }
 
+int escolheDificuldade(){
+
+    int dificuldade = 0;
+
+    printf("\n 1 - Facil");
+    printf("\n 2 - Normal");
+    printf("\n 3 - Dificil\n");
+
+    while (dificuldade != 1 && dificuldade != 2 && dificuldade != 3){
+
+        printf("\nEscolha a dificuldade: ");
+
+        char dif, c;
+
+        while ( (c = getchar() ) != '\n' && c != EOF){
+            dif = c;
+        }
+
+        dificuldade = (dif - 48);
+
+        if (dificuldade != 1 && dificuldade != 2 && dificuldade != 3){
+            printf("\nDificuldade Invalida!\n");
+        }
+
+    }
+
+    return dificuldade;
+
+}
+
+Jogo setJogo(){
+
+    Jogo jogo;
+
+    jogo.rodada = 1;
+    jogo.dificuldade = escolheDificuldade();
+
+    return jogo;
+
+}
+
 int main(){
+    
     int humano = 1;
     int computador = 0;
 
-    Jogo jogo;
-    jogo.rodada = 1;
-
+    Jogo jogo = setJogo();
 
     Jogador jogador1 = setJogador(humano);
     printf("\nBem-vindo(a)! %s %s ao Batalha Naval!\n", jogador1.titulo, jogador1.nome);
-
-    jogo.dificuldade = 3;
 
     Jogador computador1 = setJogador(computador);
 
