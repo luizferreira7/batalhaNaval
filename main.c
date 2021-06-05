@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 #include <stdbool.h>
+#include <time.h>
+#define TIMEOUT 10000
 #define TAMANHO 11
 
 typedef struct
@@ -32,17 +33,24 @@ typedef struct
     char posicao[5][2];
 } Navio;
 
-int randomNum(int limite) {
+void agua(){
+    printf("\033[36m\033[44m");
+}
 
-    int divisor = RAND_MAX/(limite+1);
+void resetColor(){
+    printf("\033[0m");
+}
 
-    int sorteio = rand() / divisor;
+void disparoErro(){
+    printf("\033[37m\033[44m");
+}
 
-    while (sorteio > limite){
-        sorteio = rand() / divisor;
-    }
+void disparoAcerto(){
+    printf("\033[31m\033[44m");
+}
 
-    return sorteio;
+void navio(){
+    printf("\033[33m\033[44m");
 }
 
 void imprimeTabuleiro(char tabuleiro[TAMANHO][TAMANHO]){
@@ -50,7 +58,31 @@ void imprimeTabuleiro(char tabuleiro[TAMANHO][TAMANHO]){
     for(int i = 0; i < TAMANHO; i++){
         printf("\n");
         for(int j = 0; j < TAMANHO; j++){
-            printf(" %c ", tabuleiro[i][j]);
+            if (tabuleiro[i][j] == '~'){
+                agua();
+                printf(" %c ", tabuleiro[i][j]);
+                resetColor();
+            } else if (tabuleiro[i][j] == 'X'){
+                disparoErro();
+                printf(" %c ", tabuleiro[i][j]);
+                resetColor();
+            } else if (tabuleiro[i][j] == '*'){
+                disparoAcerto();
+                printf(" %c ", tabuleiro[i][j]);
+                resetColor();
+            } else if (j == 0){
+                resetColor();
+                printf(" %c ", tabuleiro[i][j]);
+            } else if (tabuleiro[i][j] == 'S' || tabuleiro[i][j] == 'C' || 
+                       tabuleiro[i][j] == 'H' || tabuleiro[i][j] == 'D' ||
+                       tabuleiro[i][j] == 'P'){
+                navio();
+                printf(" %c ", tabuleiro[i][j]);
+                resetColor();
+            } else {
+                resetColor();
+                printf(" %c ", tabuleiro[i][j]);
+            }
         }
     }
 }
@@ -92,7 +124,9 @@ void sorteiaTitulo(char titulo[30]){
     char tenente[ ] = "Tenente";
     int sorteio, tamanho, i;
 
-    sorteio = randomNum(3);
+    srand(time(NULL));
+
+    sorteio = rand() % 4;
 
     if (sorteio == 0){
         tamanho = strlen(almirante);
@@ -171,7 +205,9 @@ char sorteiaI(void){
     //sorteia posicao[i]
     char i;
 
-    int sorteio = randomNum(9);
+    srand(time(NULL));
+
+    int sorteio = rand() % 10;
 
     i = 65 + sorteio;
 
@@ -182,7 +218,9 @@ char sorteiaJ(void){
     //sorteia posicao[j]
     char j;
 
-    int sorteio = randomNum(9);
+    srand(time(NULL)+5);
+
+    int sorteio = rand() % 10;
 
     j = 48 + sorteio;
 
@@ -463,14 +501,44 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
 
     bool jogadaValida = false;
 
+    unsigned long int tempoInicio, tempoTentativa;
+
     switch (dificuldade){
 
         case 1:
+            
+            tempoInicio = time(NULL);
+
+            tempoTentativa = time(NULL);
 
             while (jogadaValida == false){
 
-                i = sorteiaI();
-                j = sorteiaJ();
+                tempoTentativa += 1;
+
+                if (tempoTentativa < tempoInicio+TIMEOUT){
+
+                    i = sorteiaI();
+                    j = sorteiaJ();
+
+                }  else {
+
+                    int l = 1, m = 1;
+                    bool para = false;
+
+                    while (l < TAMANHO && para == false){
+                        while (m < TAMANHO && para == false){
+                            if ( verificaJogada(l+64, m+47, (*computador).jogadasRealizadas) ){
+                                printf("teste");
+                                i = l + 64;
+                                j = m + 47;
+                                para = true;
+                            }
+                            m++;
+                        }
+                        l++;
+                    }
+
+                }
 
                 if (i > 74 || i < 65){
                     printf("");
@@ -504,10 +572,38 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
 
             if ( (*computador).acertouAnterior == false){
 
+                tempoInicio = time(NULL);
+
+                tempoTentativa = time(NULL);
+
                 while (jogadaValida == false){
 
-                    i = sorteiaI();
-                    j = sorteiaJ();
+                    tempoTentativa += 1;
+
+                    if (tempoTentativa < tempoInicio+TIMEOUT){
+
+                        i = sorteiaI();
+                        j = sorteiaJ();
+
+                    }  else {
+
+                        int l = 1, m = 1;
+                        bool para = false;
+
+                        while (l < TAMANHO && para == false){
+                            while (m < TAMANHO && para == false){
+                                if ( verificaJogada(l+64, m+47, (*computador).jogadasRealizadas) ){
+                                    printf("teste");
+                                    i = l + 64;
+                                    j = m + 47;
+                                    para = true;
+                                }
+                                m++;
+                            }
+                            l++;
+                        }
+
+                    }
 
                     if (i > 74 || i < 65){
                         printf("");
@@ -540,7 +636,9 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
 
                 while (jogadaValida == false){
 
-                    int sorteio = randomNum(3);
+                    srand(time(NULL)+20);
+
+                    int sorteio = rand() % 4;
 
                     switch (sorteio){
                         case 0:
@@ -603,87 +701,115 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
 
         case 3:
 
-                if ( (*computador).acertouAnterior == false){
+            if ( (*computador).acertouAnterior == false){
 
-                    while (jogadaValida == false){
+                tempoInicio = time(NULL);
+
+                tempoTentativa = time(NULL);
+
+                while (jogadaValida == false){
+
+                    tempoTentativa += 1;
+
+                    if (tempoTentativa < tempoInicio+TIMEOUT){
 
                         i = sorteiaI();
                         j = sorteiaJ();
 
-                        if (i > 74 || i < 65){
-                            printf("");
-                        } else if (j > 57 || j < 48){
-                            printf("");
-                        } else {
-                            jogadaValida = verificaJogada(i, j, (*computador).jogadasRealizadas);
-                        }
-                    }
+                    }  else {
 
-                    for (int k = 0; k < 1000; k++){
-                        if ((*computador).jogadasRealizadas[k][0] == 'n' && (*computador).jogadasRealizadas[k][1] == 'n'){
-                            (*computador).jogadasRealizadas[k][0] = i;
-                            (*computador).jogadasRealizadas[k][1] = j;
-                            break;
-                        }
-                    }
+                        int l = 1, m = 1;
+                        bool para = false;
 
-                    if ((*jogador).tabuleiro[i-64][j-47] != '~'){
-                        (*jogador).tabuleiro[i-64][j-47] = '*';
-                        (*computador).pontuacao += 1;
-                        (*computador).acertouAnterior = true;
-                    } else {
-                        (*jogador).tabuleiro[i-64][j-47] = 'X';
-                    }
-
-                    imprimeTabuleiro((*jogador).tabuleiro);
-
-                } else {
-
-                    while (jogadaValida == false){
-
-                        char iAnterior = (*computador).jogadasRealizadas[rodada][0];
-                        char jAnterior = (*computador).jogadasRealizadas[rodada][1];
-
-                        char p1 = (*jogador).tabuleiro[iAnterior-64+1][jAnterior-47];
-                        char p2 = (*jogador).tabuleiro[iAnterior-64][jAnterior-47+1];
-                        char p3 = (*jogador).tabuleiro[iAnterior-64-1][jAnterior-47];
-                        char p4 = (*jogador).tabuleiro[iAnterior-64][jAnterior-47-1];
-
-                        if ( p1 != '~' && p1 != '*' && p1 != 'X' && (iAnterior+1 > 64 && iAnterior+1 < 75) &&
-                            verificaJogada(iAnterior+1, jAnterior, (*computador).jogadasRealizadas) == true &&
-                            (jAnterior > 47 && jAnterior < 58)){
-                                i = iAnterior+1;
-                                j = jAnterior;
-                        } else if ( p2 != '~' && p2 != '*' && p2 != 'X' && (iAnterior > 64 && iAnterior < 75) &&
-                                    verificaJogada(iAnterior, jAnterior+1, (*computador).jogadasRealizadas) == true &&
-                                    (jAnterior+1 > 47 && jAnterior+1 < 58)){
-                                i = iAnterior;
-                                j = jAnterior+1;
-                        } else if ( p3 != '~' && p3 != '*' && p3 != 'X' && (iAnterior-1 > 64 && iAnterior-1 < 75) &&
-                                    verificaJogada(iAnterior-1, jAnterior, (*computador).jogadasRealizadas) == true &&
-                                    (jAnterior > 47 && jAnterior < 58)){
-                                i = iAnterior-1;
-                                j = jAnterior;
-                        } else if ( p4 != '~' && p4 != '*' && p4 != 'X' && (iAnterior > 64 && iAnterior < 75) &&
-                                    verificaJogada(iAnterior, jAnterior-1, (*computador).jogadasRealizadas) == true &&
-                                    (jAnterior-1 > 47 && jAnterior-1 < 58)){
-                                i = iAnterior;
-                                j = jAnterior-1;
-                        } else {
-                             while (jogadaValida == false){
-
-                                i = sorteiaI();
-                                j = sorteiaJ();
-
-                                if (i > 74 || i < 65){
-                                    printf("");
-                                } else if (j > 57 || j < 48){
-                                    printf("");
-                                } else {
-                                    jogadaValida = verificaJogada(i, j, (*computador).jogadasRealizadas);
+                        while (l < TAMANHO && para == false){
+                            while (m < TAMANHO && para == false){
+                                if ( verificaJogada(l+64, m+47, (*computador).jogadasRealizadas) ){
+                                    printf("teste");
+                                    i = l + 64;
+                                    j = m + 47;
+                                    para = true;
                                 }
+                                m++;
+                            }
+                            l++;
+                        }
+
+                    }
+
+                    if (i > 74 || i < 65){
+                        printf("");
+                    } else if (j > 57 || j < 48){
+                        printf("");
+                    } else {
+                        jogadaValida = verificaJogada(i, j, (*computador).jogadasRealizadas);
+                    }
+                }
+
+                for (int k = 0; k < 1000; k++){
+                    if ((*computador).jogadasRealizadas[k][0] == 'n' && (*computador).jogadasRealizadas[k][1] == 'n'){
+                        (*computador).jogadasRealizadas[k][0] = i;
+                        (*computador).jogadasRealizadas[k][1] = j;
+                        break;
+                    }
+                }
+
+                if ((*jogador).tabuleiro[i-64][j-47] != '~'){
+                    (*jogador).tabuleiro[i-64][j-47] = '*';
+                    (*computador).pontuacao += 1;
+                    (*computador).acertouAnterior = true;
+                } else {
+                    (*jogador).tabuleiro[i-64][j-47] = 'X';
+                }
+
+                imprimeTabuleiro((*jogador).tabuleiro);
+
+            } else {
+
+                while (jogadaValida == false){
+
+                    char iAnterior = (*computador).jogadasRealizadas[rodada][0];
+                    char jAnterior = (*computador).jogadasRealizadas[rodada][1];
+
+                    char p1 = (*jogador).tabuleiro[iAnterior-64+1][jAnterior-47];
+                    char p2 = (*jogador).tabuleiro[iAnterior-64][jAnterior-47+1];
+                    char p3 = (*jogador).tabuleiro[iAnterior-64-1][jAnterior-47];
+                    char p4 = (*jogador).tabuleiro[iAnterior-64][jAnterior-47-1];
+
+                    if ( p1 != '~' && p1 != '*' && p1 != 'X' && (iAnterior+1 > 64 && iAnterior+1 < 75) &&
+                        verificaJogada(iAnterior+1, jAnterior, (*computador).jogadasRealizadas) == true &&
+                        (jAnterior > 47 && jAnterior < 58)){
+                            i = iAnterior+1;
+                            j = jAnterior;
+                    } else if ( p2 != '~' && p2 != '*' && p2 != 'X' && (iAnterior > 64 && iAnterior < 75) &&
+                                verificaJogada(iAnterior, jAnterior+1, (*computador).jogadasRealizadas) == true &&
+                                (jAnterior+1 > 47 && jAnterior+1 < 58)){
+                            i = iAnterior;
+                            j = jAnterior+1;
+                    } else if ( p3 != '~' && p3 != '*' && p3 != 'X' && (iAnterior-1 > 64 && iAnterior-1 < 75) &&
+                                verificaJogada(iAnterior-1, jAnterior, (*computador).jogadasRealizadas) == true &&
+                                (jAnterior > 47 && jAnterior < 58)){
+                            i = iAnterior-1;
+                            j = jAnterior;
+                    } else if ( p4 != '~' && p4 != '*' && p4 != 'X' && (iAnterior > 64 && iAnterior < 75) &&
+                                verificaJogada(iAnterior, jAnterior-1, (*computador).jogadasRealizadas) == true &&
+                                (jAnterior-1 > 47 && jAnterior-1 < 58)){
+                            i = iAnterior;
+                            j = jAnterior-1;
+                    } else {
+                        while (jogadaValida == false){
+
+                            i = sorteiaI();
+                            j = sorteiaJ();
+
+                            if (i > 74 || i < 65){
+                                printf("");
+                            } else if (j > 57 || j < 48){
+                                printf("");
+                            } else {
+                                jogadaValida = verificaJogada(i, j, (*computador).jogadasRealizadas);
                             }
                         }
+                    }
                     
 
                     if (i > 74 || i < 65){
@@ -923,9 +1049,12 @@ Jogo setJogo(){
 
 int main(){
 
+    printf("%ld", time(NULL));
+    
+
     int humano = 1;
     int comp = 0;
-
+  
     Jogo jogo = setJogo();
 
     Jogador jogador1 = setJogador(humano);
