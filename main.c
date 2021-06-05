@@ -126,7 +126,9 @@ void preencheTabuleiro(char tabuleiro[TAMANHO][TAMANHO]){
 }
 
 char imprimeTabuleiroAgua(char tabuleiro[TAMANHO][TAMANHO]){
-    preencheTabuleiro(char tabuleiro[TAMANHO][TAMANHO]);
+
+    preencheTabuleiro(tabuleiro);
+
     return tabuleiro;
 }
 
@@ -1070,7 +1072,7 @@ void realizaDisparoJogo2(Jogador *jogador, Jogador *jogadorAlvo){
 
         int w = 0;
 
-        printf("\n %s %s, digite a posicao para disparo contra %s %s!\n",jogador.titulo, jogador1.nome, jogadorAlvo.titulo, jogadorAlvo.nome);
+        printf("\n %s %s, digite a posicao para disparo contra %s %s!\n", (*jogador).titulo, (*jogador).nome, (*jogadorAlvo).titulo, (*jogadorAlvo).nome);
 
         printf("Posicao: ");
 
@@ -1280,7 +1282,7 @@ int main(){
         
         Navio submarinoJogador = setNavioJogo2(&jogador1, "Submarino", 'S', 2);
 
-        Navio destroyerJogador = setNavioJogo2&jogador1, "Destroyer", 'D', 3);
+        Navio destroyerJogador = setNavioJogo2(&jogador1, "Destroyer", 'D', 3);
 
         Navio cruzadorJogador = setNavioJogo2(&jogador1, "Cruzador", 'C', 4);
 
