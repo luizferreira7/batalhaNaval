@@ -1315,7 +1315,7 @@ void realizaDisparo(Jogador *jogador, Jogador *jogadorAlvo, Jogo *jogo){
         printf("\n%s %s Errou!\n", (*jogador).titulo, (*jogador).nome);
     }
 
-    ((*jogo).modoJogo == 1) ? imprimeTabuleiro((*jogadorAlvo).tabuleiro) : imprimeTabuleiroOculto((*jogadorAlvo).tabuleiro);
+    imprimeTabuleiroOculto((*jogadorAlvo).tabuleiro);
     printf("Tabuleiro de %s %s\n", (*jogadorAlvo).titulo, (*jogadorAlvo).nome );
 }
 
