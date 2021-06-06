@@ -1511,7 +1511,8 @@ int main(){
             }
 
         }
-        clock_t comeco = clock();
+
+
         while (jogador1.pontuacao != PONTUACAO_MAX && computador.pontuacao != PONTUACAO_MAX){
             
             printf("\n");
@@ -1532,10 +1533,20 @@ int main(){
 
             printf("\n");
 
-            computador.jogadas += 1;
-            realizaDisparoIA(&computador, &jogador1, jogo.dificuldade, computador.jogadas-2);
+            if (jogador1.pontuacao == PONTUACAO_MAX){
+                printf("\nPontos %s %s: %d\n", jogador1.titulo, jogador1.nome, jogador1.pontuacao);
+                printf("\nVENCEDOR: %s %s\n", jogador1.titulo, jogador1.nome);
+                return 0;
+            } else if (computador.pontuacao == PONTUACAO_MAX){
+                printf("\nPontos %s %s: %d\n", computador.titulo, computador.nome, computador.pontuacao);
+                printf("\nVENCEDOR: %s CPU\n", computador.titulo);
+                return 0;
+            }
 
             printf("\nAguardando jogada do Computador....");
+
+            computador.jogadas += 1;
+            realizaDisparoIA(&computador, &jogador1, jogo.dificuldade, computador.jogadas-2);
 
             while (computador.acertouAnterior == true && computador.pontuacao != PONTUACAO_MAX){
 
@@ -1548,24 +1559,15 @@ int main(){
                 realizaDisparoIA(&computador, &jogador1, jogo.dificuldade, computador.jogadas-2);
                 printf("\n");
 
-                printf("\nAguardando jogada do Computador....");
             }
 
             if (jogador1.pontuacao == PONTUACAO_MAX){
-                clock_t fim = clock();
-                float tempo = ((float)(fim - comeco)/CLOCKS_PER_SEC)/60;
-
                 printf("\nPontos %s %s: %d\n", jogador1.titulo, jogador1.nome, jogador1.pontuacao);
                 printf("\nVENCEDOR: %s %s\n", jogador1.titulo, jogador1.nome);
-                printf("Em apenas %4.2f minutos!\n", tempo);
                 return 0;
             } else if (computador.pontuacao == PONTUACAO_MAX){
-                clock_t fim = clock();
-                float tempo = ((float)(fim - comeco)/CLOCKS_PER_SEC)/60;
-
                 printf("\nPontos %s %s: %d\n", computador.titulo, computador.nome, computador.pontuacao);
                 printf("\nVENCEDOR: %s CPU\n", computador.titulo);
-                printf("Em apenas %4.2f minutos!\n", tempo);
                 return 0;
             }
             
@@ -1742,7 +1744,7 @@ int main(){
             }
 
         }
-        clock_t comeco = clock();
+
         while (jogador1.pontuacao != PONTUACAO_MAX && jogador2.pontuacao != PONTUACAO_MAX){
             
             printf("\n");
@@ -1763,6 +1765,16 @@ int main(){
 
             printf("\n");
 
+            if (jogador1.pontuacao == PONTUACAO_MAX){
+                printf("\nPontos %s %s: %d\n", jogador1.titulo, jogador1.nome, jogador1.pontuacao);
+                printf("\n VENCEDOR: %s %s \n", jogador1.titulo, jogador1.nome);
+                return 0;
+            } else if (jogador2.pontuacao == PONTUACAO_MAX){
+                printf("\nPontos %s %s: %d\n", jogador2.titulo, jogador2.nome, jogador2.pontuacao);
+                printf("\n VENCEDOR: %s %s \n", jogador2.titulo, jogador2.nome);
+                return 0;
+            }
+
             jogador2.jogadas += 1;
                 realizaDisparo(&jogador2, &jogador1, &jogo);
 
@@ -1778,20 +1790,12 @@ int main(){
             }
 
             if (jogador1.pontuacao == PONTUACAO_MAX){
-                clock_t fim = clock();
-                float tempo = ((float)(fim - comeco)/CLOCKS_PER_SEC)/60;
-
                 printf("\nPontos %s %s: %d\n", jogador1.titulo, jogador1.nome, jogador1.pontuacao);
                 printf("\n VENCEDOR: %s %s \n", jogador1.titulo, jogador1.nome);
-                printf("Em apenas %4.2f minutos!\n", tempo);
                 return 0;
             } else if (jogador2.pontuacao == PONTUACAO_MAX){
-                clock_t fim = clock();
-                float tempo = ((float)(fim - comeco)/CLOCKS_PER_SEC)/60;
-
                 printf("\nPontos %s %s: %d\n", jogador2.titulo, jogador2.nome, jogador2.pontuacao);
                 printf("\n VENCEDOR: %s %s \n", jogador2.titulo, jogador2.nome);
-                printf("Em apenas %4.2f minutos!\n", tempo);
                 return 0;
             }
 
@@ -1823,16 +1827,16 @@ int main(){
 
         setTabuleiro(&computador2, &portaAviao, &jogo, true);
 
-        clock_t comeco = clock();
+
         while (computador.pontuacao != PONTUACAO_MAX && computador2.pontuacao != PONTUACAO_MAX){
             
             printf("\n");
 
+            printf("\nAguardando jogada do Computador....");
+
             computador.jogadas += 1;
 
             realizaDisparoIA(&computador, &computador2, jogo.dificuldade, computador.jogadas-2);
-
-            printf("\nAguardando jogada do Computador....");
 
             while (computador.acertouAnterior == true && computador.pontuacao != PONTUACAO_MAX){
 
@@ -1846,15 +1850,24 @@ int main(){
 
                 printf("\n");
 
-                printf("\nAguardando jogada do Computador....");
             }
 
             printf("\n");
 
+            if (computador.pontuacao == PONTUACAO_MAX){
+                printf("\nPontos %s %s: %d\n", computador.titulo, computador.nome, computador.pontuacao);
+                printf("\n VENCEDOR: %s CPU1 \n", computador.titulo);
+                return 0;
+            } else if (computador2.pontuacao == PONTUACAO_MAX){
+                printf("\nPontos %s %s: %d\n", computador2.titulo, computador2.nome, computador2.pontuacao);
+                printf("\n VENCEDOR: %s CPU2 \n", computador2.titulo);
+                return 0;
+            }
+
+            printf("\nAguardando jogada do Computador....");            
+
             computador2.jogadas += 1;
             realizaDisparoIA(&computador2, &computador, jogo.dificuldade, computador2.jogadas-2);
-
-            printf("\nAguardando jogada do Computador....");
 
             while (computador2.acertouAnterior == true && computador2.pontuacao != PONTUACAO_MAX){
 
@@ -1867,24 +1880,15 @@ int main(){
                 realizaDisparoIA(&computador2, &computador, jogo.dificuldade, computador2.jogadas-2);
                 printf("\n");
 
-                printf("\nAguardando jogada do Computador....");
             }
 
             if (computador.pontuacao == PONTUACAO_MAX){
-                clock_t fim = clock();
-                float tempo = ((float)(fim - comeco)/CLOCKS_PER_SEC)/60;
-
                 printf("\nPontos %s %s: %d\n", computador.titulo, computador.nome, computador.pontuacao);
                 printf("\n VENCEDOR: %s CPU1 \n", computador.titulo);
-                printf("Em apenas %4.2f minutos!\n", tempo);
                 return 0;
             } else if (computador2.pontuacao == PONTUACAO_MAX){
-                clock_t fim = clock();
-                float tempo = ((float)(fim - comeco)/CLOCKS_PER_SEC)/60;
-
                 printf("\nPontos %s %s: %d\n", computador2.titulo, computador2.nome, computador2.pontuacao);
                 printf("\n VENCEDOR: %s CPU2 \n", computador2.titulo);
-                printf("Em apenas %4.2f minutos!\n", tempo);
                 return 0;
             }
 
