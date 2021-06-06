@@ -198,7 +198,7 @@ void imprimeInventario(){
     char I_navio1[4][15] = {"#  1","Submarino   ","SS    ","    2     #"};
     char I_navio2[4][15] = {"#  2","Destroyer   ","DDD   ","    3     #"};
     char I_navio3[4][15] = {"#  3","Cruzador    ","CCCC  ","    4     #"};
-    char I_navio4[4][15] = {"#  4","Porta-Aviões","PPPPP ","    5     #"};
+    char I_navio4[4][15] = {"#  4","Porta-Avioes","PPPPP ","    5     #"};
     int i;
 
     printf("\n");
@@ -253,7 +253,7 @@ void preencheTabuleiro(char tabuleiro[TAMANHO][TAMANHO]){
         tabuleiro[i][0] = letra;
         letra++;
     }
-    // acidionando água
+    // acidionando agua
     for (int i = 1; i < TAMANHO; i++){
         for (int j = 1; j < TAMANHO; j++){
             tabuleiro[i][j] = '~';
@@ -380,7 +380,7 @@ void recuperaNomeNavio(char classe, char nome[20]){
         nome[i] = '\0';
     } else if (classe == 'P'){
         int i;
-        char navio[ ] = {"Porta-Aviões"};
+        char navio[ ] = {"Porta-Avioes"};
         for(i = 0; i < strlen(navio); i++){
             nome[i] = navio[i];
         }
@@ -478,13 +478,13 @@ bool verificaPosicao(bool posicaoInicial, char tabuleiro[TAMANHO][TAMANHO], bool
         int colideIE = 0, colideID = 0, colideJE = 0, colideJD = 0;
 
         if (i > 74 || i < 65){
-            if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
+            if (automatico == false) { printf("\nDigite uma posicao valida!\n"); }
             return false;
         } else if (j > 57 || j < 48){
-            if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
+            if (automatico == false) { printf("\nDigite uma posicao valida!\n"); }
             return false;
         } else if (tabuleiro[i-64][j-47] != '~'){
-            if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
+            if (automatico == false) { printf("\nDigite uma posicao valida!\n"); }
             return false;
         } else {
             for (int a = 0; a < tamanho; a++){
@@ -520,7 +520,7 @@ bool verificaPosicao(bool posicaoInicial, char tabuleiro[TAMANHO][TAMANHO], bool
                 }
             }
             if (colideIE != 0 && colideJD != 0 && colideID != 0 && colideJE != 0){
-                if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
+                if (automatico == false) { printf("\nDigite uma posicao valida!\n"); }
                 return false;
             } else {
                 return true;
@@ -529,39 +529,39 @@ bool verificaPosicao(bool posicaoInicial, char tabuleiro[TAMANHO][TAMANHO], bool
     } else if (posicaoInicial == false) {
 
         if (i2 > 74 || i2 < 65){
-            if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
+            if (automatico == false) { printf("\nDigite uma posicao valida!\n"); }
             return false;
         } else if (j2 > 57 || j2 < 48){
-            if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
+            if (automatico == false) { printf("\nDigite uma posicao valida!\n"); }
             return false;
         } else if (i != i2 && j != j2){
-            if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
+            if (automatico == false) { printf("\nDigite uma posicao valida!\n"); }
             return false;
         } else if (((((j2 - j) < 0) ? -1*(j2-j) : (j2-j)) > tamanho-1) || 
                   ((((i2 - i) < 0) ? -1*(i2-i) : (i2-i)) > tamanho-1) ){
-            if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
+            if (automatico == false) { printf("\nDigite uma posicao valida!\n"); }
             return false;
         } else if ( tabuleiro[i2-64][j2-47] != '~') {
-            if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
+            if (automatico == false) { printf("\nDigite uma posicao valida!\n"); }
             return false;
         } else if (i==i2){
 
             for (int m = j-47+1; m < j2-47; m++){
                 if (tabuleiro[i-64][m] != '~'){
-                    if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
+                    if (automatico == false) { printf("\nDigite uma posicao valida!\n"); }
                     return false;
                 }
             }
 
             for (int m = j2-47+1; m < j-47; m++){
                 if (tabuleiro[i-64][m] != '~'){
-                    if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
+                    if (automatico == false) { printf("\nDigite uma posicao valida!\n"); }
                     return false;
                 }
             }
 
             if ( (((j2 - j) < 0) ? -1*(j2-j) : (j2-j)) < tamanho-1){
-                if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
+                if (automatico == false) { printf("\nDigite uma posicao valida!\n"); }
                 return false;
             } else {
                 return true;
@@ -570,20 +570,20 @@ bool verificaPosicao(bool posicaoInicial, char tabuleiro[TAMANHO][TAMANHO], bool
 
             for (int m = i-64+1; m < i2-64; m++){
                 if (tabuleiro[m][j-47] != '~'){
-                    if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
+                    if (automatico == false) { printf("\nDigite uma posicao valida!\n"); }
                     return false;
                 }
             }
 
             for (int m = i2-64+1; m < i-64; m++){
                 if (tabuleiro[m][j-47] != '~'){
-                    if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
+                    if (automatico == false) { printf("\nDigite uma posicao valida!\n"); }
                     return false;
                 }
             }
 
             if ( (((i2 - i) < 0) ? -1*(i2-i) : (i2-i)) < tamanho-1){
-                if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
+                if (automatico == false) { printf("\nDigite uma posicao valida!\n"); }
                 return false;
             } else {
                 return true;
@@ -619,7 +619,7 @@ void setTabuleiro(Jogador *jogador, Navio *navio, Jogo *jogo, bool automatico){
     bool posicaoValidaI = false, posicaoValidaF = false;
 
     printf("\n");
-    if ((*jogador).humano == true && automatico == false ) { printf("\nDigite as posições do %s!\n", (*navio).nome); }
+    if ((*jogador).humano == true && automatico == false ) { printf("\nDigite as posicoes do %s!\n", (*navio).nome); }
 
     while (posicaoValidaI == false){
 
@@ -1273,9 +1273,9 @@ void realizaDisparo(Jogador *jogador, Jogador *jogadorAlvo, Jogo *jogo){
         j = posicao[1];
 
         if (i > 74 || i < 65){
-            printf("\nDigite uma posição válida!\n");
+            printf("\nDigite uma posicao valida!\n");
         } else if (j > 57 || j < 48){
-            printf("\nDigite uma posição válida!\n");
+            printf("\nDigite uma posicao valida!\n");
         } else {
             jogadaValida = verificaJogada(i, j, (*jogador).jogadasRealizadas);
 
@@ -1412,7 +1412,7 @@ int main(){
 
     Navio cruzador = setNavio("Cruzador", 'C', 4);
 
-    Navio portaAviao = setNavio("Porta-Aviões", 'P', 5);
+    Navio portaAviao = setNavio("Porta-Avioes", 'P', 5);
   
     Jogo jogo = setJogo();
 
@@ -1437,7 +1437,7 @@ int main(){
 
         while (satisfeito == false){
 
-            printf("\nDeseja que o computador preencha o Tabuleiro para você?\n");
+            printf("\nDeseja que o computador preencha o Tabuleiro para voce?\n");
 
             printf("\n [1] - Sim!");
             printf("\n [2] - Nao!\n");
@@ -1582,7 +1582,7 @@ int main(){
 
         while (satisfeito == false){
 
-            printf("\nDeseja que o computador preencha o Tabuleiro para você?\n");
+            printf("\nDeseja que o computador preencha o Tabuleiro para voce?\n");
 
             printf("\n [1] - Sim!");
             printf("\n [2] - Nao!\n");
@@ -1668,7 +1668,7 @@ int main(){
 
         while (satisfeito == false){
 
-            printf("\nDeseja que o computador preencha o Tabuleiro para você?\n");
+            printf("\nDeseja que o computador preencha o Tabuleiro para voce?\n");
 
             printf("\n [1] - Sim!");
             printf("\n [2] - Nao!\n");
