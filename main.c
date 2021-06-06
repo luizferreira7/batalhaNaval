@@ -123,7 +123,7 @@
                 } else if(tabuleiro[i][j] == '*'){
                     COLOR_PRINT(tabuleiro[i][j],4,1);
                 } else if (j == 0){
-                    printf("%c", tabuleiro[i][j]);
+                    printf(" %c ", tabuleiro[i][j]);
                 } else if (tabuleiro[i][j] == 'S' || tabuleiro[i][j] == 'C' || 
                         tabuleiro[i][j] == 'H' || tabuleiro[i][j] == 'D' || 
                         tabuleiro[i][j] == 'P'){
