@@ -1411,13 +1411,50 @@ int main(){
 
         imprimeTabuleiro(jogador1.tabuleiro);
 
-        setTabuleiro(&jogador1, &submarino, &jogo);
+        bool satisfeito = false;
 
-        setTabuleiro(&jogador1, &destroyer, &jogo);
+        while (satisfeito == false){
 
-        setTabuleiro(&jogador1, &cruzador, &jogo);
+            setTabuleiro(&jogador1, &submarino, &jogo);
 
-        setTabuleiro(&jogador1, &portaAviao, &jogo);
+            setTabuleiro(&jogador1, &destroyer, &jogo);
+
+            setTabuleiro(&jogador1, &cruzador, &jogo);
+
+            setTabuleiro(&jogador1, &portaAviao, &jogo);
+
+            printf("\nEsta satisfeito ou deseja recolocar os navios?\n");
+
+            int escolha = 0;
+
+            printf("\n [1] - Sim, estou satisfeito!");
+            printf("\n [2] - Nao, quero alterar!\n");
+
+            while (escolha != 1 && escolha != 2){
+
+                printf("\nEscolha: ");
+
+                char dif, c;
+
+                while ( (c = getchar() ) != '\n' && c != EOF){
+                    dif = c;
+                }
+
+                escolha = (dif - 48);
+
+                if (escolha != 1 && escolha != 2){
+                    printf("\nDificuldade Invalida!\n");
+                }
+
+            }
+
+            if (escolha == 1){
+                satisfeito = true;
+            } else{
+                preencheTabuleiro(jogador1.tabuleiro);
+            }
+
+        }
 
         while (jogador1.pontuacao != PONTUACAO_MAX && computador.pontuacao != PONTUACAO_MAX){
 
@@ -1542,13 +1579,50 @@ int main(){
 
         imprimeTabuleiro(jogo.tabuleiro);
         
-        setTabuleiro(&jogador1, &submarino, &jogo);
+        bool satisfeito = false;
 
-        setTabuleiro(&jogador1, &destroyer, &jogo);
+        while (satisfeito == false){
 
-        setTabuleiro(&jogador1, &cruzador, &jogo);
+            setTabuleiro(&jogador1, &submarino, &jogo);
 
-        setTabuleiro(&jogador1, &portaAviao, &jogo);
+            setTabuleiro(&jogador1, &destroyer, &jogo);
+
+            setTabuleiro(&jogador1, &cruzador, &jogo);
+
+            setTabuleiro(&jogador1, &portaAviao, &jogo);
+
+            printf("\nEsta satisfeito ou deseja recolocar os navios?\n");
+
+            int escolha = 0;
+
+            printf("\n [1] - Sim, estou satisfeito!");
+            printf("\n [2] - Nao, quero alterar!\n");
+
+            while (escolha != 1 && escolha != 2){
+
+                printf("\nEscolha: ");
+
+                char dif, c;
+
+                while ( (c = getchar() ) != '\n' && c != EOF){
+                    dif = c;
+                }
+
+                escolha = (dif - 48);
+
+                if (escolha != 1 && escolha != 2){
+                    printf("\nDificuldade Invalida!\n");
+                }
+
+            }
+
+            if (escolha == 1){
+                satisfeito = true;
+            } else{
+                preencheTabuleiro(jogador1.tabuleiro);
+            }
+
+        }
 
         printf("\nAgora, ao oponente!\n");
 
@@ -1560,13 +1634,50 @@ int main(){
 
         imprimeTabuleiro(jogo.tabuleiro);
 
-        setTabuleiro(&jogador2, &submarino, &jogo);
+        satisfeito = false;
 
-        setTabuleiro(&jogador2, &destroyer, &jogo);
+        while (satisfeito == false){
 
-        setTabuleiro(&jogador2, &cruzador, &jogo);
+            setTabuleiro(&jogador2, &submarino, &jogo);
 
-        setTabuleiro(&jogador2, &portaAviao, &jogo);
+            setTabuleiro(&jogador2, &destroyer, &jogo);
+
+            setTabuleiro(&jogador2, &cruzador, &jogo);
+
+            setTabuleiro(&jogador2, &portaAviao, &jogo);
+
+            printf("\nEsta satisfeito ou deseja recolocar os navios?\n");
+
+            int escolha = 0;
+
+            printf("\n [1] - Sim, estou satisfeito!");
+            printf("\n [2] - Nao, quero alterar!\n");
+
+            while (escolha != 1 && escolha != 2){
+
+                printf("\nEscolha: ");
+
+                char dif, c;
+
+                while ( (c = getchar() ) != '\n' && c != EOF){
+                    dif = c;
+                }
+
+                escolha = (dif - 48);
+
+                if (escolha != 1 && escolha != 2){
+                    printf("\nDificuldade Invalida!\n");
+                }
+
+            }
+
+            if (escolha == 1){
+                satisfeito = true;
+            } else{
+                preencheTabuleiro(jogador2.tabuleiro);
+            }
+
+        }
 
         while (jogador1.pontuacao != PONTUACAO_MAX && jogador2.pontuacao != PONTUACAO_MAX){
 
