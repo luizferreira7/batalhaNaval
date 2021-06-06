@@ -1513,6 +1513,7 @@ int main(){
                 printf("\nPontos %s %s: %d\n", computador.titulo, computador.nome, computador.pontuacao);
 
                 printf("\nComo Acertou a anterior, realize novo disparo:\n");
+                printf("\nAguardando jogada do Computador....");
 
                 computador.jogadas += 1;
                 realizaDisparoIA(&computador, &jogador1, jogo.dificuldade, computador.jogadas-2);
@@ -1809,6 +1810,7 @@ int main(){
                 printf("\nPontos %s %s: %d\n", computador.titulo, computador.nome, computador.pontuacao);
 
                 printf("\nComo Acertou a anterior, realize novo disparo:\n");
+                printf("\nAguardando jogada do Computador....");
 
                 computador.jogadas += 1;
                 realizaDisparoIA(&computador, &computador2, jogo.dificuldade, computador.jogadas-2);
@@ -1830,6 +1832,7 @@ int main(){
                 printf("\nPontos %s %s: %d\n", computador2.titulo, computador2.nome, computador2.pontuacao);
 
                 printf("\nComo Acertou a anterior, realize novo disparo:\n");
+                printf("\nAguardando jogada do Computador....");
 
                 computador2.jogadas += 1;
                 realizaDisparoIA(&computador2, &computador, jogo.dificuldade, computador2.jogadas-2);
