@@ -1492,7 +1492,7 @@ int main(){
             if (jogador1.pontuacao == PONTUACAO_MAX){
                 clock_t fim = clock();
                 float tempo = ((float)(fim - comeco)/CLOCKS_PER_SEC)/60;
-                printf("\nVENCEDOR PLAYER: %s\n", jogador1.nome);
+                printf("\nVENCEDOR: %s\n", jogador1.nome);
                 printf("Em apenas %f minutos!\n", tempo);
                 return 0;
             } else if (computador.pontuacao == PONTUACAO_MAX){
@@ -1651,13 +1651,13 @@ int main(){
             if (jogador1.pontuacao == PONTUACAO_MAX){
                 clock_t fim = clock();
                 float tempo = ((float)(fim - comeco)/CLOCKS_PER_SEC)/60;
-                printf("\n VENCEDOR PLAYER: %s \n", jogador1.nome);
+                printf("\n VENCEDOR: %s \n", jogador1.nome);
                 printf("Em apenas %f minutos!\n", tempo);
                 return 0;
             } else if (jogador2.pontuacao == PONTUACAO_MAX){
                 clock_t fim = clock();
                 float tempo = ((float)(fim - comeco)/CLOCKS_PER_SEC)/60;
-                printf("\n VENCEDOR PLAYER: %s \n", jogador2.nome);
+                printf("\n VENCEDOR: %s \n", jogador2.nome);
                 printf("Em apenas %f minutos!\n", tempo);
                 return 0;
             }
