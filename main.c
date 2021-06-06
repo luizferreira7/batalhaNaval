@@ -127,7 +127,7 @@
                 } else if (tabuleiro[i][j] == 'S' || tabuleiro[i][j] == 'C' || 
                         tabuleiro[i][j] == 'H' || tabuleiro[i][j] == 'D' || 
                         tabuleiro[i][j] == 'P'){
-                    COLOR_PRINT(tabuleiro[i][j],6,1);        
+                    COLOR_PRINT(" ~ ",11,1);        
                 } else {
                     printf("%c", tabuleiro[i][j]);
                 }
@@ -1179,7 +1179,7 @@ void realizaDisparo(Jogador *jogador, Jogador *jogadorAlvo, Jogo *jogo){
 
         int w = 0;
 
-        printf("\n %s %s, digite a posicao para disparo!\n",jogador.titulo, jogador.nome);
+        printf("\n %s %s, digite a posicao para disparo!\n", (*jogador).titulo, (*jogador).nome);
 
         printf("Posicao: ");
 
