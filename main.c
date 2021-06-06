@@ -247,7 +247,7 @@ void sorteiaTitulo(char titulo[30]){
     }
 }
 
-Jogador setJogador(int humano){
+Jogador setJogador(int humano, char nome[20]){
     Jogador jogador;
 
     if (humano == 1){
@@ -267,7 +267,6 @@ Jogador setJogador(int humano){
         jogador.jogadas = 0;
     } else {
         int i;
-        char nome[ ] = "Computador";
 
         jogador.humano = false;
 
@@ -1368,11 +1367,11 @@ int main(){
 
     if (jogo.modoJogo == 1){
 
-        Jogador jogador1 = setJogador(humano);
+        Jogador jogador1 = setJogador(humano, "humano");
 
         printf("\n\nJogador %s %s\n", jogador1.titulo, jogador1.nome);
         
-        Jogador computador = setJogador(comp);
+        Jogador computador = setJogador(comp, "CPU");
 
         printf("\n\nAdversario %s %s\n", computador.titulo, computador.nome);
 
@@ -1403,6 +1402,8 @@ int main(){
         setTabuleiro(&jogador1, &portaAviao, &jogo);
 
         while (jogador1.pontuacao != PONTUACAO_MAX && computador.pontuacao != PONTUACAO_MAX){
+
+            printf("\n");
 
             jogador1.jogadas += 1;
             realizaDisparo(&jogador1, &computador, &jogo);
@@ -1441,7 +1442,7 @@ int main(){
 
     } else if (jogo.modoJogo == 3) {
 
-        Jogador computador = setJogador(comp);
+        Jogador computador = setJogador(comp, "CPU 1");
 
         printf("\n\nAdversario %s %s\n", computador.titulo, computador.nome);
 
@@ -1453,7 +1454,7 @@ int main(){
 
         setTabuleiro(&computador, &portaAviao, &jogo);
 
-        Jogador computador2 = setJogador(comp);
+        Jogador computador2 = setJogador(comp, "CPU 2");
 
         printf("\n\nAdversario %s %s\n", computador2.titulo, computador2.nome);
 
@@ -1466,6 +1467,8 @@ int main(){
         setTabuleiro(&computador2, &portaAviao, &jogo);
 
         while (computador.pontuacao != PONTUACAO_MAX && computador2.pontuacao != PONTUACAO_MAX){
+
+            printf("\n");
 
             computador.jogadas += 1;
                 realizaDisparoIA(&computador, &computador2, jogo.dificuldade, computador.jogadas-2);
@@ -1505,7 +1508,7 @@ int main(){
 
     } else {
 
-        Jogador jogador1 = setJogador(humano);
+        Jogador jogador1 = setJogador(humano, "humano");
 
         printf("\n\nJogador %s %s\n", jogador1.titulo, jogador1.nome);
 
@@ -1523,7 +1526,7 @@ int main(){
 
         printf("\nAgora, ao oponente!\n");
 
-        Jogador jogador2 = setJogador(humano);
+        Jogador jogador2 = setJogador(humano, "humano");
 
         printf("\n\nAdversario %s %s\n", jogador2.titulo, jogador2.nome);
 
@@ -1540,6 +1543,8 @@ int main(){
         setTabuleiro(&jogador2, &portaAviao, &jogo);
 
         while (jogador1.pontuacao != PONTUACAO_MAX && jogador2.pontuacao != PONTUACAO_MAX){
+
+            printf("\n");
 
             jogador1.jogadas += 1;
                 realizaDisparo(&jogador1, &jogador2, &jogo);
