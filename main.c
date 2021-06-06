@@ -239,7 +239,6 @@ void imprimeInventario(){
 
 }
 
-
 void preencheTabuleiro(char tabuleiro[TAMANHO][TAMANHO]){
     // adicionando números a linha
     char numero = 47;
