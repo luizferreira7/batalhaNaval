@@ -1378,7 +1378,7 @@ int main(){
 
     int humano = 1;
     int comp = 0;
-
+    float tempo, comeco, fim;
     Navio submarino = setNavio("Submarino", 'S', 2);
 
     Navio destroyer = setNavio("Destroyer", 'D', 3);
@@ -1390,7 +1390,6 @@ int main(){
     Jogo jogo = setJogo();
 
     if (jogo.modoJogo == 1){
-
         Jogador jogador1 = setJogador(humano, "humano");
 
         printf("\n\nJogador %s %s\n", jogador1.titulo, jogador1.nome);
@@ -1457,7 +1456,7 @@ int main(){
         }
 
         while (jogador1.pontuacao != PONTUACAO_MAX && computador.pontuacao != PONTUACAO_MAX){
-
+            clock_t comeco = clock();
             printf("\n");
 
             jogador1.jogadas += 1;
@@ -1491,10 +1490,16 @@ int main(){
             }
 
             if (jogador1.pontuacao == PONTUACAO_MAX){
+                clock_t fim = clock();
+                float tempo = ((float)(fim - comeco)/CLOCKS_PER_SEC)/60;
                 printf("\nVENCEDOR PLAYER: %s\n", jogador1.nome);
+                printf("Em apenas %f minutos!\n", tempo);
                 return 0;
             } else if (computador.pontuacao == PONTUACAO_MAX){
+                clock_t fim = clock();
+                float tempo = ((float)(fim - comeco)/CLOCKS_PER_SEC)/60;
                 printf("\nVENCEDOR: CPU\n");
+                printf("Em apenas %f minutos!\n", tempo);
                 return 0;
             }
         }
@@ -1610,7 +1615,7 @@ int main(){
         }
 
         while (jogador1.pontuacao != PONTUACAO_MAX && jogador2.pontuacao != PONTUACAO_MAX){
-
+            clock_t comeco = clock();
             printf("\n");
 
             jogador1.jogadas += 1;
@@ -1644,10 +1649,16 @@ int main(){
             }
 
             if (jogador1.pontuacao == PONTUACAO_MAX){
+                clock_t fim = clock();
+                float tempo = ((float)(fim - comeco)/CLOCKS_PER_SEC)/60;
                 printf("\n VENCEDOR PLAYER: %s \n", jogador1.nome);
+                printf("Em apenas %f minutos!\n", tempo);
                 return 0;
             } else if (jogador2.pontuacao == PONTUACAO_MAX){
+                clock_t fim = clock();
+                float tempo = ((float)(fim - comeco)/CLOCKS_PER_SEC)/60;
                 printf("\n VENCEDOR PLAYER: %s \n", jogador2.nome);
+                printf("Em apenas %f minutos!\n", tempo);
                 return 0;
             }
         }
@@ -1679,7 +1690,7 @@ int main(){
         setTabuleiro(&computador2, &portaAviao, &jogo);
 
         while (computador.pontuacao != PONTUACAO_MAX && computador2.pontuacao != PONTUACAO_MAX){
-
+            clock_t comeco = clock();
             printf("\n");
 
             computador.jogadas += 1;
@@ -1713,10 +1724,16 @@ int main(){
             }
 
             if (computador.pontuacao == PONTUACAO_MAX){
+                clock_t fim = clock();
+                float tempo = ((float)(fim - comeco)/CLOCKS_PER_SEC)/60;
                 printf("\n VENCEDOR: CPU1 \n");
+                printf("Em apenas %f minutos!\n", tempo);
                 return 0;
             } else if (computador2.pontuacao == PONTUACAO_MAX){
+                clock_t fim = clock();
+                float tempo = ((float)(fim - comeco)/CLOCKS_PER_SEC)/60;
                 printf("\n VENCEDOR: CPU2 \n");
+                printf("Em apenas %f minutos!\n", tempo);
                 return 0;
             }
 
