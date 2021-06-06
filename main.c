@@ -74,10 +74,18 @@
                 } else if (tabuleiro[i][j]=='S' || tabuleiro[i][j]=='C'||
                     tabuleiro[i][j]=='D'||tabuleiro[i][j]=='P'){
                     agua();
-                    printf(" %c ", tabuleiro[i][j]);
+                    printf(" ~ ");
                     resetColor();
                 } else if(tabuleiro[i][j]=='~'){
                     agua();
+                    printf(" %c ", tabuleiro[i][j]);
+                    resetColor();
+                } else if (tabuleiro[i][j] == 'X'){
+                    disparoErro();
+                    printf(" %c ", tabuleiro[i][j]);
+                    resetColor();
+                } else if (tabuleiro[i][j] == '*'){
+                    disparoAcerto();
                     printf(" %c ", tabuleiro[i][j]);
                     resetColor();
                 } else {
@@ -661,6 +669,8 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
 
         case 1:
 
+            printf("Aguardando jogada do Computador....");
+
             tempo = 0;
 
             while (jogadaValida == false){
@@ -739,6 +749,9 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
             break;
 
         case 2:
+
+            printf("Aguardando jogada do Computador....");
+
 
             if ( (*computador).acertouAnterior == false){
 
@@ -899,6 +912,8 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
             break;
 
         case 3:
+
+            printf("Aguardando jogada do Computador....");
 
             if ( (*computador).acertouAnterior == false){
 
@@ -1072,6 +1087,8 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
             break;
         
         default:
+
+            printf("Aguardando jogada do Computador....");
 
             tempo = 0;
 
