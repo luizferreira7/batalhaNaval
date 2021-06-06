@@ -1373,7 +1373,7 @@ int main(){
             jogador1.jogadas += 1;
             realizaDisparo(&jogador1, &computador, &jogo);
 
-            while (jogador1.acertouAnterior == true){
+            while (jogador1.acertouAnterior == true && jogador1.pontuacao != PONTUACAO_MAX){
                 jogador1.jogadas += 1;
                 realizaDisparo(&jogador1, &computador, &jogo);
                 printf("\n");
@@ -1384,7 +1384,7 @@ int main(){
             computador.jogadas += 1;
                 realizaDisparoIA(&computador, &jogador1, jogo.dificuldade, computador.jogadas-2);
 
-            while (computador.acertouAnterior == true){
+            while (computador.acertouAnterior == true && computador.pontuacao != PONTUACAO_MAX){
                 computador.jogadas += 1;
                 realizaDisparoIA(&computador, &jogador1, jogo.dificuldade, computador.jogadas-2);
                 printf("\n");
@@ -1429,7 +1429,7 @@ int main(){
             computador.jogadas += 1;
                 realizaDisparoIA(&computador, &computador2, jogo.dificuldade, computador.jogadas-2);
 
-            while (computador.acertouAnterior == true){
+            while (computador.acertouAnterior == true && computador.pontuacao != PONTUACAO_MAX){
                 computador.jogadas += 1;
                 realizaDisparoIA(&computador, &computador2, jogo.dificuldade, computador.jogadas-2);
                 printf("\n");
@@ -1440,7 +1440,7 @@ int main(){
             computador2.jogadas += 1;
                 realizaDisparoIA(&computador2, &computador, jogo.dificuldade, computador2.jogadas-2);
 
-            while (computador2.acertouAnterior == true){
+            while (computador2.acertouAnterior == true && computador2.pontuacao != PONTUACAO_MAX){
                 computador2.jogadas += 1;
                 realizaDisparoIA(&computador2, &computador, jogo.dificuldade, computador2.jogadas-2);
                 printf("\n");
@@ -1497,7 +1497,7 @@ int main(){
             jogador1.jogadas += 1;
                 realizaDisparo(&jogador1, &jogador2, &jogo);
 
-            while (jogador1.acertouAnterior == true){
+            while (jogador1.acertouAnterior == true && jogador1.pontuacao == PONTUACAO_MAX){
                 jogador1.jogadas += 1;
                 realizaDisparo(&jogador1, &jogador2, &jogo);
                 printf("\n");
@@ -1508,7 +1508,7 @@ int main(){
             jogador2.jogadas += 1;
                 realizaDisparo(&jogador2, &jogador1, &jogo);
 
-            while (jogador2.acertouAnterior == true){
+            while (jogador2.acertouAnterior == true && jogador2.pontuacao == PONTUACAO_MAX){
                 jogador2.jogadas += 1;
                 realizaDisparo(&jogador2, &jogador1, &jogo);
                 printf("\n");
@@ -1520,9 +1520,7 @@ int main(){
                 printf("\n VENCEDOR PLAYER: %s \n", jogador2.nome);
                 return 0;
             }
-
         }
-
     }
 
     return 0;
