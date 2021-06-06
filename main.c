@@ -712,7 +712,7 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
 
             if ((*jogador).tabuleiro[i-64][j-47] != '~'){
 
-                printf("\nAcertou!\n");
+                printf("\n%s %s Acertou!\n", (*computador).titulo, (*computador).nome);
 
                 if (verificaSeAfundou((*jogador).tabuleiro[i-64][j-47], (*jogador).tabuleiro)){
 
@@ -727,11 +727,15 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
                 (*computador).pontuacao += 1;
                 (*computador).acertouAnterior = true;
             } else {
+
                 (*jogador).tabuleiro[i-64][j-47] = 'X';
                 (*computador).acertouAnterior = false;
+
+                printf("\n%s %s Errou\n", (*computador).titulo, (*computador).nome);
             }
 
             imprimeTabuleiro((*jogador).tabuleiro);
+            printf("Tabuleiro de %s %s", (*jogador).titulo, (*jogador).nome );
 
             break;
 
@@ -789,7 +793,7 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
 
                 if ((*jogador).tabuleiro[i-64][j-47] != '~'){
 
-                    printf("\nAcertou!\n");
+                    printf("\n%s %s Acertou!\n", (*computador).titulo, (*computador).nome);
 
                     if (verificaSeAfundou((*jogador).tabuleiro[i-64][j-47], (*jogador).tabuleiro)){
 
@@ -806,9 +810,12 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
                 } else {
                     (*jogador).tabuleiro[i-64][j-47] = 'X';
                     (*computador).acertouAnterior = false;
+
+                    printf("\n%s %s Errou\n", (*computador).titulo, (*computador).nome);
                 }
 
                 imprimeTabuleiro((*jogador).tabuleiro);
+                printf("Tabuleiro de %s %s", (*jogador).titulo, (*jogador).nome );
 
             } else {
 
@@ -864,7 +871,7 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
 
                 if ((*jogador).tabuleiro[i-64][j-47] != '~'){
 
-                    printf("\nAcertou!\n");
+                    printf("\n%s %s Acertou!\n", (*computador).titulo, (*computador).nome);
 
                     if (verificaSeAfundou((*jogador).tabuleiro[i-64][j-47], (*jogador).tabuleiro)){
 
@@ -881,9 +888,12 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
                 } else {
                     (*jogador).tabuleiro[i-64][j-47] = 'X';
                     (*computador).acertouAnterior = false;
+
+                    printf("\n%s %s Errou\n", (*computador).titulo, (*computador).nome);
                 }
 
                 imprimeTabuleiro((*jogador).tabuleiro);
+                printf("Tabuleiro de %s %s", (*jogador).titulo, (*jogador).nome );
 
             }
 
@@ -943,7 +953,7 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
 
                 if ((*jogador).tabuleiro[i-64][j-47] != '~'){
 
-                    printf("\nAcertou!\n");
+                    printf("\n%s %s Acertou!\n", (*computador).titulo, (*computador).nome);
 
                     if (verificaSeAfundou((*jogador).tabuleiro[i-64][j-47], (*jogador).tabuleiro)){
 
@@ -960,9 +970,12 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
                 } else {
                     (*jogador).tabuleiro[i-64][j-47] = 'X';
                     (*computador).acertouAnterior = false;
+
+                    printf("\n%s %s Errou\n", (*computador).titulo, (*computador).nome);
                 }
 
                 imprimeTabuleiro((*jogador).tabuleiro);
+                printf("Tabuleiro de %s %s", (*jogador).titulo, (*jogador).nome );
 
             } else {
 
@@ -1032,7 +1045,7 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
 
                 if ((*jogador).tabuleiro[i-64][j-47] != '~'){
 
-                    printf("\nAcertou!\n");
+                    printf("\n%s %s Acertou!\n", (*computador).titulo, (*computador).nome);
 
                     if (verificaSeAfundou((*jogador).tabuleiro[i-64][j-47], (*jogador).tabuleiro)){
 
@@ -1049,9 +1062,12 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
                 } else {
                     (*jogador).tabuleiro[i-64][j-47] = 'X';
                     (*computador).acertouAnterior = false;
+
+                    printf("\n%s %s Errou\n", (*computador).titulo, (*computador).nome);
                 }
 
                 imprimeTabuleiro((*jogador).tabuleiro);
+                printf("Tabuleiro de %s %s", (*jogador).titulo, (*jogador).nome );
 
             }
             break;
@@ -1106,7 +1122,7 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
 
             if ((*jogador).tabuleiro[i-64][j-47] != '~'){
 
-                printf("\nAcertou!\n");
+                printf("\n%s %s Acertou!\n", (*computador).titulo, (*computador).titulo);
 
                 if (verificaSeAfundou((*jogador).tabuleiro[i-64][j-47], (*jogador).tabuleiro)){
 
@@ -1123,9 +1139,12 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
             } else {
                 (*jogador).tabuleiro[i-64][j-47] = 'X';
                 (*computador).acertouAnterior = false;
+
+                printf("\n%s %s Errou\n", (*computador).titulo, (*computador).nome);
             }
 
             imprimeTabuleiro((*jogador).tabuleiro);
+            printf("Tabuleiro de %s %s", (*jogador).titulo, (*jogador).nome );
 
             break;
     }
@@ -1179,7 +1198,7 @@ void realizaDisparo(Jogador *jogador, Jogador *jogadorAlvo, Jogo *jogo){
 
     if ((*jogadorAlvo).tabuleiro[i-64][j-47] != '~'){
 
-        printf("\nAcertou!\n");
+        printf("\n%s %s Acertou!\n", (*jogador).titulo, (*jogador).nome);
 
         if (verificaSeAfundou((*jogadorAlvo).tabuleiro[i-64][j-47], (*jogadorAlvo).tabuleiro)){
 
@@ -1197,11 +1216,11 @@ void realizaDisparo(Jogador *jogador, Jogador *jogadorAlvo, Jogo *jogo){
     } else {
         (*jogadorAlvo).tabuleiro[i-64][j-47] = 'X';
         (*jogador).acertouAnterior = false;
-        printf("\nErrou!\n");
+        printf("\n%s %s Errou!\n", (*jogador).titulo, (*jogador).nome);
     }
 
     ((*jogo).modoJogo == 1) ? imprimeTabuleiro((*jogadorAlvo).tabuleiro) : imprimeTabuleiroOculto((*jogadorAlvo).tabuleiro);
-
+    printf("Tabuleiro de %s %s", (*jogadorAlvo).titulo, (*jogadorAlvo).nome );
 }
 
 int escolheModoJogo(){
@@ -1389,6 +1408,9 @@ int main(){
             realizaDisparo(&jogador1, &computador, &jogo);
 
             while (jogador1.acertouAnterior == true && jogador1.pontuacao != PONTUACAO_MAX){
+
+                printf("\nComo Acertou a anterior, realize novo disparo:\n");
+
                 jogador1.jogadas += 1;
                 realizaDisparo(&jogador1, &computador, &jogo);
                 printf("\n");
@@ -1400,6 +1422,9 @@ int main(){
                 realizaDisparoIA(&computador, &jogador1, jogo.dificuldade, computador.jogadas-2);
 
             while (computador.acertouAnterior == true && computador.pontuacao != PONTUACAO_MAX){
+
+                printf("\nComo Acertou a anterior, realize novo disparo:\n");
+
                 computador.jogadas += 1;
                 realizaDisparoIA(&computador, &jogador1, jogo.dificuldade, computador.jogadas-2);
                 printf("\n");
@@ -1446,6 +1471,9 @@ int main(){
                 realizaDisparoIA(&computador, &computador2, jogo.dificuldade, computador.jogadas-2);
 
             while (computador.acertouAnterior == true && computador.pontuacao != PONTUACAO_MAX){
+
+                printf("\nComo Acertou a anterior, realize novo disparo:\n");
+
                 computador.jogadas += 1;
                 realizaDisparoIA(&computador, &computador2, jogo.dificuldade, computador.jogadas-2);
                 printf("\n");
@@ -1457,6 +1485,9 @@ int main(){
                 realizaDisparoIA(&computador2, &computador, jogo.dificuldade, computador2.jogadas-2);
 
             while (computador2.acertouAnterior == true && computador2.pontuacao != PONTUACAO_MAX){
+
+                printf("\nComo Acertou a anterior, realize novo disparo:\n");
+
                 computador2.jogadas += 1;
                 realizaDisparoIA(&computador2, &computador, jogo.dificuldade, computador2.jogadas-2);
                 printf("\n");
@@ -1514,6 +1545,9 @@ int main(){
                 realizaDisparo(&jogador1, &jogador2, &jogo);
 
             while (jogador1.acertouAnterior == true && jogador1.pontuacao == PONTUACAO_MAX){
+
+                printf("\nComo Acertou a anterior, realize novo disparo:\n");
+
                 jogador1.jogadas += 1;
                 realizaDisparo(&jogador1, &jogador2, &jogo);
                 printf("\n");
@@ -1525,6 +1559,9 @@ int main(){
                 realizaDisparo(&jogador2, &jogador1, &jogo);
 
             while (jogador2.acertouAnterior == true && jogador2.pontuacao == PONTUACAO_MAX){
+
+                printf("\nComo Acertou a anterior, realize novo disparo:\n");
+
                 jogador2.jogadas += 1;
                 realizaDisparo(&jogador2, &jogador1, &jogo);
                 printf("\n");
