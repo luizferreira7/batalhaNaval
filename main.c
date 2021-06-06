@@ -545,6 +545,21 @@ bool verificaPosicao(bool posicaoInicial, char tabuleiro[TAMANHO][TAMANHO], bool
             if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
             return false;
         } else if (i==i2){
+
+            for (int m = j-47+1; m < j2-47; m++){
+                if (tabuleiro[i-64][m] != '~'){
+                    if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
+                    return false;
+                }
+            }
+
+            for (int m = j2-47+1; m < j-47; m++){
+                if (tabuleiro[i-64][m] != '~'){
+                    if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
+                    return false;
+                }
+            }
+
             if ( (((j2 - j) < 0) ? -1*(j2-j) : (j2-j)) < tamanho-1){
                 if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
                 return false;
@@ -552,6 +567,21 @@ bool verificaPosicao(bool posicaoInicial, char tabuleiro[TAMANHO][TAMANHO], bool
                 return true;
             }
         } else if (j==j2){
+
+            for (int m = i-64+1; m < i2-64; m++){
+                if (tabuleiro[m][j-47] != '~'){
+                    if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
+                    return false;
+                }
+            }
+
+            for (int m = i2-64+1; m < i-64; m++){
+                if (tabuleiro[m][j-47] != '~'){
+                    if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
+                    return false;
+                }
+            }
+
             if ( (((i2 - i) < 0) ? -1*(i2-i) : (i2-i)) < tamanho-1){
                 if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
                 return false;
