@@ -1499,77 +1499,7 @@ int main(){
             }
         }
 
-    } else if (jogo.modoJogo == 3) {
-
-        Jogador computador = setJogador(comp, "CPU 1");
-
-        printf("\n\nAdversario %s %s\n", computador.titulo, computador.nome);
-
-        setTabuleiro(&computador, &submarino, &jogo);
-
-        setTabuleiro(&computador, &destroyer, &jogo);
-
-        setTabuleiro(&computador, &cruzador, &jogo);
-
-        setTabuleiro(&computador, &portaAviao, &jogo);
-
-        Jogador computador2 = setJogador(comp, "CPU 2");
-
-        printf("\n\nAdversario %s %s\n", computador2.titulo, computador2.nome);
-
-        setTabuleiro(&computador2, &submarino, &jogo);
-
-        setTabuleiro(&computador2, &destroyer, &jogo);
-
-        setTabuleiro(&computador2, &cruzador, &jogo);
-
-        setTabuleiro(&computador2, &portaAviao, &jogo);
-
-        while (computador.pontuacao != PONTUACAO_MAX && computador2.pontuacao != PONTUACAO_MAX){
-
-            printf("\n");
-
-            computador.jogadas += 1;
-                realizaDisparoIA(&computador, &computador2, jogo.dificuldade, computador.jogadas-2);
-
-            while (computador.acertouAnterior == true && computador.pontuacao != PONTUACAO_MAX){
-
-                printf("\nPontos %s %s: %d\n", computador.titulo, computador.nome, computador.pontuacao);
-
-                printf("\nComo Acertou a anterior, realize novo disparo:\n");
-
-                computador.jogadas += 1;
-                realizaDisparoIA(&computador, &computador2, jogo.dificuldade, computador.jogadas-2);
-                printf("\n");
-            }
-
-            printf("\n");
-
-            computador2.jogadas += 1;
-                realizaDisparoIA(&computador2, &computador, jogo.dificuldade, computador2.jogadas-2);
-
-            while (computador2.acertouAnterior == true && computador2.pontuacao != PONTUACAO_MAX){
-
-                printf("\nPontos %s %s: %d\n", computador2.titulo, computador2.nome, computador2.pontuacao);
-
-                printf("\nComo Acertou a anterior, realize novo disparo:\n");
-
-                computador2.jogadas += 1;
-                realizaDisparoIA(&computador2, &computador, jogo.dificuldade, computador2.jogadas-2);
-                printf("\n");
-            }
-
-            if (computador.pontuacao == PONTUACAO_MAX){
-                printf("\n VENCEDOR: CPU1 \n");
-                return 0;
-            } else if (computador2.pontuacao == PONTUACAO_MAX){
-                printf("\n VENCEDOR: CPU2 \n");
-                return 0;
-            }
-
-        }
-
-    } else {
+    } else if (jogo.modoJogo == 2) {
 
         Jogador jogador1 = setJogador(humano, "humano");
 
@@ -1721,6 +1651,77 @@ int main(){
                 return 0;
             }
         }
+
+    } else if (jogo.modoJogo == 3) {
+
+        Jogador computador = setJogador(comp, "CPU 1");
+
+        printf("\n\nAdversario %s %s\n", computador.titulo, computador.nome);
+
+        setTabuleiro(&computador, &submarino, &jogo);
+
+        setTabuleiro(&computador, &destroyer, &jogo);
+
+        setTabuleiro(&computador, &cruzador, &jogo);
+
+        setTabuleiro(&computador, &portaAviao, &jogo);
+
+        Jogador computador2 = setJogador(comp, "CPU 2");
+
+        printf("\n\nAdversario %s %s\n", computador2.titulo, computador2.nome);
+
+        setTabuleiro(&computador2, &submarino, &jogo);
+
+        setTabuleiro(&computador2, &destroyer, &jogo);
+
+        setTabuleiro(&computador2, &cruzador, &jogo);
+
+        setTabuleiro(&computador2, &portaAviao, &jogo);
+
+        while (computador.pontuacao != PONTUACAO_MAX && computador2.pontuacao != PONTUACAO_MAX){
+
+            printf("\n");
+
+            computador.jogadas += 1;
+                realizaDisparoIA(&computador, &computador2, jogo.dificuldade, computador.jogadas-2);
+
+            while (computador.acertouAnterior == true && computador.pontuacao != PONTUACAO_MAX){
+
+                printf("\nPontos %s %s: %d\n", computador.titulo, computador.nome, computador.pontuacao);
+
+                printf("\nComo Acertou a anterior, realize novo disparo:\n");
+
+                computador.jogadas += 1;
+                realizaDisparoIA(&computador, &computador2, jogo.dificuldade, computador.jogadas-2);
+                printf("\n");
+            }
+
+            printf("\n");
+
+            computador2.jogadas += 1;
+                realizaDisparoIA(&computador2, &computador, jogo.dificuldade, computador2.jogadas-2);
+
+            while (computador2.acertouAnterior == true && computador2.pontuacao != PONTUACAO_MAX){
+
+                printf("\nPontos %s %s: %d\n", computador2.titulo, computador2.nome, computador2.pontuacao);
+
+                printf("\nComo Acertou a anterior, realize novo disparo:\n");
+
+                computador2.jogadas += 1;
+                realizaDisparoIA(&computador2, &computador, jogo.dificuldade, computador2.jogadas-2);
+                printf("\n");
+            }
+
+            if (computador.pontuacao == PONTUACAO_MAX){
+                printf("\n VENCEDOR: CPU1 \n");
+                return 0;
+            } else if (computador2.pontuacao == PONTUACAO_MAX){
+                printf("\n VENCEDOR: CPU2 \n");
+                return 0;
+            }
+
+        }
+
     }
 
     return 0;
