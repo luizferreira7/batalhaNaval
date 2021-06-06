@@ -11,6 +11,82 @@
 
     #define OS 0
 
+    void agua(){
+        printf("\033[36m\033[44m");
+    }
+
+    void resetColor(){
+        printf("\033[0m");
+    }
+
+    void disparoErro(){
+        printf("\033[37m\033[44m");
+    }
+
+    void disparoAcerto(){
+        printf("\033[31m\033[44m");
+    }
+
+    void navio(){
+        printf("\033[33m\033[44m");
+    }
+
+    void imprimeTabuleiro(char tabuleiro[TAMANHO][TAMANHO]){
+
+        for(int i = 0; i < TAMANHO; i++){
+            printf("\n");
+            for(int j = 0; j < TAMANHO; j++){
+                if (tabuleiro[i][j] == '~'){
+                    agua();
+                    printf(" %c ", tabuleiro[i][j]);
+                    resetColor();
+                } else if (tabuleiro[i][j] == 'X'){
+                    disparoErro();
+                    printf(" %c ", tabuleiro[i][j]);
+                    resetColor();
+                } else if (tabuleiro[i][j] == '*'){
+                    disparoAcerto();
+                    printf(" %c ", tabuleiro[i][j]);
+                    resetColor();
+                } else if (j == 0){
+                    resetColor();
+                    printf(" %c ", tabuleiro[i][j]);
+                } else if (tabuleiro[i][j] == 'S' || tabuleiro[i][j] == 'C' || 
+                        tabuleiro[i][j] == 'H' || tabuleiro[i][j] == 'D' ||
+                        tabuleiro[i][j] == 'P'){
+                    navio();
+                    printf(" %c ", tabuleiro[i][j]);
+                    resetColor();
+                } else {
+                    resetColor();
+                    printf(" %c ", tabuleiro[i][j]);
+                }
+            }
+        }
+    }
+
+    void imprimeTabuleiroOculto(char tabuleiro[TAMANHO][TAMANHO]){
+        for(int i = 0; i < TAMANHO; i++){
+            printf("\n");
+            for(int j = 0; j < TAMANHO; j++){
+                if(j==0){
+                    printf(" %c ", tabuleiro[i][j]);
+                } else if (tabuleiro[i][j]=='S' || tabuleiro[i][j]=='C'||
+                    tabuleiro[i][j]=='D'||tabuleiro[i][j]=='P'){
+                    agua();
+                    printf(" %c ", tabuleiro[i][j]);
+                    resetColor();
+                } else if(tabuleiro[i][j]=='~'){
+                    agua();
+                    printf(" %c ", tabuleiro[i][j]);
+                    resetColor();
+                } else {
+                    printf(" %c ", tabuleiro[i][j]);
+                }
+            }
+        }
+    }
+
 #endif
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32)
@@ -25,6 +101,50 @@
         printf(" %c ", c);
         SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | 7);
         return c;
+    }
+
+    void imprimeTabuleiro(char tabuleiro[TAMANHO][TAMANHO]){
+
+        for(int i = 0; i < TAMANHO; i++){
+            printf("\n");
+            for(int j = 0; j < TAMANHO; j++){
+                if(tabuleiro[i][j]=='~'){
+                    COLOR_PRINT(tabuleiro[i][j],11,1);
+                } else if(tabuleiro[i][j] == 'X'){
+                    COLOR_PRINT(tabuleiro[i][j],15,1);
+                } else if(tabuleiro[i][j] == '*'){
+                    COLOR_PRINT(tabuleiro[i][j],4,1);
+                } else if (j == 0){
+                    printf("%c", tabuleiro[i][j]);
+                } else if (tabuleiro[i][j] == 'S' || tabuleiro[i][j] == 'C' || 
+                        tabuleiro[i][j] == 'H' || tabuleiro[i][j] == 'D' || 
+                        tabuleiro[i][j] == 'P'){
+                    COLOR_PRINT(tabuleiro[i][j],6,1);        
+                } else {
+                    printf("%c", tabuleiro[i][j]);
+                }
+
+            }
+        }
+    }
+
+
+    void imprimeTabuleiroOculto(char tabuleiro[TAMANHO][TAMANHO]){
+        for(int i = 0; i < TAMANHO; i++){
+            printf("\n");
+            for(int j = 0; j < TAMANHO; j++){
+                if(j==0){
+                    printf(" %c ", tabuleiro[i][j]);
+                } else if (tabuleiro[i][j]=='S' || tabuleiro[i][j]=='C'||
+                    tabuleiro[i][j]=='D'||tabuleiro[i][j]=='P'){
+                    COLOR_PRINT("~",11,1);
+                } else if(tabuleiro[i][j]=='~'){
+                    COLOR_PRINT("~",11,1);
+                } else {
+                    printf(" %c ", tabuleiro[i][j]);
+                }
+            }
+        }
     }
     
 
@@ -58,118 +178,6 @@ typedef struct
     int tamanho;
     char posicao[5][2];
 } Navio;
-
-void agua(){
-    printf("\033[36m\033[44m");
-}
-
-void resetColor(){
-    printf("\033[0m");
-}
-
-void disparoErro(){
-    printf("\033[37m\033[44m");
-}
-
-void disparoAcerto(){
-    printf("\033[31m\033[44m");
-}
-
-void navio(){
-    printf("\033[33m\033[44m");
-}
-
-void imprimeTabuleiro(char tabuleiro[TAMANHO][TAMANHO]){
-
-    for(int i = 0; i < TAMANHO; i++){
-        printf("\n");
-        for(int j = 0; j < TAMANHO; j++){
-            if (OS == 0){
-                if (tabuleiro[i][j] == '~'){
-                    agua();
-                    printf(" %c ", tabuleiro[i][j]);
-                    resetColor();
-                } else if (tabuleiro[i][j] == 'X'){
-                    disparoErro();
-                    printf(" %c ", tabuleiro[i][j]);
-                    resetColor();
-                } else if (tabuleiro[i][j] == '*'){
-                    disparoAcerto();
-                    printf(" %c ", tabuleiro[i][j]);
-                    resetColor();
-                } else if (j == 0){
-                    resetColor();
-                    printf(" %c ", tabuleiro[i][j]);
-                } else if (tabuleiro[i][j] == 'S' || tabuleiro[i][j] == 'C' || 
-                        tabuleiro[i][j] == 'H' || tabuleiro[i][j] == 'D' ||
-                        tabuleiro[i][j] == 'P'){
-                    navio();
-                    printf(" %c ", tabuleiro[i][j]);
-                    resetColor();
-                } else {
-                    resetColor();
-                    printf(" %c ", tabuleiro[i][j]);
-                }
-            } else if (OS == 1) {
-                if(tabuleiro[i][j]=='~'){
-                    COLOR_PRINT(tabuleiro[i][j],11,1);
-                }
-                else if(tabuleiro[i][j] == 'X'){
-                    COLOR_PRINT(tabuleiro[i][j],15,1);
-                }
-                else if(tabuleiro[i][j] == '*'){
-                    COLOR_PRINT(tabuleiro[i][j],4,1);
-                }
-                else if (j == 0){
-                    printf("%c", tabuleiro[i][j]);
-                }
-                else if (tabuleiro[i][j] == 'S' || tabuleiro[i][j] == 'C' || 
-                         tabuleiro[i][j] == 'H' || tabuleiro[i][j] == 'D' || 
-                         tabuleiro[i][j] == 'P'){
-                    COLOR_PRINT(tabuleiro[i][j],6,1);        
-                }
-                else{
-                    printf("%c", tabuleiro[i][j]);
-                }
-
-            }
-        }
-    }
-}
-
-void imprimeTabuleiroOculto(char tabuleiro[TAMANHO][TAMANHO]){
-    for(int i = 0; i < TAMANHO; i++){
-        printf("\n");
-        for(int j = 0; j < TAMANHO; j++){
-            if(j==0){
-                printf(" %c ", tabuleiro[i][j]);
-            }
-            else if (tabuleiro[i][j]=='S' || tabuleiro[i][j]=='C'||
-                tabuleiro[i][j]=='D'||tabuleiro[i][j]=='P'){
-                    if (OS == 0){
-                        agua();
-                        printf(" %c ", tabuleiro[i][j]);
-                        resetColor();
-                    } else {
-                        COLOR_PRINT("~",11,1);
-                    }
-                }
-            else if(tabuleiro[i][j]=='~'){
-                if (OS == 0){
-                        agua();
-                        printf(" %c ", tabuleiro[i][j]);
-                        resetColor();
-                    } else {
-                        COLOR_PRINT("~",11,1);
-                    }
-            }
-            else
-            {
-                printf(" %c ", tabuleiro[i][j]);
-            }
-        }
-    }
-}
 
 void preencheTabuleiro(char tabuleiro[TAMANHO][TAMANHO]){
     // adicionando números a linha
