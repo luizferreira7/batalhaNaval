@@ -191,6 +191,55 @@ typedef struct
     char posicao[5][2];
 } Navio;
 
+
+void imprimeInventario(){
+
+    char I_head[4][15] = {"#  Seq","Nome        ","Visual"," Tamanho  #"};
+    char I_navio1[4][15] = {"#  1","Submarino   ","SS    ","    2     #"};
+    char I_navio2[4][15] = {"#  2","Destroyer   ","DDD   ","    3     #"};
+    char I_navio3[4][15] = {"#  3","Cruzador    ","CCCC  ","    4     #"};
+    char I_navio4[4][15] = {"#  4","Porta-Aviões","PPPPP ","    5     #"};
+    int i;
+
+    printf("\n");
+    printf("\n############### INVENTARIO ################\n");
+    printf("#                                         #\n");
+
+    for (i=0; i<4; i++) {
+        printf("%s\t",I_head[i]);
+    }
+
+    printf("\n");
+
+    for (i=0; i<4; i++) {    
+        printf("%s\t",I_navio1[i]);
+    }
+
+    printf("\n");
+
+    for (i=0; i<4; i++) {    
+        printf("%s\t",I_navio2[i]);
+    }
+
+    printf("\n");
+
+    for (i=0; i<4; i++) {    
+        printf("%s\t",I_navio3[i]);
+    }
+
+    printf("\n");
+
+    for (i=0; i<4; i++) {    
+        printf("%s\t",I_navio4[i]);
+    }
+
+    printf("\n#                                         #");
+
+    printf("\n###########################################\n");
+
+}
+
+
 void preencheTabuleiro(char tabuleiro[TAMANHO][TAMANHO]){
     // adicionando números a linha
     char numero = 47;
@@ -622,6 +671,7 @@ void setTabuleiro(Jogador *jogador, Navio *navio, Jogo *jogo){
     }
 
     if ((*jogador).humano == true){ 
+        imprimeInventario();
         (*jogo).modoJogo == 1 ? imprimeTabuleiro((*jogador).tabuleiro) : imprimeTabuleiro((*jogo).tabuleiro);
     } else { 
         printf("\nAguardando computador...");
@@ -1143,7 +1193,6 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
             if ((*jogador).tabuleiro[i-64][j-47] != '~'){
 
                 printf("\n%s %s Acertou!\n", (*computador).titulo, (*computador).titulo);
-                printf("Pontos Computador: %d\n",(*computador).pontuacao);
 
                 if (verificaSeAfundou((*jogador).tabuleiro[i-64][j-47], (*jogador).tabuleiro)){
 
@@ -1220,7 +1269,6 @@ void realizaDisparo(Jogador *jogador, Jogador *jogadorAlvo, Jogo *jogo){
     if ((*jogadorAlvo).tabuleiro[i-64][j-47] != '~'){
 
         printf("\n%s %s Acertou!\n", (*jogador).titulo, (*jogador).nome);
-        printf("Pontos jogador: %d\n", (*jogador).pontuacao);
 
         if (verificaSeAfundou((*jogadorAlvo).tabuleiro[i-64][j-47], (*jogadorAlvo).tabuleiro)){
 
@@ -1307,53 +1355,6 @@ int escolheDificuldade(){
 
 }
 
-void imprimeInventario(){
-
-    char I_head[4][15] = {"#  Seq","Nome        ","Visual"," Tamanho  #"};
-    char I_navio1[4][15] = {"#  1","Submarino   ","SS    ","    2     #"};
-    char I_navio2[4][15] = {"#  2","Destroyer   ","DDD   ","    3     #"};
-    char I_navio3[4][15] = {"#  3","Cruzador    ","CCCC  ","    4     #"};
-    char I_navio4[4][15] = {"#  4","Porta-Aviões","PPPPP ","    5     #"};
-    int i;
-
-    printf("\n");
-    printf("\n############### INVENTARIO ################\n");
-    printf("#                                         #\n");
-
-    for (i=0; i<4; i++) {
-        printf("%s\t",I_head[i]);
-    }
-
-    printf("\n");
-
-    for (i=0; i<4; i++) {    
-        printf("%s\t",I_navio1[i]);
-    }
-
-    printf("\n");
-
-    for (i=0; i<4; i++) {    
-        printf("%s\t",I_navio2[i]);
-    }
-
-    printf("\n");
-
-    for (i=0; i<4; i++) {    
-        printf("%s\t",I_navio3[i]);
-    }
-
-    printf("\n");
-
-    for (i=0; i<4; i++) {    
-        printf("%s\t",I_navio4[i]);
-    }
-
-    printf("\n#                                         #");
-
-    printf("\n###########################################\n");
-
-}
-
 Jogo setJogo(){
 
     Jogo jogo;
@@ -1412,15 +1413,9 @@ int main(){
 
         setTabuleiro(&jogador1, &submarino, &jogo);
 
-        imprimeInventario();
-
         setTabuleiro(&jogador1, &destroyer, &jogo);
 
-        imprimeInventario();
-
         setTabuleiro(&jogador1, &cruzador, &jogo);
-
-        imprimeInventario();
 
         setTabuleiro(&jogador1, &portaAviao, &jogo);
 
@@ -1432,6 +1427,8 @@ int main(){
             realizaDisparo(&jogador1, &computador, &jogo);
 
             while (jogador1.acertouAnterior == true && jogador1.pontuacao != PONTUACAO_MAX){
+
+                printf("\nPontos %s %s: %d\n", jogador1.titulo, jogador1.nome, jogador1.pontuacao);
 
                 printf("\nComo Acertou a anterior, realize novo disparo:\n");
 
@@ -1446,6 +1443,8 @@ int main(){
                 realizaDisparoIA(&computador, &jogador1, jogo.dificuldade, computador.jogadas-2);
 
             while (computador.acertouAnterior == true && computador.pontuacao != PONTUACAO_MAX){
+
+                printf("\nPontos %s %s: %d\n", computador.titulo, computador.nome, computador.pontuacao);
 
                 printf("\nComo Acertou a anterior, realize novo disparo:\n");
 
@@ -1498,6 +1497,8 @@ int main(){
 
             while (computador.acertouAnterior == true && computador.pontuacao != PONTUACAO_MAX){
 
+                printf("\nPontos %s %s: %d\n", computador.titulo, computador.nome, computador.pontuacao);
+
                 printf("\nComo Acertou a anterior, realize novo disparo:\n");
 
                 computador.jogadas += 1;
@@ -1511,6 +1512,8 @@ int main(){
                 realizaDisparoIA(&computador2, &computador, jogo.dificuldade, computador2.jogadas-2);
 
             while (computador2.acertouAnterior == true && computador2.pontuacao != PONTUACAO_MAX){
+
+                printf("\nPontos %s %s: %d\n", computador2.titulo, computador2.nome, computador2.pontuacao);
 
                 printf("\nComo Acertou a anterior, realize novo disparo:\n");
 
@@ -1574,6 +1577,8 @@ int main(){
 
             while (jogador1.acertouAnterior == true && jogador1.pontuacao != PONTUACAO_MAX){
 
+                printf("\nPontos %s %s: %d\n", jogador1.titulo, jogador1.nome, jogador1.pontuacao);
+
                 printf("\nComo voce acertou a anterior, realize novo disparo:\n");
 
                 jogador1.jogadas += 1;
@@ -1587,6 +1592,8 @@ int main(){
                 realizaDisparo(&jogador2, &jogador1, &jogo);
 
             while (jogador2.acertouAnterior == true && jogador2.pontuacao != PONTUACAO_MAX){
+
+                printf("\nPontos %s %s: %d\n", jogador2.titulo, jogador2.nome, jogador2.pontuacao);
 
                 printf("\nComo voce acertou a anterior, realize novo disparo:\n");
 
