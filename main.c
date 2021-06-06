@@ -1445,6 +1445,7 @@ int main(){
                 realizaDisparoIA(&computador2, &computador, jogo.dificuldade, computador2.jogadas-2);
                 printf("\n");
             }
+            
             if (computador.pontuacao == PONTUACAO_MAX){
                 printf("\n VENCEDOR: CPU1 \n");
                 return 0;
