@@ -1143,6 +1143,7 @@ void realizaDisparoIA(Jogador *computador, Jogador *jogador, int dificuldade, in
             if ((*jogador).tabuleiro[i-64][j-47] != '~'){
 
                 printf("\n%s %s Acertou!\n", (*computador).titulo, (*computador).titulo);
+                printf("Pontos Computador: %d\n",(*computador).pontuacao);
 
                 if (verificaSeAfundou((*jogador).tabuleiro[i-64][j-47], (*jogador).tabuleiro)){
 
@@ -1219,6 +1220,7 @@ void realizaDisparo(Jogador *jogador, Jogador *jogadorAlvo, Jogo *jogo){
     if ((*jogadorAlvo).tabuleiro[i-64][j-47] != '~'){
 
         printf("\n%s %s Acertou!\n", (*jogador).titulo, (*jogador).nome);
+        printf("Pontos jogador: %d\n", (*jogador).pontuacao);
 
         if (verificaSeAfundou((*jogadorAlvo).tabuleiro[i-64][j-47], (*jogadorAlvo).tabuleiro)){
 
