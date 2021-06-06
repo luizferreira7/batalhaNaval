@@ -1162,7 +1162,7 @@ void realizaDisparo(Jogador *jogador, Jogador *jogadorAlvo, Jogo *jogo){
 
         int w = 0;
 
-        printf("\nDigite a posicao para disparo!\n");
+        printf("\n %s %s, digite a posicao para disparo!\n",jogador.titulo, jogador.nome);
 
         printf("Posicao: ");
 
@@ -1219,7 +1219,7 @@ void realizaDisparo(Jogador *jogador, Jogador *jogadorAlvo, Jogo *jogo){
     }
 
     ((*jogo).modoJogo == 1) ? imprimeTabuleiro((*jogadorAlvo).tabuleiro) : imprimeTabuleiroOculto((*jogadorAlvo).tabuleiro);
-    printf("Tabuleiro de %s %s", (*jogadorAlvo).titulo, (*jogadorAlvo).nome );
+    printf("\nTabuleiro de %s %s\n", (*jogadorAlvo).titulo, (*jogadorAlvo).nome );
 }
 
 int escolheModoJogo(){
