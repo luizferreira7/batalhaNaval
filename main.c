@@ -415,9 +415,9 @@ char sorteiaJ(void){
     return j;
 }
 
-void getPosicao(bool posicaoInicial, bool humano, char i, char j, int tamanho, int tentativa, char posicao[2]){
+void getPosicao(bool posicaoInicial, char i, char j, int tamanho, int tentativa, char posicao[2], bool automatico){
 
-    if (humano == true){
+    if (automatico == false){
 
         char c;
         int w = 0;
@@ -429,13 +429,13 @@ void getPosicao(bool posicaoInicial, bool humano, char i, char j, int tamanho, i
             w++;
         }
 
-    } else if (posicaoInicial == true && humano == false) {
+    } else if (posicaoInicial == true && automatico == true) {
 
         posicao[0] = sorteiaI();
 
         posicao[1] = sorteiaJ();
 
-    } else if (posicaoInicial == false && humano == false){
+    } else if (posicaoInicial == false && automatico == true){
 
         char i2, j2;
 
@@ -471,20 +471,20 @@ void getPosicao(bool posicaoInicial, bool humano, char i, char j, int tamanho, i
 
 }
 
-bool verificaPosicao(bool posicaoInicial, char tabuleiro[TAMANHO][TAMANHO], bool humano,
+bool verificaPosicao(bool posicaoInicial, char tabuleiro[TAMANHO][TAMANHO], bool automatico,
                         int tamanho, char i, char j, char i2, char j2){
 
     if (posicaoInicial == true) {
         int colideIE = 0, colideID = 0, colideJE = 0, colideJD = 0;
 
         if (i > 74 || i < 65){
-            if (humano == true) { printf("\nDigite uma posição válida!\n"); }
+            if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
             return false;
         } else if (j > 57 || j < 48){
-            if (humano == true) { printf("\nDigite uma posição válida!\n"); }
+            if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
             return false;
         } else if (tabuleiro[i-64][j-47] != '~'){
-            if (humano == true) { printf("\nDigite uma posição válida!\n"); }
+            if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
             return false;
         } else {
             for (int a = 0; a < tamanho; a++){
@@ -520,7 +520,7 @@ bool verificaPosicao(bool posicaoInicial, char tabuleiro[TAMANHO][TAMANHO], bool
                 }
             }
             if (colideIE != 0 && colideJD != 0 && colideID != 0 && colideJE != 0){
-                if (humano == true) { printf("\nDigite uma posição válida!\n"); }
+                if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
                 return false;
             } else {
                 return true;
@@ -529,31 +529,31 @@ bool verificaPosicao(bool posicaoInicial, char tabuleiro[TAMANHO][TAMANHO], bool
     } else if (posicaoInicial == false) {
 
         if (i2 > 74 || i2 < 65){
-            if (humano == true) { printf("\nDigite uma posição válida!\n"); }
+            if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
             return false;
         } else if (j2 > 57 || j2 < 48){
-            if (humano == true) { printf("\nDigite uma posição válida!\n"); }
+            if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
             return false;
         } else if (i != i2 && j != j2){
-            if (humano == true) { printf("\nDigite uma posição válida!\n"); }
+            if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
             return false;
         } else if (((((j2 - j) < 0) ? -1*(j2-j) : (j2-j)) > tamanho-1) || 
                   ((((i2 - i) < 0) ? -1*(i2-i) : (i2-i)) > tamanho-1) ){
-            if (humano == true) { printf("\nDigite uma posição válida!\n"); }
+            if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
             return false;
         } else if ( tabuleiro[i2-64][j2-47] != '~') {
-            if (humano == true) { printf("\nDigite uma posição válida!\n"); }
+            if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
             return false;
         } else if (i==i2){
             if ( (((j2 - j) < 0) ? -1*(j2-j) : (j2-j)) < tamanho-1){
-                if (humano == true) { printf("\nDigite uma posição válida!\n"); }
+                if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
                 return false;
             } else {
                 return true;
             }
         } else if (j==j2){
             if ( (((i2 - i) < 0) ? -1*(i2-i) : (i2-i)) < tamanho-1){
-                if (humano == true) { printf("\nDigite uma posição válida!\n"); }
+                if (automatico == false) { printf("\nDigite uma posição válida!\n"); }
                 return false;
             } else {
                 return true;
@@ -583,39 +583,39 @@ Navio setNavio(char nome[30], char classe, int tamanho){
 
 }
 
-void setTabuleiro(Jogador *jogador, Navio *navio, Jogo *jogo){
+void setTabuleiro(Jogador *jogador, Navio *navio, Jogo *jogo, bool automatico){
     
     char i, j, i2 = '\0', j2 = '\0';
     bool posicaoValidaI = false, posicaoValidaF = false;
 
     printf("\n");
-    if ((*jogador).humano == true) { printf("\nDigite as posições do %s!\n", (*navio).nome); }
+    if ((*jogador).humano == true && automatico == false ) { printf("\nDigite as posições do %s!\n", (*navio).nome); }
 
     while (posicaoValidaI == false){
 
         char posicao[2];
 
-        getPosicao(true, (*jogador).humano, i, j, (*navio).tamanho, 0, posicao);
+        getPosicao(true, i, j, (*navio).tamanho, 0, posicao, automatico);
 
         i = posicao[0];
         j = posicao[1];
         
-        posicaoValidaI = verificaPosicao(true, (*jogador).tabuleiro, (*jogador).humano, (*navio).tamanho, i, j, i2, j2);
+        posicaoValidaI = verificaPosicao(true, (*jogador).tabuleiro, automatico, (*navio).tamanho, i, j, i2, j2);
 
     }
 
     while (posicaoValidaF == false){
 
-        if ((*jogador).humano == true){
+        if ((*jogador).humano == true && automatico == false){
 
             char posicao[2];
 
-            getPosicao(false, (*jogador).humano, i, j, (*navio).tamanho, 0, posicao);
+            getPosicao(false, i, j, (*navio).tamanho, 0, posicao, automatico);
 
             i2 = posicao[0];
             j2 = posicao[1];
 
-            posicaoValidaF = verificaPosicao(false, (*jogador).tabuleiro, (*jogador).humano, (*navio).tamanho, 
+            posicaoValidaF = verificaPosicao(false, (*jogador).tabuleiro, automatico, (*navio).tamanho, 
                                                 i, j, i2, j2);
         
         } else {
@@ -623,9 +623,9 @@ void setTabuleiro(Jogador *jogador, Navio *navio, Jogo *jogo){
             for (int l = 0; l < 4; l++){
                 char posicao[2];
 
-                getPosicao(false, (*jogador).humano, i, j, (*navio).tamanho, l, posicao);
+                getPosicao(false, i, j, (*navio).tamanho, l, posicao, automatico);
 
-                posicaoValidaF = verificaPosicao(false, (*jogador).tabuleiro, (*jogador).humano, (*navio).tamanho, 
+                posicaoValidaF = verificaPosicao(false, (*jogador).tabuleiro, automatico, (*navio).tamanho, 
                                                     i, j, posicao[0], posicao[1]);
 
                 if (posicaoValidaF == true){
@@ -670,10 +670,15 @@ void setTabuleiro(Jogador *jogador, Navio *navio, Jogo *jogo){
         }
     }
 
-    if ((*jogador).humano == true){ 
+    if ((*jogador).humano == true && automatico == false){ 
         imprimeInventario();
         (*jogo).modoJogo == 1 ? imprimeTabuleiro((*jogador).tabuleiro) : imprimeTabuleiro((*jogo).tabuleiro);
-    } else { 
+    } else if ((*jogador).humano == true && automatico == true) { 
+        printf("\nPreenchendo tabuleiro...");
+        if((*jogo).modoJogo == 1){
+            imprimeTabuleiro((*jogador).tabuleiro);
+        }
+    } else {
         printf("\nAguardando computador...");
     }
 
@@ -1232,8 +1237,9 @@ void realizaDisparo(Jogador *jogador, Jogador *jogadorAlvo, Jogo *jogo){
         char posicao[2], c;
 
         int w = 0;
-
-        printf("\n %s %s, digite a posicao para disparo!\n", (*jogador).titulo, (*jogador).nome);
+        if ( (*jogador).acertouAnterior == false ){
+            printf("\n %s %s, digite a posicao para disparo!\n", (*jogador).titulo, (*jogador).nome);
+        }
 
         printf("Posicao: ");
 
@@ -1378,7 +1384,7 @@ int main(){
 
     int humano = 1;
     int comp = 0;
-    float tempo, comeco, fim;
+
     Navio submarino = setNavio("Submarino", 'S', 2);
 
     Navio destroyer = setNavio("Destroyer", 'D', 3);
@@ -1398,29 +1404,60 @@ int main(){
 
         printf("\n\nAdversario %s %s\n", computador.titulo, computador.nome);
 
-        setTabuleiro(&computador, &submarino, &jogo);
+        setTabuleiro(&computador, &submarino, &jogo, true);
 
-        setTabuleiro(&computador, &destroyer, &jogo);
+        setTabuleiro(&computador, &destroyer, &jogo, true);
 
-        setTabuleiro(&computador, &cruzador, &jogo);
+        setTabuleiro(&computador, &cruzador, &jogo, true);
 
-        setTabuleiro(&computador, &portaAviao, &jogo);
-
-        imprimeInventario();
-
-        imprimeTabuleiro(jogador1.tabuleiro);
+        setTabuleiro(&computador, &portaAviao, &jogo, true);
 
         bool satisfeito = false;
 
         while (satisfeito == false){
 
-            setTabuleiro(&jogador1, &submarino, &jogo);
+            printf("\nDeseja que o computador preencha o Tabuleiro para você?\n");
 
-            setTabuleiro(&jogador1, &destroyer, &jogo);
+            printf("\n [1] - Sim!");
+            printf("\n [2] - Nao!\n");
 
-            setTabuleiro(&jogador1, &cruzador, &jogo);
+            int escolhaAuto = 0;
 
-            setTabuleiro(&jogador1, &portaAviao, &jogo);
+            while (escolhaAuto != 1 && escolhaAuto != 2){
+
+                printf("\nEscolha: ");
+
+                char dif, c;
+
+                while ( (c = getchar() ) != '\n' && c != EOF){
+                    dif = c;
+                }
+
+                escolhaAuto = (dif - 48);
+
+                if (escolhaAuto != 1 && escolhaAuto != 2){
+                    printf("\nEscolha Invalida!\n");
+                }
+
+            } 
+
+            bool automatico = false;
+
+            if (escolhaAuto == 1){
+                automatico = true;
+            } else {
+                imprimeInventario();
+
+                imprimeTabuleiro(jogador1.tabuleiro);
+            }
+
+            setTabuleiro(&jogador1, &submarino, &jogo, automatico);
+
+            setTabuleiro(&jogador1, &destroyer, &jogo, automatico);
+
+            setTabuleiro(&jogador1, &cruzador, &jogo, automatico);
+
+            setTabuleiro(&jogador1, &portaAviao, &jogo, automatico);
 
             printf("\nEsta satisfeito ou deseja recolocar os navios?\n");
 
@@ -1442,7 +1479,7 @@ int main(){
                 escolha = (dif - 48);
 
                 if (escolha != 1 && escolha != 2){
-                    printf("\nDificuldade Invalida!\n");
+                    printf("\nEscolha Invalida!\n");
                 }
 
             }
@@ -1492,16 +1529,21 @@ int main(){
             if (jogador1.pontuacao == PONTUACAO_MAX){
                 clock_t fim = clock();
                 float tempo = ((float)(fim - comeco)/CLOCKS_PER_SEC)/60;
+
+                printf("\nPontos %s %s: %d\n", jogador1.titulo, jogador1.nome, jogador1.pontuacao);
                 printf("\nVENCEDOR: %s\n", jogador1.nome);
                 printf("Em apenas %f minutos!\n", tempo);
                 return 0;
             } else if (computador.pontuacao == PONTUACAO_MAX){
                 clock_t fim = clock();
                 float tempo = ((float)(fim - comeco)/CLOCKS_PER_SEC)/60;
+
+                printf("\nPontos %s %s: %d\n", computador.titulo, computador.nome, computador.pontuacao);
                 printf("\nVENCEDOR: CPU\n");
                 printf("Em apenas %f minutos!\n", tempo);
                 return 0;
             }
+            
         }
 
     } else if (jogo.modoJogo == 2) {
@@ -1509,22 +1551,53 @@ int main(){
         Jogador jogador1 = setJogador(humano, "humano");
 
         printf("\n\nJogador %s %s\n", jogador1.titulo, jogador1.nome);
-
-        imprimeInventario();
-
-        imprimeTabuleiro(jogo.tabuleiro);
         
         bool satisfeito = false;
 
         while (satisfeito == false){
 
-            setTabuleiro(&jogador1, &submarino, &jogo);
+            printf("\nDeseja que o computador preencha o Tabuleiro para você?\n");
 
-            setTabuleiro(&jogador1, &destroyer, &jogo);
+            printf("\n [1] - Sim!");
+            printf("\n [2] - Nao!\n");
 
-            setTabuleiro(&jogador1, &cruzador, &jogo);
+            int escolhaAuto = 0;
 
-            setTabuleiro(&jogador1, &portaAviao, &jogo);
+            while (escolhaAuto != 1 && escolhaAuto != 2){
+
+                printf("\nEscolha: ");
+
+                char dif, c;
+
+                while ( (c = getchar() ) != '\n' && c != EOF){
+                    dif = c;
+                }
+
+                escolhaAuto = (dif - 48);
+
+                if (escolhaAuto != 1 && escolhaAuto != 2){
+                    printf("\nEscolha Invalida!\n");
+                }
+
+            } 
+
+            bool automatico = false;
+
+            if (escolhaAuto == 1){
+                automatico = true;
+            } else {
+                imprimeInventario();
+
+                imprimeTabuleiro(jogo.tabuleiro);
+            }
+
+            setTabuleiro(&jogador1, &submarino, &jogo, automatico);
+
+            setTabuleiro(&jogador1, &destroyer, &jogo, automatico);
+
+            setTabuleiro(&jogador1, &cruzador, &jogo, automatico);
+
+            setTabuleiro(&jogador1, &portaAviao, &jogo, automatico);
 
             printf("\nEsta satisfeito ou deseja recolocar os navios?\n");
 
@@ -1546,7 +1619,7 @@ int main(){
                 escolha = (dif - 48);
 
                 if (escolha != 1 && escolha != 2){
-                    printf("\nDificuldade Invalida!\n");
+                    printf("\nEscolha Invalida!\n");
                 }
 
             }
@@ -1565,21 +1638,52 @@ int main(){
 
         printf("\n\nAdversario %s %s\n", jogador2.titulo, jogador2.nome);
 
-        imprimeInventario();
-
-        imprimeTabuleiro(jogo.tabuleiro);
-
         satisfeito = false;
 
         while (satisfeito == false){
 
-            setTabuleiro(&jogador2, &submarino, &jogo);
+            printf("\nDeseja que o computador preencha o Tabuleiro para você?\n");
 
-            setTabuleiro(&jogador2, &destroyer, &jogo);
+            printf("\n [1] - Sim!");
+            printf("\n [2] - Nao!\n");
 
-            setTabuleiro(&jogador2, &cruzador, &jogo);
+            int escolhaAuto = 0;
 
-            setTabuleiro(&jogador2, &portaAviao, &jogo);
+            while (escolhaAuto != 1 && escolhaAuto != 2){
+
+                printf("\nEscolha: ");
+
+                char dif, c;
+
+                while ( (c = getchar() ) != '\n' && c != EOF){
+                    dif = c;
+                }
+
+                escolhaAuto = (dif - 48);
+
+                if (escolhaAuto != 1 && escolhaAuto != 2){
+                    printf("\nEscolha Invalida!\n");
+                }
+
+            } 
+
+            bool automatico = false;
+
+            if (escolhaAuto == 1){
+                automatico = true;
+            } else {
+                imprimeInventario();
+
+                imprimeTabuleiro(jogo.tabuleiro);
+            }
+
+            setTabuleiro(&jogador2, &submarino, &jogo, automatico);
+
+            setTabuleiro(&jogador2, &destroyer, &jogo, automatico);
+
+            setTabuleiro(&jogador2, &cruzador, &jogo, automatico);
+
+            setTabuleiro(&jogador2, &portaAviao, &jogo, automatico);
 
             printf("\nEsta satisfeito ou deseja recolocar os navios?\n");
 
@@ -1601,7 +1705,7 @@ int main(){
                 escolha = (dif - 48);
 
                 if (escolha != 1 && escolha != 2){
-                    printf("\nDificuldade Invalida!\n");
+                    printf("\nEscolha Invalida!\n");
                 }
 
             }
@@ -1651,16 +1755,21 @@ int main(){
             if (jogador1.pontuacao == PONTUACAO_MAX){
                 clock_t fim = clock();
                 float tempo = ((float)(fim - comeco)/CLOCKS_PER_SEC)/60;
+
+                printf("\nPontos %s %s: %d\n", jogador1.titulo, jogador1.nome, jogador1.pontuacao);
                 printf("\n VENCEDOR: %s \n", jogador1.nome);
                 printf("Em apenas %f minutos!\n", tempo);
                 return 0;
             } else if (jogador2.pontuacao == PONTUACAO_MAX){
                 clock_t fim = clock();
                 float tempo = ((float)(fim - comeco)/CLOCKS_PER_SEC)/60;
+
+                printf("\nPontos %s %s: %d\n", jogador2.titulo, jogador2.nome, jogador2.pontuacao);
                 printf("\n VENCEDOR: %s \n", jogador2.nome);
                 printf("Em apenas %f minutos!\n", tempo);
                 return 0;
             }
+
         }
 
     } else if (jogo.modoJogo == 3) {
@@ -1669,25 +1778,25 @@ int main(){
 
         printf("\n\nAdversario %s %s\n", computador.titulo, computador.nome);
 
-        setTabuleiro(&computador, &submarino, &jogo);
+        setTabuleiro(&computador, &submarino, &jogo, true);
 
-        setTabuleiro(&computador, &destroyer, &jogo);
+        setTabuleiro(&computador, &destroyer, &jogo, true);
 
-        setTabuleiro(&computador, &cruzador, &jogo);
+        setTabuleiro(&computador, &cruzador, &jogo, true);
 
-        setTabuleiro(&computador, &portaAviao, &jogo);
+        setTabuleiro(&computador, &portaAviao, &jogo, true);
 
         Jogador computador2 = setJogador(comp, "CPU 2");
 
         printf("\n\nAdversario %s %s\n", computador2.titulo, computador2.nome);
 
-        setTabuleiro(&computador2, &submarino, &jogo);
+        setTabuleiro(&computador2, &submarino, &jogo, true);
 
-        setTabuleiro(&computador2, &destroyer, &jogo);
+        setTabuleiro(&computador2, &destroyer, &jogo, true);
 
-        setTabuleiro(&computador2, &cruzador, &jogo);
+        setTabuleiro(&computador2, &cruzador, &jogo, true);
 
-        setTabuleiro(&computador2, &portaAviao, &jogo);
+        setTabuleiro(&computador2, &portaAviao, &jogo, true);
 
         while (computador.pontuacao != PONTUACAO_MAX && computador2.pontuacao != PONTUACAO_MAX){
             clock_t comeco = clock();
@@ -1726,12 +1835,16 @@ int main(){
             if (computador.pontuacao == PONTUACAO_MAX){
                 clock_t fim = clock();
                 float tempo = ((float)(fim - comeco)/CLOCKS_PER_SEC)/60;
+
+                printf("\nPontos %s %s: %d\n", computador.titulo, computador.nome, computador.pontuacao);
                 printf("\n VENCEDOR: CPU1 \n");
                 printf("Em apenas %f minutos!\n", tempo);
                 return 0;
             } else if (computador2.pontuacao == PONTUACAO_MAX){
                 clock_t fim = clock();
                 float tempo = ((float)(fim - comeco)/CLOCKS_PER_SEC)/60;
+
+                printf("\nPontos %s %s: %d\n", computador2.titulo, computador2.nome, computador2.pontuacao);
                 printf("\n VENCEDOR: CPU2 \n");
                 printf("Em apenas %f minutos!\n", tempo);
                 return 0;
