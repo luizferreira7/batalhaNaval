@@ -1290,7 +1290,7 @@ void realizaDisparo(Jogador *jogador, Jogador *jogadorAlvo, Jogo *jogo){
     }
 
     ((*jogo).modoJogo == 1) ? imprimeTabuleiro((*jogadorAlvo).tabuleiro) : imprimeTabuleiroOculto((*jogadorAlvo).tabuleiro);
-    printf("\nTabuleiro de %s %s\n", (*jogadorAlvo).titulo, (*jogadorAlvo).nome );
+    printf("Tabuleiro de %s %s\n", (*jogadorAlvo).titulo, (*jogadorAlvo).nome );
 }
 
 int escolheModoJogo(){
