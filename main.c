@@ -127,7 +127,7 @@
                 } else if (tabuleiro[i][j] == 'S' || tabuleiro[i][j] == 'C' || 
                         tabuleiro[i][j] == 'H' || tabuleiro[i][j] == 'D' || 
                         tabuleiro[i][j] == 'P'){
-                    COLOR_PRINT(" ~ ",11,1);        
+                    COLOR_PRINT("tabuleiro[i][j]",6,1);        
                 } else {
                     printf("%c", tabuleiro[i][j]);
                 }
@@ -148,6 +148,10 @@
                     COLOR_PRINT('~',11,1);
                 } else if(tabuleiro[i][j]=='~'){
                     COLOR_PRINT('~',11,1);
+                } else if(tabuleiro[i][j] == 'X'){
+                    COLOR_PRINT(tabuleiro[i][j],15,1);
+                } else if(tabuleiro[i][j] == '*'){
+                    COLOR_PRINT(tabuleiro[i][j],4,1);
                 } else {
                     printf(" %c ", tabuleiro[i][j]);
                 }
