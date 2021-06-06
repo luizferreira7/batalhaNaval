@@ -1546,7 +1546,7 @@ int main(){
 
             while (jogador1.acertouAnterior == true && jogador1.pontuacao == PONTUACAO_MAX){
 
-                printf("\nComo Acertou a anterior, realize novo disparo:\n");
+                printf("\nComo voce acertou a anterior, realize novo disparo:\n");
 
                 jogador1.jogadas += 1;
                 realizaDisparo(&jogador1, &jogador2, &jogo);
@@ -1560,7 +1560,7 @@ int main(){
 
             while (jogador2.acertouAnterior == true && jogador2.pontuacao == PONTUACAO_MAX){
 
-                printf("\nComo Acertou a anterior, realize novo disparo:\n");
+                printf("\nComo voce acertou a anterior, realize novo disparo:\n");
 
                 jogador2.jogadas += 1;
                 realizaDisparo(&jogador2, &jogador1, &jogo);
