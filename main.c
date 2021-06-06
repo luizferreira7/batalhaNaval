@@ -137,9 +137,9 @@
                     printf(" %c ", tabuleiro[i][j]);
                 } else if (tabuleiro[i][j]=='S' || tabuleiro[i][j]=='C'||
                     tabuleiro[i][j]=='D'||tabuleiro[i][j]=='P'){
-                    COLOR_PRINT("~",11,1);
+                    COLOR_PRINT('~',11,1);
                 } else if(tabuleiro[i][j]=='~'){
-                    COLOR_PRINT("~",11,1);
+                    COLOR_PRINT('~',11,1);
                 } else {
                     printf(" %c ", tabuleiro[i][j]);
                 }
