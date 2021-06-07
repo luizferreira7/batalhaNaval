@@ -6,8 +6,10 @@ Relatório Trabalho 1 de Intro C/C++ 2020-2
 
 Batalha Naval
 
-Aluno:  Helena Coelho Nicolli                                       
-Aluno:  Luiz Carlos Ferreira Carvalho                           
+Aluno:  Helena Coelho Nicolli  
+
+Aluno:  Luiz Carlos Ferreira Carvalho   
+
 Aluno:  Yuri Ferreira Melo                                             
 
 A. Descrição do Jogo e seu Objetivo
